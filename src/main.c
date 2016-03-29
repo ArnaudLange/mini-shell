@@ -1,27 +1,59 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
 
- #include <sys/types.h>
- #include <sys/wait.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <unistd.h>
- #include <string.h>
-
-int main(int argc, char *argv[])
-{
-	char buf;
-	int pipefd[2];
-
-	if (pipe(pipefd) == -1) {
-               perror("pipe");
-               exit(EXIT_FAILURE);
-        }
-
-	while (read(pipefd[1], &buf, 1) > 0){
-		write(STDOUT_FILENO, &buf, 1);
-	}
-	write(STDOUT_FILENO, "\n", 1);
-        close(pipefd[1]);
-	_exit(EXIT_SUCCESS);
+void welcomeMessage(){
+        printf("Bienvenue dans notre Mini-shell Linux\n");
 }
 
+void printPrompt(){
+        printf(">");
+}
+
+void execute(char *commande,char *argv){
+        pid_t pid;
+
+        pid = fork();
+        if (pid == -1){
+                printf("le fork a échoué");
+        }
+
+        if (pid == 0){ //processus enfant
+                printf("lalala\n");
+                execlp(commande,argv,NULL);
+        }
+}
+
+int main(int argc, char* argv[]){
+
+        char *line=NULL;
+        size_t size;
+        char *chariot;
+        ssize_t read;
+
+
+        welcomeMessage();
+
+        while(1){
+                
+                printPrompt();
+                while ((read = getline(&line, &size, stdin)) != -1) {                   // lecture ligne par ligne jusqu'à fin du message entré dans stdin
+                        printf("%d\n", line);
+                        
+                        if (chariot = strchr(line,'\n')){                                                       // suppression des retour chariot
+                                chariot = 0;                                                                                    //le pointeur de \n devient pointeur nul
+                        }                                                                                       
+                        
+                        if (!strcmp(line,"")) {                                                                 //si la ligne est vide
+                                return EXIT_SUCCESS     ;                                                                                                // on passe a la prochaine 
+                        }
+                        execute(line,line); 
+                                                                                                   
+                }
+
+        }   
+        return EXIT_SUCCESS;   
+}
 

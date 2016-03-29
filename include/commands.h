@@ -8,9 +8,15 @@
 
 
 struct command{
-	char* name[20];
+	char name[100];
+        char parameters[100];
 	int (*cmd_ptr)(int, int);
 };
+
+
+typedef struct command Command;
+
+Command* parseCommand(char* input);
 
 int ls_lib(int argc, char* argv[]);
 

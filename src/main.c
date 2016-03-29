@@ -12,6 +12,8 @@ void printPrompt(){
         printf(">");
 }
 
+
+
 void execute(char *commande,char *argv){
         pid_t pid;
 
@@ -33,26 +35,25 @@ int main(int argc, char* argv[]){
         char *chariot;
         ssize_t read;
 
-
         welcomeMessage();
-
         while(1){
-                
                 printPrompt();
-                while ((read = getline(&line, &size, stdin)) != -1) {                   // lecture ligne par ligne jusqu'à fin du message entré dans stdin
+                // lecture ligne par ligne jusqu'à fin du message entré dans stdin
+                while ((read = getline(&line, &size, stdin)) != -1) {                   
                         printf("%d\n", line);
-                        
-                        if (chariot = strchr(line,'\n')){                                                       // suppression des retour chariot
-                                chariot = 0;                                                                                    //le pointeur de \n devient pointeur nul
+                        // suppression des retour chariot
+                        if (chariot = strchr(line,'\n')){                                                       
+                                chariot = NULL;
+                                //le pointeur de \n devient pointeur null
                         }                                                                                       
-                        
-                        if (!strcmp(line,"")) {                                                                 //si la ligne est vide
-                                return EXIT_SUCCESS     ;                                                                                                // on passe a la prochaine 
+                        //si la ligne est vide
+                        if (!strcmp(line,"")){
+                                // on passe a la prochaine                                                                
+                                return EXIT_SUCCESS;                                                                                                
                         }
-                        execute(line,line); 
-                                                                                                   
-                }
 
+                        execute(line,line);                                                                           
+                }
         }   
         return EXIT_SUCCESS;   
 }

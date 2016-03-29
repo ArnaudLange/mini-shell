@@ -6,13 +6,13 @@
 
 void myMkdir(char *arg)
 {
-	struct stat st = {0};
+	struct stat statbuf;
 
-	if (stat(arg, &st) == -1) {
+	if (stat(arg, &statbuf) == -1) { //si il n'existe aucun fichier déjà nommé comme celui qu'on essaye de créer 
     	mkdir(arg, 0700);
 	}
 	else{
-		printf("Le dossier %s existe deja, victime.\n", arg);
+		printf("Un element '%s' existe deja.\n", arg);
 	}
 	
 }

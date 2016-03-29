@@ -5,7 +5,7 @@
 
 int main(int argc, char const *argv[])
 {
-	char * test;
+	char * test=malloc(64*sizeof(char));
 	getcwd(test , 64*sizeof(char));
 	printf("%s\n", test);
 	return 0;

@@ -1,9 +1,22 @@
 #include "parametre.h"
 
 
+
 int openFile(char *filename)
 {
 	return open(filename, O_RDONLY);
+}
+
+int parcourirChaine(char *chaine)
+{
+	int i=0;
+
+	while (chaine[i] != '\0')
+	{
+		i++;		
+	}
+
+	return i;
 }
 
 void lectureParam(char * param, Parametres *etat)
@@ -23,6 +36,15 @@ void lectureParam(char * param, Parametres *etat)
 	else 
 		*etat=SRien;
 		printf("Pas de parametre valide.\n");
+}
+
+void tabulation(int nb)
+{
+	int i;
+	for (i=0;i<nb;i++)
+	{
+		printf("\t");
+	}
 }
 
 void testParam()
@@ -55,7 +77,8 @@ void ls(char *input, char *param)
 
 	struct dirent *flux;
 	struct stat statbuf;
-	int file, ligne;
+	int file;
+	int ligne = -1;
 
 	if( (repertoire = opendir(input)) ==NULL)
 	{
@@ -84,7 +107,8 @@ void ls(char *input, char *param)
 		case Sl:
 			printf("Case -l\n.");
 			break;
-		case Sd:
+
+		case Sc:
 			ligne++;
 			if (ligne >= 4)
 			{
@@ -93,16 +117,35 @@ void ls(char *input, char *param)
 			}
 			if (S_ISDIR(statbuf.st_mode))	//CHECK si c'est un dossier
 			{
+				int taille=0;
+				taille = parcourirChaine(flux->d_name);
+
 				printf("%s%s",KBLU,flux->d_name);		//si oui on l'ecrit en bleu pour que ce soit visuel
-				printf("%s\t\t",KNRM);	//puis on remet la couleur normale
+
+				printf("%s",KNRM);	//puis on remet la couleur normale
+				if(taille > 8)
+				{
+					tabulation(2);
+				}
+				else
+					tabulation(3);
 			}
 			else
 			{	
-				printf("%s\t\t",flux->d_name);	//sinon on ecrit normalement
+				int taille=0;
+				taille = parcourirChaine(flux->d_name);
+
+				printf("%s",flux->d_name);	//sinon on ecrit normalement
+				if(taille >= 8)
+				{
+					tabulation(2);
+				}
+				else
+					tabulation(3);
 			}
 			break;
 		
-		case Sc:
+		case Sd:
 			printf("Case -c\n.");
 			break;
 		}
@@ -113,7 +156,7 @@ void ls(char *input, char *param)
 
 int main(int argc, char *argv[])
 {
-	char *param = "d";
+	char *param = "c";
 	int i;
 	if (argc >1)
 		for (i=1;i<argc;i++)
@@ -122,7 +165,7 @@ int main(int argc, char *argv[])
 		}	
 	else	//si il n'y a pas d'arguments on lance ls dans le fichier courant
 	{
-		ls("./","");
+		ls("./",param);
 	}
 	return 0;
 }

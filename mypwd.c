@@ -5,8 +5,8 @@
 
 int main(int argc, char const *argv[])
 {
-	char * test=malloc(64*sizeof(char));
-	getcwd(test , 64*sizeof(char));
-	printf("%s\n", test);
+	char * curdir = malloc(64*sizeof(char));
+	getcwd(curdir , 64*sizeof(char));
+	printf("%s\n", curdir);
 	return 0;
 }

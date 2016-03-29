@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include "utils.h"
 
 
 void myMkdir(char *arg)

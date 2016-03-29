@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include "colors.h"
+#include "utils.h"
 
 typedef enum
 {

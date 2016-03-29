@@ -1,23 +1,9 @@
 #include "parametre.h"
+#include "utils.h"
 
 
 
-int openFile(char *filename)
-{
-	return open(filename, O_RDONLY);
-}
 
-int parcourirChaine(char *chaine)
-{
-	int i=0;
-
-	while (chaine[i] != '\0')
-	{
-		i++;		
-	}
-
-	return i;
-}
 
 void lectureParam(char * param, Parametres *etat)
 {

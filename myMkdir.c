@@ -5,7 +5,15 @@
 
 void myMkdir(char *arg)
 {
-	mkdir(arg,0777);
+	struct stat st = {0};
+
+	if (stat(arg, &st) == -1) {
+    	mkdir(arg, 0700);
+	}
+	else{
+		printf("Le dossier %s existe deja, victime.\n", arg);
+	}
+	
 }
 
 
@@ -14,7 +22,7 @@ int main(int argc, char* argv[])
 	int i;
 	if (argc > 1)
 	{
-		for(i=0; i<argc; i++)
+		for(i=1; i<argc; i++)
 		{
 			myMkdir(argv[i]);
 		}

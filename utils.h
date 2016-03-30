@@ -13,3 +13,5 @@
 
 int openFile(char *filename);
 int parcourirChaine(char *chaine);
+void affichageTableau(char *tab);
+void concatenationTableaux(char *tab1, char *tab2);

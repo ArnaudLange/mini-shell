@@ -1,8 +1,4 @@
 #include "parametre.h"
-#include "utils.h"
-
-
-
 
 
 void lectureParam(char * param, Parametres *etat)
@@ -79,14 +75,16 @@ void ls(char *input, char *param)
 		{
 		case SRien:
 
+			//printf("%d",statbuf.st_mode.S_IXUSR);
+
 			if (S_ISDIR(statbuf.st_mode))	//CHECK si c'est un dossier
 			{
-				printf("%s%s",KBLU,flux->d_name);		//si oui on l'ecrit en bleu pour que ce soit visuel
-				printf("%s | ",KNRM);	//puis on remet la couleur normale
+				printf("%s%s",BLUE,flux->d_name);		//si oui on l'ecrit en bleu pour que ce soit visuel
+				printf("%s  ",NORMAL);	//puis on remet la couleur normale
 			}
 			else
 			{	
-				printf("%s | ",flux->d_name);	//sinon on ecrit normalement
+				printf("%s  ",flux->d_name);	//sinon on ecrit normalement
 			}
 			break;
 		
@@ -106,9 +104,9 @@ void ls(char *input, char *param)
 				int taille=0;
 				taille = parcourirChaine(flux->d_name);
 
-				printf("%s%s",KBLU,flux->d_name);		//si oui on l'ecrit en bleu pour que ce soit visuel
+				printf("%s%s",BLUE,flux->d_name);		//si oui on l'ecrit en bleu pour que ce soit visuel
 
-				printf("%s",KNRM);	//puis on remet la couleur normale
+				printf("%s",NORMAL);	//puis on remet la couleur normale
 				if(taille > 8)
 				{
 					tabulation(2);
@@ -142,7 +140,7 @@ void ls(char *input, char *param)
 
 int main(int argc, char *argv[])
 {
-	char *param = "c";
+	char *param = "";
 	int i;
 	if (argc >1)
 		for (i=1;i<argc;i++)

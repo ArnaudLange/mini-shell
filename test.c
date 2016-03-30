@@ -1,48 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "utils.h"
 
-void affichageTableau(char * tab)
-{
-	printf("\nAFFICHAGE TABLEAU\n");
-	int j=0;
-	while (tab[j] != '\0')
-	{
-		printf("%c", tab[j]);
-		j++;
-	}
-	printf("\n");
-}
-
-void concatenationTableaux(char *tab1, char *tab2)
-{
-	//TAILLE DES DEUX TABLEAUX
-	int taille1=0, taille2=0;
-
-	while(tab1[taille1] != '\0')
-	{
-		taille1++;
-	}
-
-	while(tab2[taille2] != '\0')
-	{
-		taille2++;
-	}
-
-	printf("TAILLE 1 = %d\n",taille1);
-	printf("TAILLE 2 = %d\n",taille2);
-	//REALLOC TABLEAU
-	tab1 = realloc(tab1, (taille1 + taille2)*sizeof(char));
-
-	int i = taille1;
-	int j = 0;
-	while(tab2[j] != '\0')
-	{
-		tab1[i] = tab2[j];
-		i++;
-		j++;
-	}
-	affichageTableau(tab1);
-}
 
 void lectureParametres(char * param, char * options, char *arg)
 {

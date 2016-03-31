@@ -23,7 +23,7 @@ struct command{
 };
 
 /**
- * @brief      Structure for a shell ParseCommand
+ * @brief      Structure for a shell Parsed command
  */
 struct parsedCommand{
         /**

@@ -1,6 +1,14 @@
 #include "parametre.h"
 
 
+int getlogin_r(char *buf, size_t bufsize);
+
+char* formatdate(char* str, time_t val)
+{
+        strftime(str, 36, "%d.%m.%Y %H:%M:%S", localtime(&val));
+        return str;
+}
+
 void lectureParam(char * param, Parametres *etat)
 {
 	if (strcmp(param, "l")==0)
@@ -69,7 +77,18 @@ void ls(char *input, char *param)
 
 	while((flux=readdir(repertoire)))
 	{	
+		//pour -l
+		char * buf;
+		/*
+		struct stat *file_info = malloc(sizeof(struct stat));
+	    if (lstat(flux->d_name, file_info) != 0) {
+	            perror("Error");
+	            exit(1);
+	    }*/
+	    char date[36];
+		
 		file = openFile(flux->d_name);
+		
 		fstat(file,&statbuf);
 		switch (etat)
 		{
@@ -89,7 +108,40 @@ void ls(char *input, char *param)
 			break;
 		
 		case Sl:
-			printf("Case -l\n.");
+			// MODE DU FILE
+			
+
+
+			printf( (S_ISDIR(statbuf.st_mode)) ? "d" : "-");
+		    printf( (statbuf.st_mode & S_IRUSR) ? "r" : "-");
+		    printf( (statbuf.st_mode & S_IWUSR) ? "w" : "-");
+		    printf( (statbuf.st_mode & S_IXUSR) ? "x" : "-");
+		    printf( (statbuf.st_mode & S_IRGRP) ? "r" : "-");
+		    printf( (statbuf.st_mode & S_IWGRP) ? "w" : "-");
+		    printf( (statbuf.st_mode & S_IXGRP) ? "x" : "-");
+		    printf( (statbuf.st_mode & S_IROTH) ? "r" : "-");
+		    printf( (statbuf.st_mode & S_IWOTH) ? "w" : "-");
+		    printf( (statbuf.st_mode & S_IXOTH) ? "x" : "-");
+		    printf("\t");
+
+		    
+
+		    printf("%d\t",statbuf.st_nlink);
+		    
+		    getlogin_r(buf,statbuf.st_size);
+		    printf("%s\t",buf);
+
+		    printf("Access: %s\n", formatdate(date, statbuf.st_atime));
+    		printf("Modify: %s\n", formatdate(date, statbuf.st_mtime));
+    		printf("Change: %s\n", formatdate(date, statbuf.st_ctime));
+
+		    printf("%d\t",statbuf.st_gid);
+		    printf("%d\t",statbuf.st_size);
+
+
+			printf("%s\n",flux->d_name);
+		    
+		    
 			break;
 
 		case Sc:
@@ -140,7 +192,7 @@ void ls(char *input, char *param)
 
 int main(int argc, char *argv[])
 {
-	char *param = "";
+	char *param = "l";
 	int i;
 	if (argc >1)
 		for (i=1;i<argc;i++)

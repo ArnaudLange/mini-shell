@@ -4,6 +4,9 @@
 #include <string.h>
 #include <sys/types.h>
 
+#include "../include/shell.h"
+
+
 void welcomeMessage(){
         printf("Bienvenue dans notre Mini-shell Linux\n");
 }
@@ -23,7 +26,6 @@ void execute(char *commande,char *argv){
         }
 
         if (pid == 0){ //processus enfant
-                printf("lalala\n");
                 execlp(commande,argv,NULL);
         }
 }
@@ -35,12 +37,16 @@ int main(int argc, char* argv[]){
         char *chariot;
         ssize_t read;
 
+
+        Shell* shell = initShell();
+        printf("nbCmd=%d\n", (*shell).nbCmd);
+        freeShell(shell);
+
         welcomeMessage();
         while(1){
                 printPrompt();
                 // lecture ligne par ligne jusqu'à fin du message entré dans stdin
                 while ((read = getline(&line, &size, stdin)) != -1) {                   
-                        printf("%d\n", line);
                         // suppression des retour chariot
                         if (chariot = strchr(line,'\n')){                                                       
                                 chariot = NULL;
@@ -51,8 +57,15 @@ int main(int argc, char* argv[]){
                                 // on passe a la prochaine                                                                
                                 return EXIT_SUCCESS;                                                                                                
                         }
-
-                        execute(line,line);                                                                           
+                        else{
+                                Command* c = parseCommand(line);
+                                printName(c);
+                                printParameters(c);
+                                printOptions(c);
+                                free(c);
+                                execute(line,line);   
+                        }
+                                                                                                
                 }
         }   
         return EXIT_SUCCESS;   

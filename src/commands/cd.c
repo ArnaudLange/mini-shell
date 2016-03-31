@@ -1,5 +1,1 @@
-#include "../../include/cd.h"
-
-int cd_lib(int argc, char* argv[]){
-        
-}
+#include "../../include/commands/cd.h"

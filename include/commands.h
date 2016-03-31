@@ -1,4 +1,4 @@
-#ifndef COMMANDParsedCommand_H
+#ifndef COMMAND_H
 #define COMMAND_H
 
 #include <stdlib.h>
@@ -19,7 +19,7 @@ struct command{
          * NULL if the ParseCommand is not an internal
          * Otherwise it means the ParseCommand is internal and can be called
          */
-        int (*cmd_ptr)(int, int);
+        int (*cmd_ptr)(int, char*);
 };
 
 /**
@@ -63,7 +63,7 @@ struct parsedCommand{
          * NULL default
          * Otherwise it means the ParseCommand is internal and can be called
          */
-        int (*cmd_ptr)(int, int);
+        int (*cmd_ptr)(int, char*);
 };
 
 /**
@@ -126,7 +126,7 @@ ParsedCommand* parseCommand(char* input);
  *
  * @return     { description_of_the_return_value }
  */
-int addCmdToArray(Command** array, int index, char* name, int (*cmd_ptr)(int, int));
+int addCmdToArray(Command** array, int index, char* name, int (*cmd_ptr)(int, char*));
 
 /**
  * @brief      Print the name of the ParsedCommand

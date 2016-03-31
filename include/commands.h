@@ -109,6 +109,16 @@ int freeCommands(int nbCmd, Command** commands);
  */
 ParsedCommand* parseCommand(char* input);
 
+int findFunction(Command** commandes, int nbCmd, ParsedCommand* command){
+        
+        int i=0;
+        while(i<nbCmd){
+            if((*command).name==(*command).name){
+                (*command).cmd_ptr = (*command).cmd_ptr;
+            }    
+        }
+}
+
 /**
  * @brief      Adds a Command struct to the array
  *

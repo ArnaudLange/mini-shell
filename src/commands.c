@@ -5,7 +5,7 @@
  int initCommands(Command** array){
         // Internal Shell commands are first added
         // char* name, char** parameters, char** options, int nameLength, int* parameterLength, int* optionLength, int (*cmd_ptr)(int, int)
-        addCmdToArray(array, 0, "ls");
+        addCmdToArray(array, 0, "ls", NULL);
         return 0;
 }
 
@@ -72,9 +72,9 @@ void printOptions(ParsedCommand* cmd){
         printf("\"\n");  
 }
 
-int addCmdToArray(Command** array, int index, char* name){
+int addCmdToArray(Command** array, int index, char* name, int (*cmd_ptr)(int, int)){
         array[index] = (Command*) malloc(sizeof(Command));
         strncpy((*array)[index].name, name, NAME_SIZE);
-        (*array[index]).cmd_ptr = NULL;
+        (*array[index]).cmd_ptr = cmd_ptr;
         return 1;
 }

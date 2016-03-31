@@ -20,6 +20,17 @@ struct shell{
 
 typedef struct shell Shell;
 
+/**
+ * @brief      Initializes our Shell with all the functions
+ *
+ * @return     The dynamically allocated Shell
+ */
 Shell* initShell();
+
+/**
+ * @brief      Free the memory have allocation of the Shell
+ *
+ * @param      shell  The Shell to free
+ */
 void freeShell(Shell* shell);
 #endif

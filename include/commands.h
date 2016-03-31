@@ -90,6 +90,14 @@ typedef struct command Command;
  */
 int initCommands(Command** array);
 
+/**
+ * @brief      Free all the dynamically allocated commands
+ *
+ * @param[in]  nbCmd     How many commands have been allocated in the array
+ * @param      commands  The array of allocated commands
+ *
+ * @return     1 if the number of commands is ok, -1 otherwise
+ */
 int freeCommands(int nbCmd, Command** commands);
 
 /**
@@ -101,7 +109,17 @@ int freeCommands(int nbCmd, Command** commands);
  */
 ParsedCommand* parseCommand(char* input);
 
-int addCmdToArray(Command** array, int index, char* name);
+/**
+ * @brief      Adds a Command struct to the array
+ *
+ * @param      array  The array in which to add the Command
+ * @param[in]  index  The index to add the Command
+ * @param      name   The name of the Command
+ * @param      name   The function pointer to call the function
+ *
+ * @return     { description_of_the_return_value }
+ */
+int addCmdToArray(Command** array, int index, char* name, int (*cmd_ptr)(int, int));
 
 /**
  * @brief      Print the name of the ParsedCommand

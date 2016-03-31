@@ -11,5 +11,7 @@ Shell* initShell(){
 void freeShell(Shell* shell){
         //printf("nbCmd=%d\n", (*shell).nbCmd);
         int res = freeCommands((*shell).nbCmd, (*shell).commands);
-        //free(shell);
+        if(res==1){printf("Commands have been freed\n");}
+        free(shell);
+        printf("Shell has been freed\n");
 }

@@ -2,11 +2,11 @@
 
 void readOptions(char *options, Parametres *etat)
 {
-	if (strcmp(options, "l")==0)
+	if (strcmp(options, "-l")==0)
 	{
 		*etat=etatDetails;
 	}
-	else if (strcmp(options, "d")==0)
+	else if (strcmp(options, "-d")==0)
 	{
 		*etat=etatDossiers;
 	}

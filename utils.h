@@ -13,6 +13,11 @@
 #include <unistd.h>
 
 #include <time.h>
+#include <errno.h>
+#include <string.h>
+#include <pwd.h>
+#include <grp.h>
+#include <limits.h>
 
 #include <fcntl.h>
 

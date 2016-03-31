@@ -13,18 +13,18 @@ void lectureParam(char * param, Parametres *etat)
 {
 	if (strcmp(param, "l")==0)
 	{
-		*etat=Sl;
+		*etat=etatDetails;
 	}
 	else if (strcmp(param, "d")==0)
 	{
-		*etat=Sd;
+		*etat=etatDossiers;
 	}
 	else if (strcmp(param, "c")==0)
 	{
-		*etat=Sc;
+		*etat=etatColonnes;
 	}
 	else 
-		*etat=SRien;
+		*etat=etatNormal;
 		printf("Pas de parametre valide.\n");
 }
 
@@ -40,18 +40,18 @@ void tabulation(int nb)
 void testParam()
 {
 	char *parametre = "c";
-	Parametres etat = SRien;
+	Parametres etat = etatNormal;
 
 	lectureParam(parametre,&etat);
-	if (etat == Sl)
+	if (etat == etatDetails)
 	{
 		printf("Etat -l\n");
 	}
-	else if (etat == Sd)
+	else if (etat == etatDossiers)
 	{
 		printf("Etat -d\n");
 	}
-	else if (etat == Sc)
+	else if (etat == etatColonnes)
 	{
 		printf("Etat -c\n");
 	}
@@ -60,7 +60,7 @@ void testParam()
 
 void ls(char *input, char *param)
 {
-	Parametres etat = SRien;	//definition de l'etat
+	Parametres etat = etatNormal;	//definition de l'etat
 	lectureParam(param,&etat);
 
 	DIR *repertoire;
@@ -85,14 +85,14 @@ void ls(char *input, char *param)
 	            perror("Error");
 	            exit(1);
 	    }*/
-	    char date[36];
+	    //char date[36];
 		
 		file = openFile(flux->d_name);
 		
 		fstat(file,&statbuf);
 		switch (etat)
 		{
-		case SRien:
+		case etatNormal:
 
 			//printf("%d",statbuf.st_mode.S_IXUSR);
 
@@ -107,7 +107,7 @@ void ls(char *input, char *param)
 			}
 			break;
 		
-		case Sl:
+		case etatDetails:
 			// MODE DU FILE
 			
 
@@ -130,11 +130,11 @@ void ls(char *input, char *param)
 		    
 		    getlogin_r(buf,statbuf.st_size);
 		    printf("%s\t",buf);
-
+		    /*
 		    printf("Access: %s\n", formatdate(date, statbuf.st_atime));
     		printf("Modify: %s\n", formatdate(date, statbuf.st_mtime));
     		printf("Change: %s\n", formatdate(date, statbuf.st_ctime));
-
+			*/
 		    printf("%d\t",statbuf.st_gid);
 		    printf("%d\t",statbuf.st_size);
 
@@ -144,7 +144,7 @@ void ls(char *input, char *param)
 		    
 			break;
 
-		case Sc:
+		case etatColonnes:
 			ligne++;
 			if (ligne >= 4)
 			{
@@ -181,7 +181,7 @@ void ls(char *input, char *param)
 			}
 			break;
 		
-		case Sd:
+		case etatDossiers:
 			printf("Case -c\n.");
 			break;
 		}

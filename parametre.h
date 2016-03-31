@@ -5,10 +5,9 @@
 
 typedef enum
 {
-	SRien,
-	Sl,	//avec details
-	Sd, //que les dossiers
-	Sc //en colomne
+	etatNormal,
+	etatDetails,	//avec details
+	etatDossiers //que les dossiers
 
 } Parametres;
 

@@ -1,30 +1,21 @@
-#include <stdlib.h>
 #include "../include/commands.h"
 
 #define debugState 1
 
  int initCommands(Command** array){
-        //Command** ret = (Command**)malloc(100*sizeof(Command));
-
         // Internal Shell commands are first added
-        //ret[0] = allocateCommand();
-        return 1;
-}
-
-Command* allocateCommand(char* name, char** parameters, char** options, int nameLength, int* parameterLength, int* optionLength, int (*cmd_ptr)(int, int)){
-        return (Command*)malloc(sizeof(Command));
-}
-
-Command** allocateCommands(int amount){
-        return (Command**)malloc(amount*sizeof(struct command));
+        // char* name, char** parameters, char** options, int nameLength, int* parameterLength, int* optionLength, int (*cmd_ptr)(int, int)
+        addCmdToArray(array, 0, "ls");
+        return 0;
 }
 
 int freeCommands(int nbCmd, Command** commands){
         int i=0;
         Command* curr = NULL;
         if(nbCmd>MAX_COMMANDS){return -1;}
-        //printf("nbCmd=%d\n", nbCmd);
+        printf("%d\n", nbCmd);
         while(i<nbCmd){
+
                 curr = commands[i];
                 if(curr!=NULL){free(curr);}
                 else{break;}
@@ -33,7 +24,7 @@ int freeCommands(int nbCmd, Command** commands){
         return 1;
 }
 
-Command* parseCommand(char* input){
+ParsedCommand* parseCommand(char* input){
 
         State current = S0;
 
@@ -63,7 +54,7 @@ Command* parseCommand(char* input){
         return NULL;
 }
 
-void printName(Command* cmd){
+void printName(ParsedCommand* cmd){
         printf("cmd=\"");
         for(int i=0;i<(*cmd).nameLength;i++){
                 printf("%c", (*cmd).name[i]);
@@ -71,12 +62,19 @@ void printName(Command* cmd){
         printf("\"\n");  
 }
 
-void printParameters(Command* cmd){
+void printParameters(ParsedCommand* cmd){
         printf("parameters=\"");  
         printf("\"\n");  
 }
 
-void printOptions(Command* cmd){
+void printOptions(ParsedCommand* cmd){
         printf("options=\"");  
         printf("\"\n");  
+}
+
+int addCmdToArray(Command** array, int index, char* name){
+        array[index] = (Command*) malloc(sizeof(Command));
+        strncpy((*array)[index].name, name, NAME_SIZE);
+        (*array[index]).cmd_ptr = NULL;
+        return 1;
 }

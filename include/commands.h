@@ -1,6 +1,8 @@
-#ifndef COMMANDS_H
-#define COMMANDS_H
+#ifndef COMMANDParsedCommand_H
+#define COMMAND_H
 
+#include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -9,23 +11,34 @@
 #define NAME_SIZE 100
 #define MAX_COMMANDS 200
 
-/**
- * @brief      Structure for a shell command
- */
 struct command{
+        char name[NAME_SIZE];
+
         /**
-         * Name of the command
+         * Pointer to the function
+         * NULL if the ParseCommand is not an internal
+         * Otherwise it means the ParseCommand is internal and can be called
+         */
+        int (*cmd_ptr)(int, int);
+};
+
+/**
+ * @brief      Structure for a shell ParseCommand
+ */
+struct parsedCommand{
+        /**
+         * Name of the ParseCommand
          */
 	char name[NAME_SIZE];
 
         /**
-         * Parameters of the commands. 
+         * Parameters of the ParsedCommand. 
          * Max size if 100 caracters.
          * Can hold up to 100 parameters
          */
         char parameters[MAX_COMMANDS][NAME_SIZE];
         /**
-         * Options of the commands. 
+         * Options of the ParsedCommand. 
          * Max size if 100 caracters.
          * Can hold up to 100 options
          */
@@ -44,13 +57,6 @@ struct command{
          * 100 sizes for 100 options available
          */
         int optionLength[NAME_SIZE];
-
-        /**
-         * Pointer to the function
-         * NULL if the command is not an internal
-         * Otherwise it means the command is internal and can be called
-         */
-	int (*cmd_ptr)(int, int);
 };
 
 /**
@@ -74,10 +80,11 @@ typedef enum {
 } State;
 
 
+typedef struct parsedCommand ParsedCommand;
 typedef struct command Command;
 
 /**
- * @brief      Initialize an array of commands.
+ * @brief      Initialize an array of ParsedCommands.
  *
  * @return     1 if everything went correctly. 0 otherwise
  */
@@ -85,38 +92,36 @@ int initCommands(Command** array);
 
 int freeCommands(int nbCmd, Command** commands);
 
-Command* allocateCommand(char* name, char** parameters, char** options, int nameLength, int* parameterLength, int* optionLength, int (*cmd_ptr)(int, int));
-
-Command** allocateCommands(int amount);
-
 /**
- * @brief      Parse a String command
+ * @brief      Parse a String ParsedCommand
  *
  * @param      input  the input string to parse
- * @see        command
- * @return     a Command struct which holds the different parsed informations
+ * @see        ParsedCommand
+ * @return     a ParsedCommand struct which holds the different parsed informations
  */
-Command* parseCommand(char* input);
+ParsedCommand* parseCommand(char* input);
+
+int addCmdToArray(Command** array, int index, char* name);
 
 /**
- * @brief      Print the name of the command
+ * @brief      Print the name of the ParsedCommand
  *
- * @param      cmd   The command structure
+ * @param      cmd   The ParsedCommand structure
  */
-void printName(Command* cmd);
+void printName(ParsedCommand* cmd);
 
 /**
- * @brief      Print the parameters of the command
+ * @brief      Print the parameters of the ParsedCommand
  *
- * @param      cmd   The command structure
+ * @param      cmd   The ParsedCommand structure
  */
-void printParameters(Command* cmd);
+void printParameters(ParsedCommand* cmd);
 
 /**
- * @brief      Print the options of the command
+ * @brief      Print the options of the ParsedCommand
  *
- * @param      cmd   The command structure
+ * @param      cmd   The ParsedCommand structure
  */
-void printOptions(Command* cmd);
+void printOptions(ParsedCommand* cmd);
 
 #endif

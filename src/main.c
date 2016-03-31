@@ -40,7 +40,7 @@ int main(int argc, char* argv[]){
 
         Shell* shell = initShell();
         printf("nbCmd=%d\n", (*shell).nbCmd);
-        freeShell(shell);
+        //freeShell(shell);
 
         welcomeMessage();
         while(1){

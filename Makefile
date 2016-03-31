@@ -123,33 +123,6 @@ shell/fast:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/build
 .PHONY : shell/fast
 
-src/cd.o: src/cd.c.o
-
-.PHONY : src/cd.o
-
-# target to build an object file
-src/cd.c.o:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/cd.c.o
-.PHONY : src/cd.c.o
-
-src/cd.i: src/cd.c.i
-
-.PHONY : src/cd.i
-
-# target to preprocess a source file
-src/cd.c.i:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/cd.c.i
-.PHONY : src/cd.c.i
-
-src/cd.s: src/cd.c.s
-
-.PHONY : src/cd.s
-
-# target to generate assembly for a file
-src/cd.c.s:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/cd.c.s
-.PHONY : src/cd.c.s
-
 src/commands.o: src/commands.c.o
 
 .PHONY : src/commands.o
@@ -240,9 +213,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... shell"
-	@echo "... src/cd.o"
-	@echo "... src/cd.i"
-	@echo "... src/cd.s"
 	@echo "... src/commands.o"
 	@echo "... src/commands.i"
 	@echo "... src/commands.s"

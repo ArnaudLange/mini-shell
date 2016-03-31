@@ -57,12 +57,16 @@ int main(int argc, char* argv[]){
                                 return EXIT_SUCCESS;                                                                                                
                         }
                         else{
+                                /*
                                 ParsedCommand* c = parseCommand(line);
                                 printName(c);
                                 printParameters(c);
                                 printOptions(c);
                                 free(c);
-                                execute(line,line);   
+                                execute(line,line);
+                                */
+                                ParsedCommand* c = parseCommand(line);
+                                findFunction(shell, c);
                         }
                                                                                                 
                 }

@@ -57,6 +57,13 @@ struct parsedCommand{
          * 100 sizes for 100 options available
          */
         int optionLength[NAME_SIZE];
+
+        /**
+         * Pointer to the function
+         * NULL default
+         * Otherwise it means the ParseCommand is internal and can be called
+         */
+        int (*cmd_ptr)(int, int);
 };
 
 /**
@@ -108,16 +115,6 @@ int freeCommands(int nbCmd, Command** commands);
  * @return     a ParsedCommand struct which holds the different parsed informations
  */
 ParsedCommand* parseCommand(char* input);
-
-int findFunction(Command** commandes, int nbCmd, ParsedCommand* command){
-        
-        int i=0;
-        while(i<nbCmd){
-            if((*command).name==(*command).name){
-                (*command).cmd_ptr = (*command).cmd_ptr;
-            }    
-        }
-}
 
 /**
  * @brief      Adds a Command struct to the array

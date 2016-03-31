@@ -33,4 +33,7 @@ Shell* initShell();
  * @param      shell  The Shell to free
  */
 void freeShell(Shell* shell);
+
+int findFunction(Shell* shell, ParsedCommand* command);
+
 #endif

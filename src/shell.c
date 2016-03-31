@@ -15,3 +15,15 @@ void freeShell(Shell* shell){
         free(shell);
         printf("Shell has been freed\n");
 }
+
+int findFunction(Shell* shell, ParsedCommand* command){
+        int i=0;
+        while(i<shell->nbCmd){
+            if((*shell->commands)[i].name==(*command).name){
+                (*command).cmd_ptr = (*shell->commands)[i].cmd_ptr;
+                return 1;
+            }    
+        }
+        (*command).cmd_ptr = NULL;
+        return 0;
+}

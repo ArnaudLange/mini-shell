@@ -1,9 +1,11 @@
-image: madduci/docker-cmake-gcc5
+image: yutakakinjyo/gtest-cmake-example
 Build:
   stage: build
   script:
-    - cmake .
-    - make
+	-mkdir build
+	-cd build
+	-cmake ..
+	-make
   only:
     - master
   tags:

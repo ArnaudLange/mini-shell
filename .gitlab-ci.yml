@@ -1,4 +1,4 @@
-image: yutakakinjyo/gtest-cmake-example
+image: kaskada/cmake-gcc5
 Build:
   stage: build
   script:

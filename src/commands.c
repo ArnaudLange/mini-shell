@@ -8,17 +8,16 @@
         // Internal Shell commands are first added
         // char* name, char** parameters, char** options, int nameLength, int* parameterLength, int* optionLength, int (*cmd_ptr)(int, int)
         
-        int (*cd_ptr)(int,char*);
-        cd_ptr = &cd_lib;
-        addCmdToArray(array, 0, "cd", cd_ptr);
+        int (*cmd_ptr)(int,char*[]);
+        cmd_ptr = &test;
+        addCmdToArray(array, 0, "cd", cmd_ptr);
         return 1;
 }
 
 int freeCommands(int nbCmd, Command** commands){
         int i=0;
         Command* curr = NULL;
-        if(nbCmd>MAX_COMMANDS){return -1;}
-        printf("nbCmd=%d\n", nbCmd);
+        if(nbCmd>MAXCMD){return -1;}
         while(i<nbCmd){
                 curr = commands[i];
                 if(curr!=NULL){free(curr);}
@@ -76,7 +75,7 @@ void printOptions(ParsedCommand* cmd){
         printf("\"\n");  
 }
 
-int addCmdToArray(Command** array, int index, char* name, int (*cmd_ptr)(int, char*)){
+int addCmdToArray(Command** array, int index, char* name, int (*cmd_ptr)(int, char*[])){
         array[index] = (Command*) malloc(sizeof(Command));
         strncpy((*array)[index].name, name, NAME_SIZE);
         (*array[index]).cmd_ptr = cmd_ptr;

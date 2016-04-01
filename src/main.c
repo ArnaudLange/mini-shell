@@ -40,7 +40,6 @@ int main(int argc, char* argv[]){
 
         Shell* shell = initShell();
         
-
         welcomeMessage();
         while(1){
                 printPrompt();
@@ -60,18 +59,19 @@ int main(int argc, char* argv[]){
                         }
                         else{
                                 printf("3\n"); 
-                                /*
+                                
                                 ParsedCommand* c = parseCommand(line);
                                 printName(c);
                                 printParameters(c);
                                 printOptions(c);
                                 free(c);
                                 execute(line,line);
-                                */
-                                ParsedCommand* c = malloc(sizeof(ParsedCommand));
+                                
+                                
+                                /*ParsedCommand* c = malloc(sizeof(ParsedCommand));
                                 strncpy(c->name, "cd", NAME_SIZE);
                                 printf("res=%d\n", findFunction(shell, c));
-                                printf("function=%d\n", c->cmd_ptr);
+                                printf("function=%d\n", c->cmd_ptr);*/
                                    
                                 break;  
                         }                                                      

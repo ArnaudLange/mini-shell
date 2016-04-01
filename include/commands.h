@@ -9,7 +9,9 @@
 #include <dirent.h>
 
 #define NAME_SIZE 100
-#define MAX_COMMANDS 200
+#define MAX_PARAMETERS 100
+#define MAX_OPTIONS 100
+
 
 struct command{
         char name[NAME_SIZE];
@@ -19,7 +21,7 @@ struct command{
          * NULL if the ParseCommand is not an internal
          * Otherwise it means the ParseCommand is internal and can be called
          */
-        int (*cmd_ptr)(int, char*);
+        int (*cmd_ptr)(int, char*[]);
 };
 
 /**
@@ -36,13 +38,13 @@ struct parsedCommand{
          * Max size if 100 caracters.
          * Can hold up to 100 parameters
          */
-        char parameters[MAX_COMMANDS][NAME_SIZE];
+        char parameters[MAX_PARAMETERS][NAME_SIZE];
         /**
          * Options of the ParsedCommand. 
          * Max size if 100 caracters.
          * Can hold up to 100 options
          */
-        char options[MAX_COMMANDS][NAME_SIZE];
+        char options[MAX_OPTIONS][NAME_SIZE];
         /**
          * Size of the name
          */
@@ -63,7 +65,7 @@ struct parsedCommand{
          * NULL default
          * Otherwise it means the ParseCommand is internal and can be called
          */
-        int (*cmd_ptr)(int, char*);
+        int (*cmd_ptr)(int, char*[]);
 };
 
 /**
@@ -126,7 +128,7 @@ ParsedCommand* parseCommand(char* input);
  *
  * @return     { description_of_the_return_value }
  */
-int addCmdToArray(Command** array, int index, char* name, int (*cmd_ptr)(int, char*));
+int addCmdToArray(Command** array, int index, char* name, int (*cmd_ptr)(int, char*[]));
 
 /**
  * @brief      Print the name of the ParsedCommand

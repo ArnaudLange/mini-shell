@@ -1,4 +1,4 @@
-image: docker-cmake-gcc5
+image: madduci/docker-cmake-gcc5
 Build:
   stage: build
   script:

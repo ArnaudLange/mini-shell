@@ -2,6 +2,7 @@ image: madduci/docker-cmake-gcc5
 Build:
   stage: build
   script:
+    - cmake .
     - make
   only:
     - master

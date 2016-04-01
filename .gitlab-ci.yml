@@ -8,5 +8,6 @@ Build:
        - make
   only:
     - master
+    - develop
   tags:
     - docker

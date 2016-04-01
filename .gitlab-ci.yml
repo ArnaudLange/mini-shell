@@ -7,7 +7,6 @@ Build:
        - cmake ..
        - make
   only:
-    - master
     - develop
   tags:
     - docker

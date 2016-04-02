@@ -18,6 +18,6 @@
  */
 void redirectFlow(int fd_in, int fd_out);
 
-void writeTo(int fd, char* input);
+void output(int fd, char* input);
 
 #endif

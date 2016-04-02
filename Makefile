@@ -123,6 +123,33 @@ shell/fast:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/build
 .PHONY : shell/fast
 
+src/bogoprintf.o: src/bogoprintf.c.o
+
+.PHONY : src/bogoprintf.o
+
+# target to build an object file
+src/bogoprintf.c.o:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/bogoprintf.c.o
+.PHONY : src/bogoprintf.c.o
+
+src/bogoprintf.i: src/bogoprintf.c.i
+
+.PHONY : src/bogoprintf.i
+
+# target to preprocess a source file
+src/bogoprintf.c.i:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/bogoprintf.c.i
+.PHONY : src/bogoprintf.c.i
+
+src/bogoprintf.s: src/bogoprintf.c.s
+
+.PHONY : src/bogoprintf.s
+
+# target to generate assembly for a file
+src/bogoprintf.c.s:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/bogoprintf.c.s
+.PHONY : src/bogoprintf.c.s
+
 src/commands.o: src/commands.c.o
 
 .PHONY : src/commands.o
@@ -149,6 +176,33 @@ src/commands.s: src/commands.c.s
 src/commands.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands.c.s
 .PHONY : src/commands.c.s
+
+src/commands/ls.o: src/commands/ls.c.o
+
+.PHONY : src/commands/ls.o
+
+# target to build an object file
+src/commands/ls.c.o:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.o
+.PHONY : src/commands/ls.c.o
+
+src/commands/ls.i: src/commands/ls.c.i
+
+.PHONY : src/commands/ls.i
+
+# target to preprocess a source file
+src/commands/ls.c.i:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.i
+.PHONY : src/commands/ls.c.i
+
+src/commands/ls.s: src/commands/ls.c.s
+
+.PHONY : src/commands/ls.s
+
+# target to generate assembly for a file
+src/commands/ls.c.s:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.s
+.PHONY : src/commands/ls.c.s
 
 src/main.o: src/main.c.o
 
@@ -267,9 +321,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... shell"
+	@echo "... src/bogoprintf.o"
+	@echo "... src/bogoprintf.i"
+	@echo "... src/bogoprintf.s"
 	@echo "... src/commands.o"
 	@echo "... src/commands.i"
 	@echo "... src/commands.s"
+	@echo "... src/commands/ls.o"
+	@echo "... src/commands/ls.i"
+	@echo "... src/commands/ls.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

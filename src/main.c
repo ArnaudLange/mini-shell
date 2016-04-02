@@ -51,7 +51,10 @@ int main(int argc, char* argv[]){
                                 free(c);
                                 execute(line,line);
                                 */
-                                test_execute(line,line);
+                                //test_execute(line,line);
+                                FILE* file_out = fopen("exemple.txt", "a");
+                                test_internal_ls(stdin, file_out);
+                                fclose(file_out);
                                 /*ParsedCommand* c = malloc(sizeof(ParsedCommand));
                                 strncpy(c->name, "cd", NAME_SIZE);
                                 printf("res=%d\n", findFunction(shell, c));

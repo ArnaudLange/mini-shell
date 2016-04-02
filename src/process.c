@@ -47,7 +47,7 @@ int test_execute(char *commande,char *argv){
 }
 
 int test_internal_ls(FILE* fd_in, FILE* fd_out){
-        ls(fd_in, fd_out, "./", "");
+        ls(fd_in, fd_out, "./", "-ld");
 }
 
 int execute(char *commande,char *argv){

@@ -9,7 +9,7 @@
 
 
 void welcomeMessage(){
-        printf("Bienvenue dans notre Mini-shell Linux\n");
+        printf("Binsh 0.1\n");
 }
 
 void printPrompt(){
@@ -52,9 +52,9 @@ int main(int argc, char* argv[]){
                                 execute(line,line);
                                 */
                                 //test_execute(line,line);
-                                FILE* file_out = fopen("exemple.txt", "a");
-                                test_internal_ls(stdin, file_out);
-                                fclose(file_out);
+                                //FILE* file_out = fopen("exemple.txt", "a");
+                                test_internal_ls(stdin, stdout);
+                                //fclose(file_out);
                                 /*ParsedCommand* c = malloc(sizeof(ParsedCommand));
                                 strncpy(c->name, "cd", NAME_SIZE);
                                 printf("res=%d\n", findFunction(shell, c));

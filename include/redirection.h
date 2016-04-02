@@ -3,6 +3,12 @@
 
 #include <unistd.h>
 
+// STDOUT_FILENO;
+// STDIN_FILENO;
+// STDERR_FILENO;
+                
+// int fd = open("exemple.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+
 /**
  * @brief      Redirect from one file descriptor to another. Can be used to write in a file.
  *

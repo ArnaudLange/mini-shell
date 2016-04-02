@@ -12,17 +12,16 @@ void cat(char* files, char**options, int iOptions)
 	Options etat;
 	etat = etatNormal;
 	int h;
-
 	for (h = 0; h <= iOptions; h++)
 	{
 		printf("h : %d\n",h);
-		printf("iOptions : %d\n",iOptions);
 		printf("Options : %s\n",options[h]);
 		readOptions(options[h], &etat);
-		free(options[h]);
 	}
-	free(options);
-	//readOptions(options, &etat);
+	if (etat == etatETL)
+	{
+		printf("ETAT MAXIMUM\n");
+	}
 }
 
 int main(int argc, char const *argv[])
@@ -91,25 +90,14 @@ int main(int argc, char const *argv[])
 			}
 		}
 		// if there are different files
-		int k;
-		printf("Options : ");
-		for(k = 0; k <= iOptions; k++)
-		{
-			printf("'");
-			printf("%s",options[k]);
-			printf("'");
-		}
-
+		
 		for(j = 0; j <= iFiles; j++)
 		{
+			printf("\nFILE : %s\n\n",files[j]);
 			cat(files[j],options,iOptions);
-		}
+			free(files[j]);
+		}	
 		
-		// if not
-		printf("if not");
-		cat(files[0],options,iOptions);
-
-		free(files[0]);
 		free(files);
 
 

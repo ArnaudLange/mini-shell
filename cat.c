@@ -10,11 +10,18 @@
 void cat(char* files, char**options, int iOptions)
 {
 	Options etat;
+	etat = etatNormal;
 	int h;
-	for (h = 0; h < iOptions; h++)
+
+	for (h = 0; h <= iOptions; h++)
 	{
+		printf("h : %d\n",h);
+		printf("iOptions : %d\n",iOptions);
+		printf("Options : %s\n",options[h]);
 		readOptions(options[h], &etat);
+		free(options[h]);
 	}
+	free(options);
 	//readOptions(options, &etat);
 }
 
@@ -58,9 +65,9 @@ int main(int argc, char const *argv[])
 
 	// -----------------------------------
 
-	int iOptions = 0;
-	int iFiles = 0;
-	int i,j,k;
+	int iOptions = -1;
+	int iFiles = -1;
+	int i,j;
 
 	// -----------------------------------
 	// parcourt des arguments de la fonction
@@ -73,8 +80,8 @@ int main(int argc, char const *argv[])
 			{
 				iOptions++;
 				options[iOptions] = malloc(sizeof(char*));
-
 				concatenateTables(options[iOptions],argv[i]);
+
 			}
 			else {
 				iFiles++;
@@ -83,20 +90,27 @@ int main(int argc, char const *argv[])
 				concatenateTables(files[iFiles],argv[i]);
 			}
 		}
-		printf("Files : ");
-		for(j = 0; j <= iFiles; j++)
-		{
-			printf("%s ",files[j]);
-			
-		}
-		printf("\n");
-
+		// if there are different files
+		int k;
 		printf("Options : ");
 		for(k = 0; k <= iOptions; k++)
 		{
-			printf("%s ",options[k]);
+			printf("'");
+			printf("%s",options[k]);
+			printf("'");
 		}
-		printf("\n");
+
+		for(j = 0; j <= iFiles; j++)
+		{
+			cat(files[j],options,iOptions);
+		}
+		
+		// if not
+		printf("if not");
+		cat(files[0],options,iOptions);
+
+		free(files[0]);
+		free(files);
 
 
 	}

@@ -26,6 +26,16 @@ void readOptions(char *options, Options *etat)
 	 * And updates etat accordingly
 	 */
 
+	if (strcmp(options, "--help")==0)
+	{
+		printf("Usage: cat [OPTION]... [FILE]...\n");
+		printf("Concatenate FILE(s), or standart input, to standart output\n");
+		printf("\n\t-E, --show-ends\t\tdisplay $ at the end of each line\n");
+		printf("\n\t-T, --show-tabs\t\tdisplay TAB character as ^I\n");
+		printf("\n\t-n, --number   \t\tnumber all input lines\n");
+		exit(-1);
+	}
+
 	switch (*etat)
 	{
 		case etatEnds:
@@ -86,6 +96,7 @@ void readOptions(char *options, Options *etat)
 			break;		
 
 		case etatNormal:
+			printf("Ici ?\n");
 			if (strcmp(options, "-E")==0 || strcmp(options, "--show-ends")==0)
 			{
 				*etat = etatEnds;
@@ -101,16 +112,8 @@ void readOptions(char *options, Options *etat)
 			break;
 	}
 	
-	if (strcmp(options, "--help")==0)
-	{
-		printf("Usage: cat [OPTION]... [FILE]...\n");
-		printf("Concatenate FILE(s), or standart input, to standart output\n");
-		printf("\n\t-E, --show-ends\t\tdisplay $ at the end of each line\n");
-		printf("\n\t-T, --show-tabs\t\tdisplay TAB character as ^I\n");
-		printf("\n\t-n, --number   \t\tnumber all input lines\n");
-		exit(-1);
-	}
-	else
+	
+	if (strcmp(options, "-E")!=0 && strcmp(options, "--show-ends")!=0 && strcmp(options, "-n")!=0 && strcmp(options, "--number")!=0 && strcmp(options, "-T")!=0 && strcmp(options, "--show-tabs")!=0 )
 	{
 		/**
 		 * Error if the options isn't handled
@@ -118,7 +121,7 @@ void readOptions(char *options, Options *etat)
 		 * And quits the program
 		 */
 		printf("cat: invalid option %s\n",options);
-		printf("Try 'cat --help' for more information.");
+		printf("Try 'cat --help' for more information.\n");
 		exit(-1);
 	}
 

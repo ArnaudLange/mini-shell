@@ -5,6 +5,7 @@
 #include <sys/types.h>
 
 #include "../include/shell.h"
+#include "../include/process.h"
 
 
 void welcomeMessage(){
@@ -13,21 +14,6 @@ void welcomeMessage(){
 
 void printPrompt(){
         printf(">");
-}
-
-
-
-void execute(char *commande,char *argv){
-        pid_t pid;
-
-        pid = fork();
-        if (pid == -1){
-                printf("le fork a échoué");
-        }
-
-        if (pid == 0){ //processus enfant
-                execlp(commande,argv,NULL);
-        }
 }
 
 int main(int argc, char* argv[]){
@@ -65,7 +51,7 @@ int main(int argc, char* argv[]){
                                 free(c);
                                 execute(line,line);
                                 */
-                                
+                                test_execute(line,line);
                                 /*ParsedCommand* c = malloc(sizeof(ParsedCommand));
                                 strncpy(c->name, "cd", NAME_SIZE);
                                 printf("res=%d\n", findFunction(shell, c));

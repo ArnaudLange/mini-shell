@@ -177,6 +177,60 @@ src/main.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/main.c.s
 .PHONY : src/main.c.s
 
+src/process.o: src/process.c.o
+
+.PHONY : src/process.o
+
+# target to build an object file
+src/process.c.o:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/process.c.o
+.PHONY : src/process.c.o
+
+src/process.i: src/process.c.i
+
+.PHONY : src/process.i
+
+# target to preprocess a source file
+src/process.c.i:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/process.c.i
+.PHONY : src/process.c.i
+
+src/process.s: src/process.c.s
+
+.PHONY : src/process.s
+
+# target to generate assembly for a file
+src/process.c.s:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/process.c.s
+.PHONY : src/process.c.s
+
+src/redirection.o: src/redirection.c.o
+
+.PHONY : src/redirection.o
+
+# target to build an object file
+src/redirection.c.o:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/redirection.c.o
+.PHONY : src/redirection.c.o
+
+src/redirection.i: src/redirection.c.i
+
+.PHONY : src/redirection.i
+
+# target to preprocess a source file
+src/redirection.c.i:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/redirection.c.i
+.PHONY : src/redirection.c.i
+
+src/redirection.s: src/redirection.c.s
+
+.PHONY : src/redirection.s
+
+# target to generate assembly for a file
+src/redirection.c.s:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/redirection.c.s
+.PHONY : src/redirection.c.s
+
 src/shell.o: src/shell.c.o
 
 .PHONY : src/shell.o
@@ -219,6 +273,12 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/process.o"
+	@echo "... src/process.i"
+	@echo "... src/process.s"
+	@echo "... src/redirection.o"
+	@echo "... src/redirection.i"
+	@echo "... src/redirection.s"
 	@echo "... src/shell.o"
 	@echo "... src/shell.i"
 	@echo "... src/shell.s"

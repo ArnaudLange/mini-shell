@@ -1,6 +1,6 @@
 #include "../../include/commands/ls.h"
 
-void ls(char *directory, char *options)
+void ls(int fd_in, int fd_out, char *directory, char *options)
 {
 	Options etat;
 	readOptions(options, &etat);
@@ -69,7 +69,8 @@ void ls(char *directory, char *options)
 				else if ((statbuf.st_mode & S_IFBLK)==S_IFBLK) printf("b");
 				else if ((statbuf.st_mode & S_IFDIR)==S_IFDIR) printf("d");
 				else if ((statbuf.st_mode & S_IFCHR)==S_IFCHR) printf("c");	
-				else if ((statbuf.st_mode & S_IFIFO)==S_IFIFO) printf("p");	
+				else if ((statbuf.st_mode & S_IFIFO)==S_IFIFO) printf("p");
+
 			    printf( (statbuf.st_mode & S_IRUSR) ? "r" : "-");
 			    printf( (statbuf.st_mode & S_IWUSR) ? "w" : "-");
 			    printf( (statbuf.st_mode & S_IXUSR) ? "x" : "-");

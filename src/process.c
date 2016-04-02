@@ -46,6 +46,10 @@ int test_execute(char *commande,char *argv){
         return 1;
 }
 
+int test_internal_ls(FILE* fd_in, FILE* fd_out){
+        ls(fd_in, fd_out, "./", "");
+}
+
 int execute(char *commande,char *argv){
         pid_t pid;
         // File descriptor du Pipe

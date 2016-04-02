@@ -1,16 +1,11 @@
-#ifndef _LS_H
-#define _LS_H
+#ifndef LS_H
+#define LS_H
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <string.h>
-#include <dirent.h>
-
-#include <sys/types.h>
 #include <sys/stat.h>
-
+#include <sys/types.h>
 #include <unistd.h>
+
+#include <dirent.h>
 
 #include <time.h>
 #include <errno.h>
@@ -20,6 +15,14 @@
 #include <limits.h>
 
 #include <fcntl.h>
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <string.h>
+#include "../redirection.h"
+
 
 #define NORMAL "\x1B[0m"
 #define RED     "\x1b[31m"
@@ -45,16 +48,15 @@ typedef enum
 
 } Options;
 
+void ls(FILE* fd_in, FILE* fd_out, char *directory, char *options);
+
 /**
  * @brief 	Opens a file with the read only mode
  * 
  * @return 	The file in Integer
  */
 
-int openFile(char *filename)
-{
-    return open(filename, O_RDONLY);
-}
+int openFile(char *filename);
 
 /**
  * @brief 	Sets the options depending on the entries
@@ -62,41 +64,7 @@ int openFile(char *filename)
  * 
  */
 
-void readOptions(char *options, Options *etat)
-{
-	/**
-	 * Compares options and different types of options handled
-	 * And updates etat accordingly
-	 */
-	if (strcmp(options, "-l")==0)
-	{
-		*etat=etatDetails;
-	}
-	else if (strcmp(options, "-d")==0)
-	{
-		*etat=etatDossiers;
-	}
-	else if (strcmp(options, "")==0)
-	{
-		*etat=etatNormal;
-	}
-	else if ((strcmp(options, "-dl")==0) || (strcmp(options, "-ld")==0) || (strcmp(options, "-d-l")==0) || (strcmp(options, "-l-d")==0))
-	{
-		*etat=etatDetailsDossiers;
-	}
-	else
-	{
-		/**
-		 * Error if the options isn't handled
-		 * Precise which options were at fault
-		 * And quits the program
-		 */
-		printf("ls: invalid option -- \"%s\"\n",options);
-		printf("Get more information on the README.md document.");
-		exit(-1);
-	}
-
-}
+void readOptions(char *options, Options *etat);
 
 /**
  * @brief 	Concatenates two tables
@@ -104,40 +72,6 @@ void readOptions(char *options, Options *etat)
  *
  */
 
-void concatenateTables(char *tab1, char *tab2)
-{
-	/**
-	 * Gets the size of each table
-	 *
-	 */
-	int taille1=0, taille2=0;
-
-	while(tab1[taille1] != '\0')
-	{
-		taille1++;
-	}
-
-	while(tab2[taille2] != '\0')
-	{
-		taille2++;
-	}
-
-	/**
-	 * Resets the memory of the table 
-	 * Sets it to the addition of both tables' size
-	 */
-	tab1 = realloc(tab1, (taille1 + taille2)*sizeof(char));
-
-	int i = taille1;
-	int j = 0;
-
-
-	while(tab2[j] != '\0')
-	{
-		tab1[i] = tab2[j];
-		i++;
-		j++;
-	}
-}
+void concatenateTables(char *tab1, char *tab2);
 
 #endif

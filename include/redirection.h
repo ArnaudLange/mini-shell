@@ -1,6 +1,7 @@
 #ifndef REDIRECTION_H
 #define REDIRECTION_H
 
+#include <string.h>
 #include <unistd.h>
 
 // STDOUT_FILENO;
@@ -16,5 +17,7 @@
  * @param[in]  fd_out  File descriptor which provides the output
  */
 void redirectFlow(int fd_in, int fd_out);
+
+void writeTo(int fd, char* input);
 
 #endif

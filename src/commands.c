@@ -3,6 +3,8 @@
 #include "../include/commands/cd.h"
 #include "../include/commands/ls.h"
 
+#include "../include/shell.h"
+
 #define debugState 1
 
  int initCommands(Command** array){
@@ -10,7 +12,7 @@
         // char* name, char** parameters, char** options, int nameLength, int* parameterLength, int* optionLength, int (*cmd_ptr)(int, int)
         
         int (*cmd_ptr)(int,char*[]);
-        cmd_ptr = &test;
+        cmd_ptr = &cd_internal;
 
         int (*ls_ptr)(int,char*[]);
         ls_ptr = &ls_lib;

@@ -1,5 +1,66 @@
 #include "../../include/commands/ls.h"
 
+int ls_lib(int argc, char *argv[])
+{
+        char *optionTest = "";
+
+        char *options = NULL;
+        options = malloc(sizeof(char));
+        if (options == NULL)
+        {
+                perror("options");
+                exit(-1);
+        }
+
+        int iOptions = -1;
+        int iParam = -1;
+        int i;
+
+        if (argc >0)
+        {
+                for (i=0; i<argc; i++)
+                {
+                        if(argv[i][0] == '-')
+                        {
+                                iOptions = i;
+                                printf("test");
+                                concatenateTables(options,argv[i]);
+                        }
+                        else {
+                                iParam = i;
+                        }
+                }
+
+                if (iOptions == -1)
+                {
+                        if (iParam == -1)
+                        {
+                                ls("./","");
+                        }
+                        else
+                        {
+                                ls(argv[iParam],"");
+                        }
+                }
+                else {
+                        if (iParam == -1)
+                        {
+                                ls("./",options);
+                        }
+                        else
+                        {
+                                ls(argv[iParam],options);
+                        }
+                }
+        }
+        //SI pas d'arguments => on execute dans le dossier courant
+        else
+        {
+                ls("./",optionTest);
+        }
+        return 0;
+}
+
 void ls(char *directory, char *options)
 {
 	Options etat;
@@ -236,65 +297,4 @@ void concatenateTables(char *tab1, char *tab2)
                 i++;
                 j++;
         }
-}
-
-int ls_lib(int argc, char *argv[])
-{
-	char *optionTest = "";
-
-	char *options = NULL;
-	options = malloc(sizeof(char));
-	if (options == NULL)
-	{
-		perror("options");
-		exit(-1);
-	}
-
-	int iOptions = -1;
-	int iParam = -1;
-	int i;
-
-	if (argc >0)
-	{
-		for (i=0; i<argc; i++)
-		{
-			if(argv[i][0] == '-')
-			{
-				iOptions = i;
-                                printf("test");
-				concatenateTables(options,argv[i]);
-			}
-			else {
-				iParam = i;
-			}
-		}
-
-		if (iOptions == -1)
-		{
-			if (iParam == -1)
-			{
-				ls("./","");
-			}
-			else
-			{
-				ls(argv[iParam],"");
-			}
-		}
-		else {
-			if (iParam == -1)
-			{
-				ls("./",options);
-			}
-			else
-			{
-				ls(argv[iParam],options);
-			}
-		}
-	}
-	//SI pas d'arguments => on execute dans le dossier courant
-	else
-	{
-		ls("./",optionTest);
-	}
-	return 0;
 }

@@ -52,10 +52,19 @@ int main(int argc, char* argv[]){
                                 */
                                 //test_execute(line,line);
                                 //FILE* file_out = fopen("exemple.txt", "a");
-                                
-                                int fd = open("exemple.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-                                test_internal_ls(STDIN_FILENO, STDOUT_FILENO);
-                                test_internal_ls(STDIN_FILENO, fd);
+                                /*
+                                ParsedCommand* c = parseCommand(line);
+                                if(findFunction(line, c)){
+                                        printf("found function\n");
+                                }
+                                else{
+                                        printf("didn't find function\n");
+                                }
+                                free(c);
+                                */
+                                //int fd = open("exemple.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+                                //test_internal_ls(STDIN_FILENO, STDOUT_FILENO);
+                                //test_internal_ls(STDIN_FILENO, fd);
                                 //fclose(file_out);
                                 /*ParsedCommand* c = malloc(sizeof(ParsedCommand));
                                 strncpy(c->name, "cd", NAME_SIZE);

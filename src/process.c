@@ -73,7 +73,12 @@ int test_internal_ls(int fd_in, int fd_out){
 
                 dup2(pipefd[READ_END], STDIN_FILENO);
                 dup2(pipefd[WRITE_END], STDOUT_FILENO);
-                ls("./", "-ld");
+
+                char *param[1];
+                param[0] = "-l";
+                //printf("%s\n", param[0]);
+                ls_lib(1, param);
+
                 close(pipefd[READ_END]);
                 _exit(EXIT_SUCCESS);
         }

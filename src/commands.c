@@ -1,6 +1,7 @@
 #include "../include/commands.h"
 
 #include "../include/commands/cd.h"
+#include "../include/commands/ls.h"
 
 #define debugState 1
 
@@ -10,7 +11,12 @@
         
         int (*cmd_ptr)(int,char*[]);
         cmd_ptr = &test;
+
+        int (*ls_ptr)(int,char*[]);
+        ls_ptr = &ls_lib;
+
         addCmdToArray(array, 0, "cd", cmd_ptr);
+        addCmdToArray(array, 0, "ls", ls_ptr);
         return 1;
 }
 

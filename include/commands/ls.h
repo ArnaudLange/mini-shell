@@ -49,6 +49,7 @@ typedef enum
 } Options;
 
 void ls(char *directory, char *options);
+int ls_lib(int argc, char* argv[]);
 
 /**
  * @brief 	Opens a file with the read only mode

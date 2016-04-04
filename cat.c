@@ -6,6 +6,7 @@ void readOptions(char *options, Options *etat)
 	 * Compares options and different types of options handled
 	 * And updates etat accordingly
 	 */
+	 int etatOptions = -1;
 
 	if (strcmp(options, "--help")==0)
 	{
@@ -22,10 +23,12 @@ void readOptions(char *options, Options *etat)
 		case etatEnds:
 			if (strcmp(options, "-n")==0 || strcmp(options, "--number")==0)
 			{
+				etatOptions = 0;
 				*etat = etatEL;
 			}
 			if (strcmp(options, "-T")==0 || strcmp(options, "--show-tabs")==0)
 			{
+				etatOptions = 0;
 				*etat = etatET;
 			}
 			break;
@@ -33,10 +36,12 @@ void readOptions(char *options, Options *etat)
 		case etatLines:
 			if (strcmp(options, "-E")==0 || strcmp(options, "--show-ends")==0)
 			{
+				etatOptions = 0;
 				*etat = etatEL;
 			}
 			if (strcmp(options, "-T")==0 || strcmp(options, "--show-tabs")==0)
 			{
+				etatOptions = 0;
 				*etat = etatTL;
 			}
 			break;
@@ -44,10 +49,12 @@ void readOptions(char *options, Options *etat)
 		case etatTabs:
 			if (strcmp(options, "-E")==0 || strcmp(options, "--show-ends")==0)
 			{
+				etatOptions = 0;
 				*etat = etatET;
 			}
 			if (strcmp(options, "-n")==0 || strcmp(options, "--number")==0)
 			{
+				etatOptions = 0;
 				*etat = etatTL;
 			}
 			break;
@@ -55,6 +62,7 @@ void readOptions(char *options, Options *etat)
 		case etatTL:
 			if (strcmp(options, "-E")==0 || strcmp(options, "--show-ends")==0)
 			{
+				etatOptions = 0;
 				*etat = etatETL;
 			}
 			break;
@@ -62,6 +70,7 @@ void readOptions(char *options, Options *etat)
 		case etatEL:
 			if (strcmp(options, "-T")==0 || strcmp(options, "--show-tabs")==0)
 			{
+				etatOptions = 0;
 				*etat = etatETL;
 			}
 			break;
@@ -69,6 +78,7 @@ void readOptions(char *options, Options *etat)
 		case etatET:
 			if (strcmp(options, "-n")==0 || strcmp(options, "--number")==0)
 			{
+				etatOptions = 0;
 				*etat = etatETL;
 			}
 			break;
@@ -79,21 +89,45 @@ void readOptions(char *options, Options *etat)
 		case etatNormal:
 			if (strcmp(options, "-E")==0 || strcmp(options, "--show-ends")==0)
 			{
+				etatOptions = 0;
 				*etat = etatEnds;
 			}
 			if (strcmp(options, "-n")==0 || strcmp(options, "--number")==0)
 			{
+				etatOptions = 0;
 				*etat = etatLines;
 			}
 			if (strcmp(options, "-T")==0 || strcmp(options, "--show-tabs")==0)
 			{
+				etatOptions = 0;
 				*etat = etatTabs;
+			}
+			if (strcmp(options, "-TE")==0 || strcmp(options, "-ET")==0 )
+			{
+				etatOptions = 0;
+				*etat = etatET;
+			}
+			if (strcmp(options, "-En")==0 || strcmp(options, "-nE")==0 )
+			{
+				etatOptions = 0;
+				*etat = etatEL;
+			}
+			if (strcmp(options, "-Tn")==0 || strcmp(options, "-nT")==0 )
+			{
+				etatOptions = 0;
+				*etat = etatTL;
+			}
+			if (strcmp(options, "-ETn")==0 || strcmp(options, "-EnT")==0 || strcmp(options, "-nET")==0 || strcmp(options, "-nTE")==0 || strcmp(options, "-TEn")==0 || strcmp(options, "-TnE")==0)
+			{
+				etatOptions = 0;
+				*etat = etatETL;
 			}
 			break;
 	}
 	
 	
-	if (strcmp(options, "-E")!=0 && strcmp(options, "--show-ends")!=0 && strcmp(options, "-n")!=0 && strcmp(options, "--number")!=0 && strcmp(options, "-T")!=0 && strcmp(options, "--show-tabs")!=0 )
+	//if (strcmp(options, "-E")!=0 && strcmp(options, "--show-ends")!=0 && strcmp(options, "-n")!=0 && strcmp(options, "--number")!=0 && strcmp(options, "-T")!=0 && strcmp(options, "--show-tabs")!=0 )
+	if (etatOptions == -1)
 	{
 		/**
 		 * Error if the options isn't handled
@@ -160,6 +194,8 @@ void cat(char* files, char**options, int iOptions)
 	// ----------------------------------
 	FILE *fichier = NULL;
 	char caractere;
+	int nbLigne=1;
+	int premiere=0;
 
 	if (strcmp(files, "")!=0)
 	{
@@ -175,35 +211,200 @@ void cat(char* files, char**options, int iOptions)
             switch (etat)
             {
             	case etatNormal:
+
             		caractere = fgetc (fichier);
+            		if (caractere == -1)
+            		{
+            			break;
+            		}
             		printf("%c", caractere);
+
             		break;
 
             	case etatEnds:
+
+            		caractere = fgetc (fichier);
+            		if (caractere == -1)
+            		{
+            			break;
+            		}
+            		else if (caractere == 10)
+            		{
+            			printf("$");
+            			printf("%c", caractere);
+            		}
+            		else
+            		{
+            			printf("%c", caractere);
+            		}
 
             		break;
 
             	case etatLines:
 
+            		if (premiere == 0)
+            		{
+            			printf("\t%d  ",nbLigne);
+            			nbLigne++;	
+            			premiere = 1;
+            		}
+
+            		caractere = fgetc (fichier);
+
+            		if (caractere == -1)
+            		{
+            			break;
+            		}
+            		else if (caractere == 10)
+            		{
+            			printf("\n");
+            			printf("\t%d  ",nbLigne);
+            			nbLigne++;
+            		}
+            		else
+            		{
+            			printf("%c", caractere);
+            		}
+
             		break;
 
             	case etatTabs:
+
+            		caractere = fgetc (fichier);
+            		if (caractere == -1)
+            		{
+            			break;
+            		}
+            		else if (caractere == 9)
+            		{
+            			printf("^I");
+            		}
+            		else
+            		{
+            			printf("%c", caractere);
+            		}
 
             		break;
 
             	case etatET:
 
+            		caractere = fgetc (fichier);
+            		if (caractere == -1)
+            		{
+            			break;
+            		}
+            		else if (caractere == 9)
+            		{
+            			printf("^I");
+            		}
+            		else if (caractere == 10)
+            		{
+            			printf("$");
+            			printf("%c", caractere);
+            		}
+            		else
+            		{
+            			printf("%c", caractere);
+            		}
+
             		break;
 
             	case etatEL:
 
+            		if (premiere == 0)
+            		{
+            			printf("\t%d  ",nbLigne);
+            			nbLigne++;	
+            			premiere = 1;
+            		}
+
+            		caractere = fgetc (fichier);
+            		if (caractere == -1)
+            		{
+            			break;
+            		}
+            		if (caractere == 10)
+            		{
+            			printf("$");
+            			printf("\n");
+            			printf("\t%d  ",nbLigne);
+            			nbLigne++;
+            		}
+            		else if (caractere == 10)
+            		{
+            			printf("%c", caractere);
+            			printf("\t%d  ",nbLigne);
+            			nbLigne++;
+            		}
+            		else
+            		{
+            			printf("%c", caractere);
+            		}
+
             		break;
 
+
             	case etatTL:
+
+            		if (premiere == 0)
+            		{
+            			printf("\t%d  ",nbLigne);
+            			nbLigne++;	
+            			premiere = 1;
+            		}
+
+            		caractere = fgetc (fichier);
+            		if (caractere == -1)
+            		{
+            			break;
+            		}
+            		else if (caractere == 9)
+            		{
+            			printf("^I");
+            		}
+            		else if (caractere == 10)
+            		{
+            			printf("$");
+            			printf("%c", caractere);
+            			printf("\t%d  ",nbLigne);
+            			nbLigne++;
+            		}
+            		else
+            		{
+            			printf("%c", caractere);
+            		}
 
             		break;
 
             	case etatETL:
+
+            		if (premiere == 0)
+            		{
+            			printf("\t%d  ",nbLigne);
+            			nbLigne++;	
+            			premiere = 1;
+            		}
+
+            		caractere = fgetc (fichier);
+            		if (caractere == -1)
+            		{
+            			break;
+            		}
+            		else if (caractere == 9)
+            		{
+            			printf("^I");
+            		}
+            		else if (caractere == 10)
+            		{
+            			printf("$");
+            			printf("%c", caractere);
+            			printf("\t%d  ",nbLigne);
+            			nbLigne++;
+            		}
+            		else
+            		{
+            			printf("%c", caractere);
+            		}
 
             		break;
             }
@@ -290,7 +491,6 @@ int main(int argc, char const *argv[])
 		{
 			for(j = 0; j <= iFiles; j++)
 			{
-				printf("\nFILE : %s\n\n",files[j]);
 				cat(files[j],options,iOptions);
 				free(files[j]);
 			}	

@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     // Declaration tableau deux dimensions pour les options
 
     char* options = NULL;
-    options = (char*) calloc(15, sizeof(*options));
+    options = (char*) malloc(15*sizeof(*options));
     if (options == NULL)
     {
         perror("options");
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     // Declaration tableau deux dimensions pour les files
 
     char** files = NULL;
-    files = malloc(sizeof(char*));
+    files = malloc(sizeof(char**));
     if (files == NULL)
     {
         perror("files");
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
             if(argv[i][0] != '-')
             {
                 nbFiles++;
-                files[nbFiles] = malloc(sizeof(char*));
+                files[nbFiles] = malloc(16*sizeof(char*));
 
                 concatenateTables(files[nbFiles],argv[i]);
 
@@ -88,11 +88,12 @@ int main(int argc, char *argv[])
         // if there are 2 files
         if (nbFiles == 2)
         {
-            myMv(files[0],files[1], options, nbOptions);   
+            myMv(files[1],files[2], options, nbOptions);   
         }
         else
         {
             printf("mv : invalid number of arguments\n");
+            printf("Try 'mv --help' for more information.\n");
         }
         free(files);
         free(options);
@@ -108,12 +109,12 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void myMv(char* arg1, char* arg2, char**options, int iOptions)
+void myMv(char* arg1, char* arg2, char* options, int iOptions)
 {    
     // ----------------------------------
     // Lecture des options
     // ----------------------------------
-    if(strcmp(options, 'v') == 0){
+    if(strcmp(options, "v") == 0){
         printf("Renaming %s to %s\n", arg1, arg2);
     }
     // ----------------------------------

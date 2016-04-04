@@ -10,4 +10,4 @@
 
 
 void concatenateTables(char *tab1, const char *tab2);
-void myMv(char* arg1, char* arg2, char**options, int iOptions);
+void myMv(char* arg1, char* arg2, char* options, int iOptions);

@@ -6,6 +6,7 @@ project(binsh)
 
 set(CMAKE_C_FLAGS "-std=c99 -D_XOPEN_SOURCE=600")
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin )
+set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib )
 
 # Crée des variables avec les fichiers à compiler
 file(GLOB SRC
@@ -20,6 +21,7 @@ file(GLOB HEADER
 add_executable(shell ${SRC} ${HEADER})
 
 
+# building command executables
 file(GLOB SRC_LS
     "src/commands/ls.c"
     "src/main/ls.c"
@@ -28,3 +30,7 @@ file(GLOB HEADER_LS
     "include/commands/ls.h"
 )
 add_executable(ls ${SRC_LS} ${HEADER_LS})
+
+# building command libraries
+add_library(lib SHARED ${SRC_LS})
+set_target_properties(lib PROPERTIES OUTPUT_NAME "insh")

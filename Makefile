@@ -124,6 +124,19 @@ ls/fast:
 .PHONY : ls/fast
 
 #=============================================================================
+# Target rules for targets named lib
+
+# Build rule for target.
+lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 lib
+.PHONY : lib
+
+# fast build rule for target.
+lib/fast:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/build
+.PHONY : lib/fast
+
+#=============================================================================
 # Target rules for targets named shell
 
 # Build rule for target.
@@ -170,6 +183,7 @@ src/commands/ls.o: src/commands/ls.c.o
 # target to build an object file
 src/commands/ls.c.o:
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.o
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/commands/ls.c.o
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.o
 .PHONY : src/commands/ls.c.o
 
@@ -180,6 +194,7 @@ src/commands/ls.i: src/commands/ls.c.i
 # target to preprocess a source file
 src/commands/ls.c.i:
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.i
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/commands/ls.c.i
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.i
 .PHONY : src/commands/ls.c.i
 
@@ -190,6 +205,7 @@ src/commands/ls.s: src/commands/ls.c.s
 # target to generate assembly for a file
 src/commands/ls.c.s:
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.s
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/commands/ls.c.s
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.s
 .PHONY : src/commands/ls.c.s
 
@@ -227,6 +243,7 @@ src/main/ls.o: src/main/ls.c.o
 # target to build an object file
 src/main/ls.c.o:
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.o
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/main/ls.c.o
 .PHONY : src/main/ls.c.o
 
 src/main/ls.i: src/main/ls.c.i
@@ -236,6 +253,7 @@ src/main/ls.i: src/main/ls.c.i
 # target to preprocess a source file
 src/main/ls.c.i:
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.i
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/main/ls.c.i
 .PHONY : src/main/ls.c.i
 
 src/main/ls.s: src/main/ls.c.s
@@ -245,6 +263,7 @@ src/main/ls.s: src/main/ls.c.s
 # target to generate assembly for a file
 src/main/ls.c.s:
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.s
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/main/ls.c.s
 .PHONY : src/main/ls.c.s
 
 src/process.o: src/process.c.o
@@ -335,9 +354,10 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... rebuild_cache"
 	@echo "... ls"
+	@echo "... lib"
 	@echo "... shell"
+	@echo "... rebuild_cache"
 	@echo "... src/commands.o"
 	@echo "... src/commands.i"
 	@echo "... src/commands.s"

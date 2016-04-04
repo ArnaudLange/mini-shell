@@ -125,6 +125,9 @@ void myMv(char* arg1, char* arg2, char* options, int iOptions)
     if (stat(arg1, &statbuf) == -1) { //si il n'existe aucun fichier déjà nommé comme celui qu'on essaye de déplacer
         printf("mv : '%s' invalid path\n", arg1);
     }
+    else if(stat(arg2, &statbuf) != -1) { //si le fichier dest existe déjà
+        printf("mv : '%s' already exists\n", arg2);
+    }
     else{
         rename(arg1, arg2);
     }

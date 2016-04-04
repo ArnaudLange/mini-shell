@@ -1,12 +1,13 @@
 #include <stdio.h>     /* for printf */
 #include <stdlib.h>    /* for exit */
 #include <getopt.h>
+#include <string.h>
 
 int
 main(int argc, char **argv)
 {
     int c;
-    char* options = (char*) malloc(sizeof(*options));
+    char* options = (char*) calloc(15, sizeof(*options));
     int nbOptions = 0;
 
    while (1) {
@@ -24,26 +25,23 @@ main(int argc, char **argv)
        switch (c) {
 
          case 'h':
-           printf("Usage: mv [OPTIONS] SOURCE... DEST...\n");
+           printf("Usage: mv [OPTION]... SOURCE DEST\n");
            printf("Rename SOURCE to DEST\n");
+           printf("-v, --verbose : explain what is being done\n");
            exit(0);
            break;
 
          case 'v':
+           options[nbOptions] = c; 
            nbOptions++;
            break;
 
        default:
-            printf("?? getopt returned character code 0%o ??\n", c);
-        }
+            printf("Try 'mv --help' for more information.\n");
+            exit(1);
+      }
+      free(options);
     }
 
-   if (optind < argc) {
-        printf("non-option ARGV-elements: ");
-        while (optind < argc)
-            printf("%s ", argv[optind++]);
-        printf("\n");
-    }
-   printf("%d\n", nbOptions);
-   exit(EXIT_SUCCESS);
+   return 0;
 }

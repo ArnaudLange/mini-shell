@@ -1,31 +1,24 @@
 #include "mv.h"
 
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
     // -----------------------------------
     // Declaration tableau deux dimensions pour les options
 
-    char **options = NULL;
-    options = (char**) malloc(sizeof(*options));
+    char* options = NULL;
+    options = (char*) calloc(15, sizeof(*options));
     if (options == NULL)
     {
         perror("options");
         exit(1);
     }
-    options[0] = malloc(sizeof(char));
-    if (options[0] == NULL)
-    {
-        perror("options[x]");
-        exit(1);
-    }
-    options[0]="";
 
 
     // -----------------------------------
     // Declaration tableau deux dimensions pour les files
 
-    char **files = NULL;
+    char** files = NULL;
     files = malloc(sizeof(char*));
     if (files == NULL)
     {
@@ -41,43 +34,66 @@ int main(int argc, char const *argv[])
 
     // -----------------------------------
 
-    int iOptions = 0;
-    int iFiles = 0;
-    int i;
+    int nbOptions = 0;
+    int nbFiles = 0;
+    int i, c;
 
     // -----------------------------------
     // parcourt des arguments de la fonction
 
-    if (argc >1)
-    {
+    if (argc >1) {
+        while (1) {
+        int option_index = 0;
+        static struct option long_options[] = {
+            {"help",     no_argument,       0, 'h'},
+            {"verbose",  no_argument,       0, 'v'}
+        };
+
+       c = getopt_long(argc, argv, "hv", long_options, &option_index);
+
+        if (c == -1) break;
+
+       switch (c) {
+
+         case 'h':
+           printf("Usage: mv [OPTION]... SOURCE DEST\n");
+           printf("Rename SOURCE to DEST\n");
+           printf("-v, --verbose : explain what is being done\n");
+           exit(0);
+           break;
+
+         case 'v':
+           options[nbOptions] = c; 
+           nbOptions++;
+           break;
+
+       default:
+            printf("Try 'mv --help' for more information.\n");
+            exit(1);
+      }
+    }
+
         for (i=1; i<argc; i++)
         {
-            if(argv[i][0] == '-')
+            if(argv[i][0] != '-')
             {
-                iOptions++;
-                options[iOptions] = malloc(sizeof(char*));
-                concatenateTables(options[iOptions],argv[i]);
-                printf("ceci est un tasty test : %s\n", options[i]);
+                nbFiles++;
+                files[nbFiles] = malloc(sizeof(char*));
+
+                concatenateTables(files[nbFiles],argv[i]);
 
 
-            }
-            else {
-                iFiles++;
-                files[iFiles] = malloc(sizeof(char*));
-
-                concatenateTables(files[iFiles],argv[i]);
             }
         }
         // if there are 2 files
-        if (iFiles == 2 || iOptions > 0)
+        if (nbFiles == 2)
         {
-            myMv(files[0],files[1], options, iOptions);   
+            myMv(files[0],files[1], options, nbOptions);   
         }
         else
         {
             printf("mv : invalid number of arguments\n");
         }
-        printf("test2 %d\n", iOptions);
         free(files);
         free(options);
 
@@ -97,10 +113,8 @@ void myMv(char* arg1, char* arg2, char**options, int iOptions)
     // ----------------------------------
     // Lecture des options
     // ----------------------------------
-    int h;
-    for (h = 0; h <= iOptions; h++)
-    {
-        readOptions(options[h]);
+    if(strcmp(options, 'v') == 0){
+        printf("Renaming %s to %s\n", arg1, arg2);
     }
     // ----------------------------------
     // Initialisation
@@ -151,32 +165,4 @@ void concatenateTables(char *tab1, const char *tab2)
         j++;
     }
 }
-
-void readOptions(char *options)
-{
-    /**
-     * Compares options and different types of options handled
-     * And updates etat accordingly
-     */
-
-    if (strcmp(options, "--help")==0){
-
-        printf("Usage: mv SOURCE... DEST...\n");
-        printf("Rename SOURCE to DEST\n");
-        exit(0);
-    }
-
-    else{
-        /**
-         * Error if the options isn't handled
-         * Precise which options were at fault
-         * And quits the program
-         */
-        printf("mv: invalid option %s\n", options);
-        printf("Try 'mv --help' for more information.\n");
-        exit(1);
-    }
-
-}
-
 

@@ -7,13 +7,13 @@ int main(int argc, char const *argv[])
     // Declaration tableau deux dimensions pour les options
 
     char **options = NULL;
-    options = malloc(sizeof(char*));
+    options = (char**) malloc(sizeof(*options));
     if (options == NULL)
     {
         perror("options");
         exit(1);
     }
-    options[0] = malloc(sizeof(char*));
+    options[0] = malloc(sizeof(char));
     if (options[0] == NULL)
     {
         perror("options[x]");
@@ -57,7 +57,7 @@ int main(int argc, char const *argv[])
                 iOptions++;
                 options[iOptions] = malloc(sizeof(char*));
                 concatenateTables(options[iOptions],argv[i]);
-                printf("test %s\n", options[i]);
+                printf("ceci est un tasty test : %s\n", options[i]);
 
 
             }
@@ -161,8 +161,8 @@ void readOptions(char *options)
 
     if (strcmp(options, "--help")==0){
 
-        printf("Usage: mv [FILE1]... [FILE2]...\n");
-        printf("Move or rename FILE1 to FILE2\n");
+        printf("Usage: mv SOURCE... DEST...\n");
+        printf("Rename SOURCE to DEST\n");
         exit(0);
     }
 

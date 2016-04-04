@@ -177,6 +177,8 @@ void concatenateTables(char *tab1, const char *tab2)
 	}
 }
 
+
+
 void cat(char* files, char**options, int iOptions)
 {
 	// ----------------------------------
@@ -193,7 +195,7 @@ void cat(char* files, char**options, int iOptions)
 	// Initialisation
 	// ----------------------------------
 	FILE *fichier = NULL;
-	char caractere;
+	char character;
 	int nbLigne=1;
 	int premiere=0;
 
@@ -202,40 +204,30 @@ void cat(char* files, char**options, int iOptions)
 		fichier = fopen(files,"r");
 		if (fichier == NULL)
 		{
-			perror("fopen");
+			perror(files);
 			exit(1);
 		}
-		do
+		while ((character=fgetc(fichier)) != EOF)
         {
             
             switch (etat)
             {
             	case etatNormal:
 
-            		caractere = fgetc (fichier);
-            		if (caractere == -1)
-            		{
-            			break;
-            		}
-            		printf("%c", caractere);
+            		printf("%c", character);
 
             		break;
 
             	case etatEnds:
 
-            		caractere = fgetc (fichier);
-            		if (caractere == -1)
-            		{
-            			break;
-            		}
-            		else if (caractere == 10)
+            		if (character == 10)
             		{
             			printf("$");
-            			printf("%c", caractere);
+            			printf("%c", character);
             		}
             		else
             		{
-            			printf("%c", caractere);
+            			printf("%c", character);
             		}
 
             		break;
@@ -249,62 +241,49 @@ void cat(char* files, char**options, int iOptions)
             			premiere = 1;
             		}
 
-            		caractere = fgetc (fichier);
-
-            		if (caractere == -1)
+            		//character = fgetc (fichier);
+            		if (character == 10)
             		{
-            			break;
-            		}
-            		else if (caractere == 10)
-            		{
-            			printf("\n");
+            			printf("%c", character);
             			printf("\t%d  ",nbLigne);
             			nbLigne++;
             		}
             		else
             		{
-            			printf("%c", caractere);
+            			printf("%c", character);
             		}
-
             		break;
+            		
 
             	case etatTabs:
 
-            		caractere = fgetc (fichier);
-            		if (caractere == -1)
-            		{
-            			break;
-            		}
-            		else if (caractere == 9)
+            		//character = fgetc (fichier);
+					if (character == 9)
             		{
             			printf("^I");
             		}
             		else
             		{
-            			printf("%c", caractere);
+            			printf("%c", character);
             		}
 
             		break;
 
             	case etatET:
 
-            		caractere = fgetc (fichier);
-            		if (caractere == -1)
-            		{
-            			break;
-            		}
-            		else if (caractere == 9)
+            		//character = fgetc (fichier);
+					if (character == 9)
             		{
             			printf("^I");
             		}
-            		else if (caractere == 10)
+            		else if (character == 10)
             		{
             			printf("$");
-            			printf("%c", caractere);
+            			printf("%c", character);
             		}
             		else
             		{
-            			printf("%c", caractere);
+            			printf("%c", character);
             		}
 
             		break;
@@ -318,27 +297,23 @@ void cat(char* files, char**options, int iOptions)
             			premiere = 1;
             		}
 
-            		caractere = fgetc (fichier);
-            		if (caractere == -1)
-            		{
-            			break;
-            		}
-            		if (caractere == 10)
+            		//character = fgetc (fichier);
+            		if (character == 10)
             		{
             			printf("$");
             			printf("\n");
             			printf("\t%d  ",nbLigne);
             			nbLigne++;
             		}
-            		else if (caractere == 10)
+            		else if (character == 10)
             		{
-            			printf("%c", caractere);
+            			printf("%c", character);
             			printf("\t%d  ",nbLigne);
             			nbLigne++;
             		}
             		else
             		{
-            			printf("%c", caractere);
+            			printf("%c", character);
             		}
 
             		break;
@@ -353,25 +328,20 @@ void cat(char* files, char**options, int iOptions)
             			premiere = 1;
             		}
 
-            		caractere = fgetc (fichier);
-            		if (caractere == -1)
-            		{
-            			break;
-            		}
-            		else if (caractere == 9)
+            		//character = fgetc (fichier);
+            		if (character == 9)
             		{
             			printf("^I");
             		}
-            		else if (caractere == 10)
+            		else if (character == 10)
             		{
-            			printf("$");
-            			printf("%c", caractere);
+            			printf("%c", character);
             			printf("\t%d  ",nbLigne);
             			nbLigne++;
             		}
             		else
             		{
-            			printf("%c", caractere);
+            			printf("%c", character);
             		}
 
             		break;
@@ -385,37 +355,35 @@ void cat(char* files, char**options, int iOptions)
             			premiere = 1;
             		}
 
-            		caractere = fgetc (fichier);
-            		if (caractere == -1)
-            		{
-            			break;
-            		}
-            		else if (caractere == 9)
+            		//character = fgetc (fichier);
+            		if (character == 9)
             		{
             			printf("^I");
             		}
-            		else if (caractere == 10)
+            		else if (character == 10)
             		{
             			printf("$");
-            			printf("%c", caractere);
+            			printf("%c", character);
             			printf("\t%d  ",nbLigne);
             			nbLigne++;
             		}
             		else
             		{
-            			printf("%c", caractere);
+            			printf("%c", character);
             		}
 
             		break;
             }
 
-        } while (caractere != EOF);
+        }
+        printf("\n"); 
 	}
 	else
 	{
 		printf("Pas de file en entree\n");
 		exit(0);
 	}
+
 	// ----------------------------------
 	// Si il n'y a pas de fichiers en entrée
 	// ----------------------------------
@@ -500,6 +468,11 @@ int main(int argc, char const *argv[])
 			cat("",options,iOptions);
 		}
 		free(files);
+		int l;
+		for (l=0;l<iOptions;l++)
+		{
+			free(options[l]);
+		}
 		free(options);
 
 

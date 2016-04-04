@@ -33,6 +33,16 @@ file(GLOB HEADER_LS
 )
 add_executable(ls ${SRC_LS} ${HEADER_LS})
 
+# ls
+file(GLOB SRC_CD
+    "src/commands/cd.c"
+    "src/main/cd.c"
+)
+file(GLOB HEADER_CD
+    "include/commands/cd.h"
+)
+add_executable(cd ${SRC_CD} ${HEADER_CD})
+
 # building command libraries
 add_library(lib SHARED ${SRC_LS})
 set_target_properties(lib PROPERTIES OUTPUT_NAME "insh")

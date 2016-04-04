@@ -15,7 +15,7 @@ void readOptions(char *options, Options *etat)
 		printf("\n\t-E, --show-ends\t\tdisplay $ at the end of each line\n");
 		printf("\n\t-T, --show-tabs\t\tdisplay TAB character as ^I\n");
 		printf("\n\t-n, --number   \t\tnumber all input lines\n");
-		exit(1);
+		exit(0);
 	}
 
 	switch (*etat)
@@ -413,7 +413,7 @@ void cat(char* files, char**options, int iOptions)
 	}
 	else
 	{
-		printf("Pas de file en entree");
+		printf("Pas de file en entree\n");
 		exit(0);
 	}
 	// ----------------------------------

@@ -96,7 +96,6 @@ void readOptions(char *options, Options *etat)
 			break;		
 
 		case etatNormal:
-			printf("Ici ?\n");
 			if (strcmp(options, "-E")==0 || strcmp(options, "--show-ends")==0)
 			{
 				*etat = etatEnds;

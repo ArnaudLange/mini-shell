@@ -41,7 +41,7 @@ int main(int argc, char const *argv[])
 
     // -----------------------------------
 
-    int iOptions = -1;
+    int iOptions = 0;
     int iFiles = 0;
     int i;
 
@@ -57,6 +57,8 @@ int main(int argc, char const *argv[])
                 iOptions++;
                 options[iOptions] = malloc(sizeof(char*));
                 concatenateTables(options[iOptions],argv[i]);
+                printf("test %s\n", options[i]);
+
 
             }
             else {
@@ -75,6 +77,7 @@ int main(int argc, char const *argv[])
         {
             printf("mv : invalid number of arguments\n");
         }
+        printf("test2 %d\n", iOptions);
         free(files);
         free(options);
 
@@ -169,7 +172,7 @@ void readOptions(char *options)
          * Precise which options were at fault
          * And quits the program
          */
-        printf("mv: invalid option %s\n",options);
+        printf("mv: invalid option %s\n", options);
         printf("Try 'mv --help' for more information.\n");
         exit(1);
     }

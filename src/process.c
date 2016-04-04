@@ -46,11 +46,88 @@ int test_execute(char *commande,char *argv){
         return 1;
 }
 
-int test_internal_ls(FILE* fd_in, FILE* fd_out){
-        ls(fd_in, fd_out, "./", "-ld");
+int test_internal_ls(int fd_in, int fd_out){
+        
+        pid_t pid;
+        // File descriptor du Pipe
+           // pipefd[0] ---> Entrée (standard, fichier, ...)
+           // pipefd[1] ---> Sortie (standard, fichier, ...)
+           int pipefd[2];
+           // pid utilisé pour le processus forké
+           pid_t cpid;
+           // Crée un Pipe, on spécifie le flag en deuxième paramètre
+           if (pipe(pipefd) == -1) {
+               perror("pipe");
+               exit(EXIT_FAILURE);
+           }
+
+           cpid = fork();
+           if (cpid == -1) {
+               perror("fork");
+               exit(EXIT_FAILURE);
+           }
+           if (cpid == 0) {
+               // Ici on est dans le fils
+                pipefd[READ_END] = fd_in;
+                pipefd[WRITE_END] = fd_out;
+
+                dup2(pipefd[READ_END], STDIN_FILENO);
+                dup2(pipefd[WRITE_END], STDOUT_FILENO);
+                ls("./", "-ld");
+                close(pipefd[READ_END]);
+                _exit(EXIT_SUCCESS);
+        }
+        else{
+                // Ici on est dans le parent
+                wait(NULL);
+                close(pipefd[WRITE_END]);
+                //redirectFlow(pipefd[READ_END], STDOUT_FILENO);
+                return pipefd[WRITE_END];
+        }
 }
 
-int execute(char *commande,char *argv){
+int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
+        
+        pid_t pid;
+        // File descriptor du Pipe
+           // pipefd[0] ---> Entrée (standard, fichier, ...)
+           // pipefd[1] ---> Sortie (standard, fichier, ...)
+           int pipefd[2];
+           // pid utilisé pour le processus forké
+           pid_t cpid;
+           // Crée un Pipe, on spécifie le flag en deuxième paramètre
+           if (pipe(pipefd) == -1) {
+               perror("pipe");
+               exit(EXIT_FAILURE);
+           }
+
+           cpid = fork();
+           if (cpid == -1) {
+               perror("fork");
+               exit(EXIT_FAILURE);
+           }
+           if (cpid == 0) {
+               // Ici on est dans le fils
+                pipefd[READ_END] = fd_in;
+                pipefd[WRITE_END] = fd_out;
+
+                dup2(pipefd[READ_END], STDIN_FILENO);
+                dup2(pipefd[WRITE_END], STDOUT_FILENO);
+                
+                
+                close(pipefd[READ_END]);
+                _exit(EXIT_SUCCESS);
+        }
+        else{
+                // Ici on est dans le parent
+                wait(NULL);
+                close(pipefd[WRITE_END]);
+                //redirectFlow(pipefd[READ_END], STDOUT_FILENO);
+                return pipefd[WRITE_END];
+        }
+}
+
+int executeExternalCommand(char *commande,char *argv){
         pid_t pid;
         // File descriptor du Pipe
            // pipefd[0] ---> Entrée (standard, fichier, ...)

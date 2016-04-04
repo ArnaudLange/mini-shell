@@ -42,7 +42,6 @@ int main(int argc, char* argv[]){
                                 return EXIT_SUCCESS;                                                                                                
                         }
                         else{
-
                                 /*
                                 ParsedCommand* c = parseCommand(line);
                                 printName(c);
@@ -53,7 +52,10 @@ int main(int argc, char* argv[]){
                                 */
                                 //test_execute(line,line);
                                 //FILE* file_out = fopen("exemple.txt", "a");
-                                test_internal_ls(stdin, stdout);
+                                
+                                int fd = open("exemple.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+                                test_internal_ls(STDIN_FILENO, STDOUT_FILENO);
+                                test_internal_ls(STDIN_FILENO, fd);
                                 //fclose(file_out);
                                 /*ParsedCommand* c = malloc(sizeof(ParsedCommand));
                                 strncpy(c->name, "cd", NAME_SIZE);

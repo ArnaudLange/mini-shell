@@ -1,6 +1,6 @@
 #include "../../include/commands/ls.h"
 
-void ls(FILE* fd_in, FILE* fd_out, char *directory, char *options)
+void ls(char *directory, char *options)
 {
 	Options etat;
 	readOptions(options, &etat);
@@ -52,57 +52,57 @@ void ls(FILE* fd_in, FILE* fd_out, char *directory, char *options)
 				if (S_ISDIR(statbuf.st_mode))
 				{
 					//SET bleue puis PRINTF le nom puis SET couleur normale
-					bogoprintf(fd_out, "%s%s%s  ",BLUE,flux->d_name,NORMAL);
+					printf("%s%s%s  ",BLUE,flux->d_name,NORMAL);
 				}
 				else
 				{	
-					bogoprintf(fd_out, "%s  ",flux->d_name);
+					printf("%s  ",flux->d_name);
 				}
 				break;
 
 			case etatDetails:
 
 				// AFFICHAGE MODE
-				if ((statbuf.st_mode & S_IFSOCK)==S_IFSOCK) bogoprintf(fd_out, "s");
-				else if ((statbuf.st_mode & S_IFLNK)==S_IFLNK) bogoprintf(fd_out, "l");
-				else if ((statbuf.st_mode & S_IFREG)==S_IFREG) bogoprintf(fd_out, "-");
-				else if ((statbuf.st_mode & S_IFBLK)==S_IFBLK) bogoprintf(fd_out, "b");
-				else if ((statbuf.st_mode & S_IFDIR)==S_IFDIR) bogoprintf(fd_out, "d");
-				else if ((statbuf.st_mode & S_IFCHR)==S_IFCHR) bogoprintf(fd_out, "c");	
-				else if ((statbuf.st_mode & S_IFIFO)==S_IFIFO) bogoprintf(fd_out, "p");	
-			    bogoprintf(fd_out,  (statbuf.st_mode & S_IRUSR) ? "r" : "-");
-			    bogoprintf(fd_out,  (statbuf.st_mode & S_IWUSR) ? "w" : "-");
-			    bogoprintf(fd_out,  (statbuf.st_mode & S_IXUSR) ? "x" : "-");
-			    bogoprintf(fd_out,  (statbuf.st_mode & S_IRGRP) ? "r" : "-");
-			    bogoprintf(fd_out,  (statbuf.st_mode & S_IWGRP) ? "w" : "-");
-			    bogoprintf(fd_out,  (statbuf.st_mode & S_IXGRP) ? "x" : "-");
-			    bogoprintf(fd_out,  (statbuf.st_mode & S_IROTH) ? "r" : "-");
-			    bogoprintf(fd_out,  (statbuf.st_mode & S_IWOTH) ? "w" : "-");
-			    bogoprintf(fd_out,  (statbuf.st_mode & S_IXOTH) ? "x" : "-");
+				if ((statbuf.st_mode & S_IFSOCK)==S_IFSOCK) printf("s");
+				else if ((statbuf.st_mode & S_IFLNK)==S_IFLNK) printf("l");
+				else if ((statbuf.st_mode & S_IFREG)==S_IFREG) printf("-");
+				else if ((statbuf.st_mode & S_IFBLK)==S_IFBLK) printf("b");
+				else if ((statbuf.st_mode & S_IFDIR)==S_IFDIR) printf("d");
+				else if ((statbuf.st_mode & S_IFCHR)==S_IFCHR) printf("c");	
+				else if ((statbuf.st_mode & S_IFIFO)==S_IFIFO) printf("p");	
+			    printf( (statbuf.st_mode & S_IRUSR) ? "r" : "-");
+			    printf( (statbuf.st_mode & S_IWUSR) ? "w" : "-");
+			    printf( (statbuf.st_mode & S_IXUSR) ? "x" : "-");
+			    printf( (statbuf.st_mode & S_IRGRP) ? "r" : "-");
+			    printf( (statbuf.st_mode & S_IWGRP) ? "w" : "-");
+			    printf( (statbuf.st_mode & S_IXGRP) ? "x" : "-");
+			    printf( (statbuf.st_mode & S_IROTH) ? "r" : "-");
+			    printf( (statbuf.st_mode & S_IWOTH) ? "w" : "-");
+			    printf( (statbuf.st_mode & S_IXOTH) ? "x" : "-");
 
-			    bogoprintf(fd_out, " %d\t",(int)statbuf.st_nlink);
+			    printf(" %d\t",(int)statbuf.st_nlink);
 
 				userInfo=getpwuid(statbuf.st_uid);
-				bogoprintf(fd_out, "%s",userInfo->pw_name);
+				printf("%s",userInfo->pw_name);
 
 				groupInfo=getgrgid(statbuf.st_gid);
-				bogoprintf(fd_out, " %s",groupInfo->gr_name);
+				printf(" %s",groupInfo->gr_name);
 
-				bogoprintf(fd_out, " %8d",(int)statbuf.st_size);
+				printf(" %8d",(int)statbuf.st_size);
 
 				timeInfo=localtime(&statbuf.st_mtime);
-				bogoprintf(fd_out, " %4d-%02d-%02d %02d:%02d",timeInfo->tm_year+1900,timeInfo->tm_mon+1,timeInfo->tm_mday,timeInfo->tm_hour,timeInfo->tm_min);
+				printf(" %4d-%02d-%02d %02d:%02d",timeInfo->tm_year+1900,timeInfo->tm_mon+1,timeInfo->tm_mday,timeInfo->tm_hour,timeInfo->tm_min);
 
 				if ((statbuf.st_mode & S_IFDIR)==S_IFDIR)
 				{
-					bogoprintf(fd_out, " %s%s%s\n",BLUE,flux->d_name,NORMAL);
+					printf(" %s%s%s\n",BLUE,flux->d_name,NORMAL);
 				}
 				else if ((statbuf.st_mode & S_IXUSR))
 				{
-					bogoprintf(fd_out, " %s%s%s\n",GREEN,flux->d_name,NORMAL);
+					printf(" %s%s%s\n",GREEN,flux->d_name,NORMAL);
 				}
 				else {
-					bogoprintf(fd_out, " %s\n",flux->d_name);
+					printf(" %s\n",flux->d_name);
 				}
 				
 
@@ -113,7 +113,7 @@ void ls(FILE* fd_in, FILE* fd_out, char *directory, char *options)
 				if (S_ISDIR(statbuf.st_mode))
 				{
 					//SET bleue puis PRINTF le nom puis SET couleur normale
-					bogoprintf(fd_out, "%s%s%s  ",BLUE,flux->d_name,NORMAL);
+					printf("%s%s%s  ",BLUE,flux->d_name,NORMAL);
 				}
 				break;
 
@@ -121,32 +121,32 @@ void ls(FILE* fd_in, FILE* fd_out, char *directory, char *options)
 
 				if (S_ISDIR(statbuf.st_mode))
 				{
-					bogoprintf(fd_out, "d");
-					bogoprintf(fd_out,  (statbuf.st_mode & S_IRUSR) ? "r" : "-");
-				    bogoprintf(fd_out,  (statbuf.st_mode & S_IWUSR) ? "w" : "-");
-				    bogoprintf(fd_out,  (statbuf.st_mode & S_IXUSR) ? "x" : "-");
-				    bogoprintf(fd_out,  (statbuf.st_mode & S_IRGRP) ? "r" : "-");
-				    bogoprintf(fd_out,  (statbuf.st_mode & S_IWGRP) ? "w" : "-");
-				    bogoprintf(fd_out,  (statbuf.st_mode & S_IXGRP) ? "x" : "-");
-				    bogoprintf(fd_out,  (statbuf.st_mode & S_IROTH) ? "r" : "-");
-				    bogoprintf(fd_out,  (statbuf.st_mode & S_IWOTH) ? "w" : "-");
-				    bogoprintf(fd_out,  (statbuf.st_mode & S_IXOTH) ? "x" : "-");
+					printf("d");
+					printf( (statbuf.st_mode & S_IRUSR) ? "r" : "-");
+				    printf( (statbuf.st_mode & S_IWUSR) ? "w" : "-");
+				    printf( (statbuf.st_mode & S_IXUSR) ? "x" : "-");
+				    printf( (statbuf.st_mode & S_IRGRP) ? "r" : "-");
+				    printf( (statbuf.st_mode & S_IWGRP) ? "w" : "-");
+				    printf( (statbuf.st_mode & S_IXGRP) ? "x" : "-");
+				    printf( (statbuf.st_mode & S_IROTH) ? "r" : "-");
+				    printf( (statbuf.st_mode & S_IWOTH) ? "w" : "-");
+				    printf( (statbuf.st_mode & S_IXOTH) ? "x" : "-");
 
-				    bogoprintf(fd_out, " %d\t",(int)statbuf.st_nlink);
+				    printf(" %d\t",(int)statbuf.st_nlink);
 
 					userInfo=getpwuid(statbuf.st_uid);
-					bogoprintf(fd_out, "%s",userInfo->pw_name);
+					printf("%s",userInfo->pw_name);
 
 					groupInfo=getgrgid(statbuf.st_gid);
-					bogoprintf(fd_out, " %s",groupInfo->gr_name);
+					printf(" %s",groupInfo->gr_name);
 
-					bogoprintf(fd_out, " %8d",(int)statbuf.st_size);
+					printf(" %8d",(int)statbuf.st_size);
 
 					timeInfo=localtime(&statbuf.st_mtime);
-					bogoprintf(fd_out, " %4d-%02d-%02d %02d:%02d",timeInfo->tm_year+1900,timeInfo->tm_mon+1,timeInfo->tm_mday,timeInfo->tm_hour,timeInfo->tm_min);
+					printf(" %4d-%02d-%02d %02d:%02d",timeInfo->tm_year+1900,timeInfo->tm_mon+1,timeInfo->tm_mday,timeInfo->tm_hour,timeInfo->tm_min);
 
 
-					bogoprintf(fd_out, " %s%s%s\n",BLUE,flux->d_name,NORMAL);
+					printf(" %s%s%s\n",BLUE,flux->d_name,NORMAL);
 
 					break;
 
@@ -157,7 +157,7 @@ void ls(FILE* fd_in, FILE* fd_out, char *directory, char *options)
 
 	}
 	//SAUT DE LIGNE A LA FIN
-	bogoprintf(fd_out, "\n");
+	printf("\n");
 
 }
 

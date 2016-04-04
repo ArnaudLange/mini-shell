@@ -123,33 +123,6 @@ shell/fast:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/build
 .PHONY : shell/fast
 
-src/bogoprintf.o: src/bogoprintf.c.o
-
-.PHONY : src/bogoprintf.o
-
-# target to build an object file
-src/bogoprintf.c.o:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/bogoprintf.c.o
-.PHONY : src/bogoprintf.c.o
-
-src/bogoprintf.i: src/bogoprintf.c.i
-
-.PHONY : src/bogoprintf.i
-
-# target to preprocess a source file
-src/bogoprintf.c.i:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/bogoprintf.c.i
-.PHONY : src/bogoprintf.c.i
-
-src/bogoprintf.s: src/bogoprintf.c.s
-
-.PHONY : src/bogoprintf.s
-
-# target to generate assembly for a file
-src/bogoprintf.c.s:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/bogoprintf.c.s
-.PHONY : src/bogoprintf.c.s
-
 src/commands.o: src/commands.c.o
 
 .PHONY : src/commands.o
@@ -321,9 +294,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... shell"
-	@echo "... src/bogoprintf.o"
-	@echo "... src/bogoprintf.i"
-	@echo "... src/bogoprintf.s"
 	@echo "... src/commands.o"
 	@echo "... src/commands.i"
 	@echo "... src/commands.s"

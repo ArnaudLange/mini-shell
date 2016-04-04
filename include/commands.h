@@ -92,6 +92,8 @@ typedef enum {
 typedef struct parsedCommand ParsedCommand;
 typedef struct command Command;
 
+int startParsedCommand(ParsedCommand* cmd);
+
 /**
  * @brief      Initialize an array of ParsedCommands.
  *

@@ -13,9 +13,11 @@
 
 #include "commands/ls.h"
 #include "redirection.h"
+#include "commands.h"
 
 int test_execute(char *commande,char *argv);
-int test_internal_ls(FILE* fd_in, FILE* fd_out);
-int execute(char *commande,char *argv);
+int test_internal_ls(int fd_in, int fd_out);
+int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd);
+int executeExternalCommand(char *commande,char *argv);
 
 #endif

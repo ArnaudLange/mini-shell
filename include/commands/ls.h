@@ -33,6 +33,8 @@
 #define CYAN    "\x1b[36m"
 #define RESET   "\x1b[0m"
 
+int ls_lib(int argc, char* argv[]);
+
 /**
  * @brief	Options enumeration
  * Manages the differents kinds of options of our ls command
@@ -49,7 +51,6 @@ typedef enum
 } Options;
 
 void ls(char *directory, char *options);
-int ls_lib(int argc, char* argv[]);
 
 /**
  * @brief 	Opens a file with the read only mode

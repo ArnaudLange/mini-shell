@@ -10,6 +10,18 @@
 
 void welcomeMessage(){
         printf("Binsh 0.1\n");
+        printf("     |__  __  __|\n");
+        printf(" .---|  ::  ::  |\n");
+        printf("|  __|__;:__;:__|\n");
+        printf("| |  |  __  __  |\n");
+        printf("| |  |::  ::  ::|\n");
+        printf("| |  |::__;:__;:|\n");
+        printf("| |  |__  __  __|\n");
+        printf(" . `.|  ::  ::  |\n");
+        printf("  `..|  ::  ::  |\n");
+        printf("      \\ ::  :: /\n");
+        printf("       \\;:  ;:/\n");
+        printf("        \"\"\"\"\"\"\n");
 }
 
 void printPrompt(){
@@ -63,7 +75,7 @@ int main(int argc, char* argv[]){
                                 free(c);
                                 */
                                 //int fd = open("exemple.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-                                //test_internal_ls(STDIN_FILENO, STDOUT_FILENO);
+                                test_internal_ls(STDIN_FILENO, STDOUT_FILENO);
                                 //test_internal_ls(STDIN_FILENO, fd);
                                 //fclose(file_out);
                                 /*ParsedCommand* c = malloc(sizeof(ParsedCommand));

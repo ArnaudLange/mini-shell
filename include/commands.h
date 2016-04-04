@@ -32,34 +32,22 @@ struct parsedCommand{
          * Name of the ParseCommand
          */
 	char name[NAME_SIZE];
+        /**
+         * Size of the name
+         */
+        int nameLength;
 
         /**
          * Parameters of the ParsedCommand. 
          * Max size if 100 caracters.
          * Can hold up to 100 parameters
          */
-        char parameters[MAX_PARAMETERS][NAME_SIZE];
-        /**
-         * Options of the ParsedCommand. 
-         * Max size if 100 caracters.
-         * Can hold up to 100 options
-         */
-        char options[MAX_OPTIONS][NAME_SIZE];
-        /**
-         * Size of the name
-         */
-        int nameLength;
+        char argv[MAX_PARAMETERS][NAME_SIZE];
         /**
          * Size of the parameters
          * 100 sizes for 100 parameters available
          */
-        int parameterLength[NAME_SIZE];
-        /**
-         * Size of the options
-         * 100 sizes for 100 options available
-         */
-        int optionLength[NAME_SIZE];
-
+        int argc[NAME_SIZE];
         /**
          * Pointer to the function
          * NULL default

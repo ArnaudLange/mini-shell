@@ -176,6 +176,33 @@ src/commands.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands.c.s
 .PHONY : src/commands.c.s
 
+src/commands/cd.o: src/commands/cd.c.o
+
+.PHONY : src/commands/cd.o
+
+# target to build an object file
+src/commands/cd.c.o:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cd.c.o
+.PHONY : src/commands/cd.c.o
+
+src/commands/cd.i: src/commands/cd.c.i
+
+.PHONY : src/commands/cd.i
+
+# target to preprocess a source file
+src/commands/cd.c.i:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cd.c.i
+.PHONY : src/commands/cd.c.i
+
+src/commands/cd.s: src/commands/cd.c.s
+
+.PHONY : src/commands/cd.s
+
+# target to generate assembly for a file
+src/commands/cd.c.s:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cd.c.s
+.PHONY : src/commands/cd.c.s
+
 src/commands/ls.o: src/commands/ls.c.o
 
 .PHONY : src/commands/ls.o
@@ -361,6 +388,9 @@ help:
 	@echo "... src/commands.o"
 	@echo "... src/commands.i"
 	@echo "... src/commands.s"
+	@echo "... src/commands/cd.o"
+	@echo "... src/commands/cd.i"
+	@echo "... src/commands/cd.s"
 	@echo "... src/commands/ls.o"
 	@echo "... src/commands/ls.i"
 	@echo "... src/commands/ls.s"

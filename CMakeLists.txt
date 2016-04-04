@@ -11,7 +11,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib )
 # Crée des variables avec les fichiers à compiler
 file(GLOB SRC
     "src/*.c"
-    "src/commands/ls.c"
+    "src/commands/*.c"
 )
 file(GLOB HEADER
     "include/*.h"
@@ -22,6 +22,8 @@ add_executable(shell ${SRC} ${HEADER})
 
 
 # building command executables
+
+# ls
 file(GLOB SRC_LS
     "src/commands/ls.c"
     "src/main/ls.c"

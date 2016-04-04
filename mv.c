@@ -67,7 +67,7 @@ int main(int argc, char const *argv[])
             }
         }
         // if there are 2 files
-        if (iFiles == 2)
+        if (iFiles == 2 || iOptions > 0)
         {
             myMv(files[0],files[1], options, iOptions);   
         }

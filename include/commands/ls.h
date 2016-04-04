@@ -22,6 +22,7 @@
 
 #include <string.h>
 #include "../redirection.h"
+#include "../utils.h"
 
 
 #define NORMAL "\x1B[0m"
@@ -53,27 +54,11 @@ typedef enum
 void ls(char *directory, char *options);
 
 /**
- * @brief 	Opens a file with the read only mode
- * 
- * @return 	The file in Integer
- */
-
-int openFile(char *filename);
-
-/**
  * @brief 	Sets the options depending on the entries
  * Also concatenates if there are more than two options and that the concatenation is possible
  * 
  */
 
-void readOptions(char *options, Options *etat);
-
-/**
- * @brief 	Concatenates two tables
- *
- *
- */
-
-void concatenateTables(char *tab1, char *tab2);
+void readLsOptions(char *options, Options *etat);
 
 #endif

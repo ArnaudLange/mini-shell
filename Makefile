@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named lib
+
+# Build rule for target.
+lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 lib
+.PHONY : lib
+
+# fast build rule for target.
+lib/fast:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/build
+.PHONY : lib/fast
+
+#=============================================================================
 # Target rules for targets named shell
 
 # Build rule for target.
@@ -150,17 +163,17 @@ cd/fast:
 .PHONY : cd/fast
 
 #=============================================================================
-# Target rules for targets named lib
+# Target rules for targets named cat
 
 # Build rule for target.
-lib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 lib
-.PHONY : lib
+cat: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 cat
+.PHONY : cat
 
 # fast build rule for target.
-lib/fast:
-	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/build
-.PHONY : lib/fast
+cat/fast:
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/build
+.PHONY : cat/fast
 
 src/commands.o: src/commands.c.o
 
@@ -188,6 +201,36 @@ src/commands.s: src/commands.c.s
 src/commands.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands.c.s
 .PHONY : src/commands.c.s
+
+src/commands/cat.o: src/commands/cat.c.o
+
+.PHONY : src/commands/cat.o
+
+# target to build an object file
+src/commands/cat.c.o:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cat.c.o
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/commands/cat.c.o
+.PHONY : src/commands/cat.c.o
+
+src/commands/cat.i: src/commands/cat.c.i
+
+.PHONY : src/commands/cat.i
+
+# target to preprocess a source file
+src/commands/cat.c.i:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cat.c.i
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/commands/cat.c.i
+.PHONY : src/commands/cat.c.i
+
+src/commands/cat.s: src/commands/cat.c.s
+
+.PHONY : src/commands/cat.s
+
+# target to generate assembly for a file
+src/commands/cat.c.s:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cat.c.s
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/commands/cat.c.s
+.PHONY : src/commands/cat.c.s
 
 src/commands/cd.o: src/commands/cd.c.o
 
@@ -225,9 +268,9 @@ src/commands/ls.o: src/commands/ls.c.o
 
 # target to build an object file
 src/commands/ls.c.o:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/commands/ls.c.o
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.o
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.o
-	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/commands/ls.c.o
 .PHONY : src/commands/ls.c.o
 
 src/commands/ls.i: src/commands/ls.c.i
@@ -236,9 +279,9 @@ src/commands/ls.i: src/commands/ls.c.i
 
 # target to preprocess a source file
 src/commands/ls.c.i:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/commands/ls.c.i
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.i
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.i
-	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/commands/ls.c.i
 .PHONY : src/commands/ls.c.i
 
 src/commands/ls.s: src/commands/ls.c.s
@@ -247,9 +290,9 @@ src/commands/ls.s: src/commands/ls.c.s
 
 # target to generate assembly for a file
 src/commands/ls.c.s:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/commands/ls.c.s
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.s
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.s
-	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/commands/ls.c.s
 .PHONY : src/commands/ls.c.s
 
 src/main.o: src/main.c.o
@@ -278,6 +321,33 @@ src/main.s: src/main.c.s
 src/main.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/main.c.s
 .PHONY : src/main.c.s
+
+src/main/cat.o: src/main/cat.c.o
+
+.PHONY : src/main/cat.o
+
+# target to build an object file
+src/main/cat.c.o:
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/main/cat.c.o
+.PHONY : src/main/cat.c.o
+
+src/main/cat.i: src/main/cat.c.i
+
+.PHONY : src/main/cat.i
+
+# target to preprocess a source file
+src/main/cat.c.i:
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/main/cat.c.i
+.PHONY : src/main/cat.c.i
+
+src/main/cat.s: src/main/cat.c.s
+
+.PHONY : src/main/cat.s
+
+# target to generate assembly for a file
+src/main/cat.c.s:
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/main/cat.c.s
+.PHONY : src/main/cat.c.s
 
 src/main/cd.o: src/main/cd.c.o
 
@@ -312,8 +382,8 @@ src/main/ls.o: src/main/ls.c.o
 
 # target to build an object file
 src/main/ls.c.o:
-	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.o
 	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/main/ls.c.o
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.o
 .PHONY : src/main/ls.c.o
 
 src/main/ls.i: src/main/ls.c.i
@@ -322,8 +392,8 @@ src/main/ls.i: src/main/ls.c.i
 
 # target to preprocess a source file
 src/main/ls.c.i:
-	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.i
 	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/main/ls.c.i
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.i
 .PHONY : src/main/ls.c.i
 
 src/main/ls.s: src/main/ls.c.s
@@ -332,8 +402,8 @@ src/main/ls.s: src/main/ls.c.s
 
 # target to generate assembly for a file
 src/main/ls.c.s:
-	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.s
 	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/main/ls.c.s
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.s
 .PHONY : src/main/ls.c.s
 
 src/process.o: src/process.c.o
@@ -417,6 +487,42 @@ src/shell.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/shell.c.s
 .PHONY : src/shell.c.s
 
+src/utils.o: src/utils.c.o
+
+.PHONY : src/utils.o
+
+# target to build an object file
+src/utils.c.o:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.o
+.PHONY : src/utils.c.o
+
+src/utils.i: src/utils.c.i
+
+.PHONY : src/utils.i
+
+# target to preprocess a source file
+src/utils.c.i:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.i
+.PHONY : src/utils.c.i
+
+src/utils.s: src/utils.c.s
+
+.PHONY : src/utils.s
+
+# target to generate assembly for a file
+src/utils.c.s:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.s
+.PHONY : src/utils.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -424,14 +530,18 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... lib"
 	@echo "... rebuild_cache"
 	@echo "... shell"
 	@echo "... ls"
 	@echo "... cd"
-	@echo "... lib"
+	@echo "... cat"
 	@echo "... src/commands.o"
 	@echo "... src/commands.i"
 	@echo "... src/commands.s"
+	@echo "... src/commands/cat.o"
+	@echo "... src/commands/cat.i"
+	@echo "... src/commands/cat.s"
 	@echo "... src/commands/cd.o"
 	@echo "... src/commands/cd.i"
 	@echo "... src/commands/cd.s"
@@ -441,6 +551,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/main/cat.o"
+	@echo "... src/main/cat.i"
+	@echo "... src/main/cat.s"
 	@echo "... src/main/cd.o"
 	@echo "... src/main/cd.i"
 	@echo "... src/main/cd.s"
@@ -456,6 +569,9 @@ help:
 	@echo "... src/shell.o"
 	@echo "... src/shell.i"
 	@echo "... src/shell.s"
+	@echo "... src/utils.o"
+	@echo "... src/utils.i"
+	@echo "... src/utils.s"
 .PHONY : help
 
 

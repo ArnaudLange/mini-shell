@@ -26,6 +26,7 @@ add_executable(shell ${SRC} ${HEADER})
 # ls
 file(GLOB SRC_LS
     "src/commands/ls.c"
+    "src/utils.c"
     "src/main/ls.c"
 )
 file(GLOB HEADER_LS
@@ -33,7 +34,7 @@ file(GLOB HEADER_LS
 )
 add_executable(ls ${SRC_LS} ${HEADER_LS})
 
-# ls
+# cd
 file(GLOB SRC_CD
     "src/commands/cd.c"
     "src/main/cd.c"
@@ -42,6 +43,17 @@ file(GLOB HEADER_CD
     "include/commands/cd.h"
 )
 add_executable(cd ${SRC_CD} ${HEADER_CD})
+
+# cat
+file(GLOB SRC_CAT
+    "src/commands/cat.c"
+    "src/utils.c"
+    "src/main/cat.c"
+)
+file(GLOB HEADER_CAT
+    "include/commands/cat.h"
+)
+add_executable(cat ${SRC_CAT} ${HEADER_CAT})
 
 # building command libraries
 add_library(lib SHARED ${SRC_LS})

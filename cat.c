@@ -179,7 +179,7 @@ void concatenateTables(char *tab1, const char *tab2)
 
 
 
-void cat(char* files, char**options, int iOptions)
+void cat(char* files, char**options, int iOptions, int *nbLigne)
 {
 	// ----------------------------------
 	// Lecture des options
@@ -196,10 +196,9 @@ void cat(char* files, char**options, int iOptions)
 	// ----------------------------------
 	FILE *fichier = NULL;
 	char character;
-	int nbLigne=1;
 	int premiere=0;
 
-	if (strcmp(files, "")!=0)
+	if (strcmp(files, ""))
 	{
 		fichier = fopen(files,"r");
 		if (fichier == NULL)
@@ -236,8 +235,8 @@ void cat(char* files, char**options, int iOptions)
 
             		if (premiere == 0)
             		{
-            			printf("\t%d  ",nbLigne);
-            			nbLigne++;	
+            			printf("\t%d  ",*nbLigne);
+            			(*nbLigne)++;	
             			premiere = 1;
             		}
 
@@ -245,8 +244,8 @@ void cat(char* files, char**options, int iOptions)
             		if (character == 10)
             		{
             			printf("%c", character);
-            			printf("\t%d  ",nbLigne);
-            			nbLigne++;
+            			printf("\t%d  ",*nbLigne);
+            			(*nbLigne)++;
             		}
             		else
             		{
@@ -292,8 +291,8 @@ void cat(char* files, char**options, int iOptions)
 
             		if (premiere == 0)
             		{
-            			printf("\t%d  ",nbLigne);
-            			nbLigne++;	
+            			printf("\t%d  ",*nbLigne);
+            			(*nbLigne)++;	
             			premiere = 1;
             		}
 
@@ -302,14 +301,14 @@ void cat(char* files, char**options, int iOptions)
             		{
             			printf("$");
             			printf("\n");
-            			printf("\t%d  ",nbLigne);
-            			nbLigne++;
+            			printf("\t%d  ",*nbLigne);
+            			(*nbLigne)++;
             		}
             		else if (character == 10)
             		{
             			printf("%c", character);
-            			printf("\t%d  ",nbLigne);
-            			nbLigne++;
+            			printf("\t%d  ",*nbLigne);
+            			(*nbLigne)++;
             		}
             		else
             		{
@@ -323,8 +322,8 @@ void cat(char* files, char**options, int iOptions)
 
             		if (premiere == 0)
             		{
-            			printf("\t%d  ",nbLigne);
-            			nbLigne++;	
+            			printf("\t%d  ",*nbLigne);
+            			(*nbLigne)++;	
             			premiere = 1;
             		}
 
@@ -336,8 +335,8 @@ void cat(char* files, char**options, int iOptions)
             		else if (character == 10)
             		{
             			printf("%c", character);
-            			printf("\t%d  ",nbLigne);
-            			nbLigne++;
+            			printf("\t%d  ",*nbLigne);
+            			(*nbLigne)++;
             		}
             		else
             		{
@@ -350,8 +349,8 @@ void cat(char* files, char**options, int iOptions)
 
             		if (premiere == 0)
             		{
-            			printf("\t%d  ",nbLigne);
-            			nbLigne++;	
+            			printf("\t%d  ",*nbLigne);
+            			(*nbLigne)++;	
             			premiere = 1;
             		}
 
@@ -364,8 +363,8 @@ void cat(char* files, char**options, int iOptions)
             		{
             			printf("$");
             			printf("%c", character);
-            			printf("\t%d  ",nbLigne);
-            			nbLigne++;
+            			printf("\t%d  ",*nbLigne);
+            			(*nbLigne)++;
             		}
             		else
             		{
@@ -431,6 +430,7 @@ int main(int argc, char const *argv[])
 
 	int iOptions = -1;
 	int iFiles = -1;
+	int nbLigne = 1;
 	int i,j;
 
 	// -----------------------------------
@@ -459,13 +459,13 @@ int main(int argc, char const *argv[])
 		{
 			for(j = 0; j <= iFiles; j++)
 			{
-				cat(files[j],options,iOptions);
+				cat(files[j],options,iOptions, &nbLigne);
 				free(files[j]);
 			}	
 		}
 		else
 		{
-			cat("",options,iOptions);
+			cat("",options,iOptions,&nbLigne);
 		}
 		free(files);
 		int l;

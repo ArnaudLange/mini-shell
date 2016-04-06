@@ -23,7 +23,7 @@ int ls_lib(int argc, char *argv[]){
     // Declaration tableau deux dimensions pour les options
 
     char* options = NULL;
-    options = (char*) calloc(2,sizeof(*options));
+    options = (char*) calloc(2,sizeof(char));
     if (options == NULL)
     {
         perror("options");
@@ -41,14 +41,12 @@ int ls_lib(int argc, char *argv[]){
         perror("files");
         exit(1);
     }
-    /*
     files[0] = malloc(sizeof(char*));
     if (files[0] == NULL)
     {
         perror("files[x]");
         exit(1);
     }
-	*/
     // -----------------------------------
 
     int nbFiles = 0;
@@ -76,7 +74,7 @@ int ls_lib(int argc, char *argv[]){
 
            	printf("Usage: ls [OPTION]... [FILE]...\n");
 			printf("List information about the FILEs (the current directory by default).\n");
-			printf("\n  -l\t\tuse a long listing format\n");
+			printf("\n  -l             \t\tuse a long listing format\n");
 			printf("\n  -d, --directory\t\tlist directory entries instead of content.\n");
            	exit(0);
            	break;
@@ -90,6 +88,7 @@ int ls_lib(int argc, char *argv[]){
            break;
 
        default:
+            printf("ls: invalid option -- \"%c\"\n",c);
             printf("Try 'ls --help' for more information.\n");
             exit(1);
       }
@@ -99,9 +98,15 @@ int ls_lib(int argc, char *argv[]){
         {
             if(argv[i][0] != '-')
             {
-            	files[nbFiles]=argv[i];
-                nbFiles++;
-                files = realloc(files, (nbFiles +1)*sizeof(char*));
+            	nbFiles++;
+                files=realloc(files, (nbFiles)*sizeof(char*));
+                files[nbFiles] = malloc(sizeof(char));
+                if (files[nbFiles] == NULL)
+                {
+                    perror("files[x]");
+                    exit(1);
+                }
+                concatenateTables(files[nbFiles], argv[i]);
             }
         }
         // if there are 2 files
@@ -130,66 +135,6 @@ int ls_lib(int argc, char *argv[]){
     }
 
     return 0;
-	/*
-        char *optionTest = "";
-
-        char *options = NULL;
-        options = malloc(sizeof(char));
-        if (options == NULL)
-        {
-                perror("options");
-                exit(-1);
-        }
-
-        int iOptions = -1;
-        int iParam = -1;
-        int i;
-
-        if (argc >0)
-        {
-                for (i=0; i<argc; i++)
-                {
-                        if(argv[i][0] == '-')
-                        {
-                                iOptions = i;
-                                printf("test");
-                                concatenateTables(options,argv[i]);
-                        }
-                        else {
-                                iParam = i;
-                        }
-                }
-
-                if (iOptions == -1)
-                {
-                        if (iParam == -1)
-                        {
-                                ls("./","");
-                        }
-                        else
-                        {
-                                ls(argv[iParam],"");
-                        }
-                }
-                else {
-                        if (iParam == -1)
-                        {
-                                ls("./",options);
-                        }
-                        else
-                        {
-                                ls(argv[iParam],options);
-                        }
-                }
-        }
-        //SI pas d'arguments => on execute dans le dossier courant
-        else
-        {
-                ls("./",optionTest);
-        }
-        return 0;
-
-    */
 }
 
 void ls(char *directory, char *options)
@@ -198,6 +143,13 @@ void ls(char *directory, char *options)
 	readLsOptions(options, &etat);
 
 	DIR *repertoire;
+    char *nameFile = NULL;
+    nameFile = malloc(sizeof(char));
+    if(nameFile == NULL)
+    {
+        perror("malloc");
+        exit(1);
+    }
 
 	struct dirent *flux;
 	struct stat statbuf;
@@ -211,26 +163,28 @@ void ls(char *directory, char *options)
 	struct group *groupInfo;
 	struct tm *timeInfo;
 
-
 	if ((repertoire = opendir(directory)) == NULL)
 	{
 		perror(directory);
-		exit(-1);
+		exit(1);
 	}
 
 	while ((flux = readdir(repertoire)))
 	{
-		file = openFile(flux->d_name);
+        concatenateTables(nameFile,directory);
+        concatenateTables(nameFile,"/");
+        concatenateTables(nameFile,flux->d_name);
+		file = openFile(nameFile);
+
 		if (file == -1)
 		{
-			perror(flux->d_name);
-			exit(-1);
+			perror(nameFile);
+			exit(1);
 		}
-
 		if (fstat(file,&statbuf) == -1)
 		{
 			perror("stat");
-			exit(-1);
+			exit(1);
 		}
 
 		//-----------------SWITCH AVEC LES DIFFERENTES OPTIONS-----------------//
@@ -359,32 +313,28 @@ void readLsOptions(char *options, Options *etat)
          * Compares options and different types of options handled
          * And updates etat accordingly
          */
-        if (strcmp(options, "-l")==0)
+
+        if (options[0] == 1)
         {
-                *etat=etatDetails;
-        }
-        else if (strcmp(options, "-d")==0)
-        {
-                *etat=etatDossiers;
-        }
-        else if (strcmp(options, "")==0)
-        {
-                *etat=etatNormal;
-        }
-        else if ((strcmp(options, "-dl")==0) || (strcmp(options, "-ld")==0) || (strcmp(options, "-d-l")==0) || (strcmp(options, "-l-d")==0))
-        {
-                *etat=etatDetailsDossiers;
+            if (options[1]==1)
+            {
+                *etat = etatDetailsDossiers;
+            }
+            else
+            {
+                *etat = etatDetails;
+            }
         }
         else
         {
-                /**
-                 * Error if the options isn't handled
-                 * Precise which options were at fault
-                 * And quits the program
-                 */
-                printf("ls: invalid option -- \"%s\"\n",options);
-                printf("Get more information on the README.md document.");
-                exit(-1);
+            if (options[1]==1)
+            {
+                *etat = etatDossiers;
+            }
+            else
+            {
+                *etat = etatNormal;
+            }
         }
 
 }

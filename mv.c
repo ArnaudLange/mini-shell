@@ -120,7 +120,7 @@ void myMv(char* arg1, char* arg2, char* options, int iOptions){
     // ----------------------------------
     // Lecture des options
     // ----------------------------------
-    if(strcmp(options, "v") == 0 && !stat(arg2, &statbuf) != -1) {
+    if(strcmp(options, "v") == 0 && stat(arg2, &statbuf) != -1) {
         printf("Renaming %s to %s\n", arg1, arg2);
     }
     

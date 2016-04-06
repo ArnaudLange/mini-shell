@@ -56,10 +56,10 @@ int main(int argc, char *argv[])
        switch (c) {
 
          case 'h':
-           printf("\n-----------------------------------------------------------\n\n");
-           printf("    Usage: mv [OPTION]... SOURCE DEST\n\n");
-           printf("    Rename SOURCE to DEST\n\n");
-           printf("    -v, --verbose : explain what is being done\n");
+           printf("\n-----------------------------------------------------------\n");
+           printf("Usage: mv [OPTION]... SOURCE DEST\n");
+           printf("Rename SOURCE to DEST\n\n");
+           printf("    -v, --verbose        explain what is being done\n");
            printf("\n-----------------------------------------------------------\n\n");
            exit(0);
            break;

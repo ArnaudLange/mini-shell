@@ -22,9 +22,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
+#include <dlfcn.h>
+
+#include <dirent.h>
 
 #include "../include/shell.h"
 #include "../include/process.h"
+
+#define LIB_PATH "lib/"
+
+typedef void (*init)(Shell* shell);
+init Init;
 
 
 void welcomeMessage(){
@@ -47,6 +55,29 @@ void printPrompt(){
         printf(">");
 }
 
+int loadLibraries(Shell* shell){
+        DIR* dirp = opendir(LIB_PATH);
+        struct dirent* dp;
+        void *lib;
+        while ((dp = readdir(dirp)) ){
+                char *path = malloc(strlen(LIB_PATH)+strlen(dp->d_name)+1);//+1 for the zero-terminator
+                //in real code you would check for errors in malloc here
+                strcpy(path, LIB_PATH);
+                strcat(path, dp->d_name);
+
+                if ((lib = dlopen(path, RTLD_LAZY)) != NULL) {
+                        if ((Init = (init) dlsym(lib, "init")) == NULL) {
+                                printf("Error loading %s\n", dp->d_name);
+                        }
+                        else{
+                                Init(shell);
+                        }
+                }
+        }
+                
+   (void)closedir(dirp);
+}
+
 int main(int argc, char* argv[]){
 
         char *line=NULL;
@@ -54,9 +85,10 @@ int main(int argc, char* argv[]){
         char *chariot;
         ssize_t read;
 
-
         Shell* shell = initShell();
         
+        loadLibraries(shell);
+
         welcomeMessage();
         while(1){
                 printPrompt();

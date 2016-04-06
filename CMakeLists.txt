@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.0)
 # Notre projet est étiqueté shell
 project(binsh)
 
-set(CMAKE_C_FLAGS "-std=c99 -D_XOPEN_SOURCE=600")
+set(CMAKE_C_FLAGS "-std=c99 -D_XOPEN_SOURCE=600 -ldl")
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin )
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib )
 
@@ -33,6 +33,8 @@ file(GLOB HEADER_LS
     "include/commands/ls.h"
 )
 add_executable(ls ${SRC_LS} ${HEADER_LS})
+add_library(ls_lib SHARED ${SRC_LS})
+set_target_properties(ls_lib PROPERTIES OUTPUT_NAME "ls")
 
 # cd
 file(GLOB SRC_CD
@@ -44,6 +46,7 @@ file(GLOB HEADER_CD
 )
 add_executable(cd ${SRC_CD} ${HEADER_CD})
 
+
 # cat
 file(GLOB SRC_CAT
     "src/commands/cat.c"
@@ -54,7 +57,5 @@ file(GLOB HEADER_CAT
     "include/commands/cat.h"
 )
 add_executable(cat ${SRC_CAT} ${HEADER_CAT})
-
-# building command libraries
-add_library(lib SHARED ${SRC_LS})
-set_target_properties(lib PROPERTIES OUTPUT_NAME "insh")
+add_library(cat_lib SHARED ${SRC_CAT})
+set_target_properties(cat_lib PROPERTIES OUTPUT_NAME "cat")

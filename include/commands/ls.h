@@ -1,15 +1,3 @@
-#ifndef LS_H
-#define LS_H
-
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-#include <dirent.h>
-
-#include <time.h>
-#include <errno.h>
-#include <string.h>
 /*
     This file is part of Binsh.
 
@@ -26,7 +14,19 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-    
+#ifndef LS_H
+#define LS_H
+
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+#include <dirent.h>
+
+#include <time.h>
+#include <errno.h>
+#include <string.h>
+#include <getopt.h>
 #include <pwd.h>
 #include <grp.h>
 #include <limits.h>

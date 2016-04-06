@@ -1,0 +1,7 @@
+/home/cokral/mini-shell/CMakeFiles/edit_cache.dir
+/home/cokral/mini-shell/CMakeFiles/lib.dir
+/home/cokral/mini-shell/CMakeFiles/cat.dir
+/home/cokral/mini-shell/CMakeFiles/cd.dir
+/home/cokral/mini-shell/CMakeFiles/ls.dir
+/home/cokral/mini-shell/CMakeFiles/rebuild_cache.dir
+/home/cokral/mini-shell/CMakeFiles/shell.dir

@@ -18,6 +18,119 @@
 #include "../../include/commands/ls.h"
 
 int ls_lib(int argc, char *argv[]){
+
+	// -----------------------------------
+    // Declaration tableau deux dimensions pour les options
+
+    char* options = NULL;
+    options = (char*) calloc(2,sizeof(*options));
+    if (options == NULL)
+    {
+        perror("options");
+        exit(1);
+    }
+
+
+    // -----------------------------------
+    // Declaration tableau deux dimensions pour les files
+
+    char** files = NULL;
+    files = malloc(sizeof(char**));
+    if (files == NULL)
+    {
+        perror("files");
+        exit(1);
+    }
+    /*
+    files[0] = malloc(sizeof(char*));
+    if (files[0] == NULL)
+    {
+        perror("files[x]");
+        exit(1);
+    }
+	*/
+    // -----------------------------------
+
+    int nbFiles = 0;
+    int i, c;
+
+    // -----------------------------------
+    // parcourt des arguments de la fonction
+
+    if (argc >1) {
+        while (1) {
+        int option_index = 0;
+        static struct option long_options[] = {
+            {"help",     no_argument,       0, 'h'},
+            {"l",  no_argument,       0, 'l'},
+            {"directory",  no_argument,       0, 'd'}
+        };
+
+       c = getopt_long(argc, argv, "hld", long_options, &option_index);
+
+        if (c == -1) break;
+
+       switch (c) {
+
+         case 'h':
+
+           	printf("Usage: ls [OPTION]... [FILE]...\n");
+			printf("List information about the FILEs (the current directory by default).\n");
+			printf("\n  -l\t\tuse a long listing format\n");
+			printf("\n  -d, --directory\t\tlist directory entries instead of content.\n");
+           	exit(0);
+           	break;
+
+         case 'l':
+           options[0]=1; 
+           break;
+
+         case 'd':
+           options[1]=1; 
+           break;
+
+       default:
+            printf("Try 'ls --help' for more information.\n");
+            exit(1);
+      }
+    }
+
+        for (i=1; i<argc; i++)
+        {
+            if(argv[i][0] != '-')
+            {
+            	files[nbFiles]=argv[i];
+                nbFiles++;
+                files = realloc(files, (nbFiles +1)*sizeof(char*));
+            }
+        }
+        // if there are 2 files
+        if (nbFiles == 0)
+        {
+            ls("./",options);
+        }
+        else
+        {
+            int k;
+            for(k=0; k<nbFiles ; k++)
+            {
+            	printf("%s\n",files[nbFiles]);
+            	ls(files[nbFiles],options);
+            }
+        }
+        free(files);
+        free(options);
+
+
+    }
+    //SI pas d'arguments => on affiche une erreur
+    else
+    {
+        ls("./","");
+    }
+
+    return 0;
+	/*
         char *optionTest = "";
 
         char *options = NULL;
@@ -75,6 +188,8 @@ int ls_lib(int argc, char *argv[]){
                 ls("./",optionTest);
         }
         return 0;
+
+    */
 }
 
 void ls(char *directory, char *options)

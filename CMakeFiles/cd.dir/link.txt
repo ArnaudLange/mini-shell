@@ -1,0 +1,1 @@
+/usr/bin/cc  -std=c99 -D_XOPEN_SOURCE=600   CMakeFiles/cd.dir/src/commands/cd.c.o CMakeFiles/cd.dir/src/main/cd.c.o  -o bin/cd -rdynamic 

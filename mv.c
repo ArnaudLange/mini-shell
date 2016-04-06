@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     // Declaration tableau deux dimensions pour les options
 
     char* options = NULL;
-    options = (char*) malloc(15*sizeof(*options));
+    options = (char*) calloc(15, sizeof(*options));
     if (options == NULL)
     {
         perror("options");
@@ -56,9 +56,11 @@ int main(int argc, char *argv[])
        switch (c) {
 
          case 'h':
-           printf("Usage: mv [OPTION]... SOURCE DEST\n");
-           printf("Rename SOURCE to DEST\n");
-           printf("-v, --verbose : explain what is being done\n");
+           printf("\n-----------------------------------------------------------\n\n");
+           printf("    Usage: mv [OPTION]... SOURCE DEST\n\n");
+           printf("    Rename SOURCE to DEST\n\n");
+           printf("    -v, --verbose : explain what is being done\n");
+           printf("\n-----------------------------------------------------------\n\n");
            exit(0);
            break;
 
@@ -109,24 +111,37 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void myMv(char* arg1, char* arg2, char* options, int iOptions)
-{    
-    // ----------------------------------
-    // Lecture des options
-    // ----------------------------------
-    if(strcmp(options, "v") == 0){
-        printf("Renaming %s to %s\n", arg1, arg2);
-    }
+void myMv(char* arg1, char* arg2, char* options, int iOptions){
     // ----------------------------------
     // Initialisation
     // ----------------------------------
     struct stat statbuf;
 
+    // ----------------------------------
+    // Lecture des options
+    // ----------------------------------
+    if(strcmp(options, "v") == 0 && !stat(arg2, &statbuf) != -1) {
+        printf("Renaming %s to %s\n", arg1, arg2);
+    }
+    
+
+
     if (stat(arg1, &statbuf) == -1) { //si il n'existe aucun fichier déjà nommé comme celui qu'on essaye de déplacer
         printf("mv : '%s' invalid path\n", arg1);
     }
     else if(stat(arg2, &statbuf) != -1) { //si le fichier dest existe déjà
-        printf("mv : '%s' already exists\n", arg2);
+
+        if(S_ISDIR(statbuf.st_mode)){ //si c'est un dossier, déplacement de arg1 dans arg2
+
+            if(strcmp(options, "v") == 0) {
+                printf("Moving %s to %s/\n", arg1, arg2);
+            }
+
+            concatenateTables(arg2, "/");
+            concatenateTables(arg2, arg1);
+            rename(arg1, arg2);
+        }
+        else printf("mv : '%s' already exists\n", arg2);
     }
     else{
         rename(arg1, arg2);

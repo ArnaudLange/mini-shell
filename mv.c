@@ -1,7 +1,7 @@
 #include "mv.h"
 
 
-int main(int argc, char *argv[])
+int mv(int argc, char *argv[])
 {
     // -----------------------------------
     // Declaration tableau deux dimensions pour les options
@@ -120,12 +120,8 @@ void myMv(char* arg1, char* arg2, char* options, int iOptions){
     // ----------------------------------
     // Lecture des options
     // ----------------------------------
-    if(strcmp(options, "v") == 0 && stat(arg2, &statbuf) != -1) {
-        printf("Renaming %s to %s\n", arg1, arg2);
-    }
     
-
-
+   
     if (stat(arg1, &statbuf) == -1) { //si il n'existe aucun fichier déjà nommé comme celui qu'on essaye de déplacer
         printf("mv : '%s' invalid path\n", arg1);
     }
@@ -144,6 +140,9 @@ void myMv(char* arg1, char* arg2, char* options, int iOptions){
         else printf("mv : '%s' already exists\n", arg2);
     }
     else{
+    	if(strcmp(options, "v") == 0) {
+        	printf("Renaming %s to %s\n", arg1, arg2);
+    	}
         rename(arg1, arg2);
     }
     

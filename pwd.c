@@ -15,9 +15,7 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "../../include/commands/pwd.h"
-
 
 int pwd_lib(int argc, char *argv[]){
 	

@@ -14,16 +14,9 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-#pragma once
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <getopt.h>
-
     
-#include "../redirection.h"
-#include "../utils.h"
+#include "../../include/commands/pwd.h"
 
-
-int pwd_lib(int argc, char *argv[]);
+int main(int argc, char* argv[]){
+        pwd_lib(argc, argv);
+}

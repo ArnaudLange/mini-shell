@@ -57,6 +57,8 @@ fcntl.h
 -
 stdlib.h
 -
+stdio.h
+-
 
 /home/cokral/mini-shell/src/commands/ls.c
 ../../include/commands/ls.h

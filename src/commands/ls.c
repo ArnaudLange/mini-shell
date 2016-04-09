@@ -35,13 +35,13 @@ int ls_lib(int argc, char *argv[]){
     // Declaration tableau deux dimensions pour les files
 
     char** files = NULL;
-    files = malloc(sizeof(char**));
+    files = calloc(1,sizeof(char**));
     if (files == NULL)
     {
         perror("files");
         exit(1);
     }
-    files[0] = malloc(sizeof(char*));
+    files[0] = calloc(1,sizeof(char*));
     if (files[0] == NULL)
     {
         perror("files[x]");
@@ -74,8 +74,8 @@ int ls_lib(int argc, char *argv[]){
 
            	printf("Usage: ls [OPTION]... [FILE]...\n");
 			printf("List information about the FILEs (the current directory by default).\n");
-			printf("\n  -l             \t\tuse a long listing format\n");
-			printf("\n  -d, --directory\t\tlist directory entries instead of content.\n");
+			printf("\n  -l             \tuse a long listing format\n");
+			printf("\n  -d, --directory\tlist directory entries instead of content.\n");
            	exit(0);
            	break;
 
@@ -121,6 +121,7 @@ int ls_lib(int argc, char *argv[]){
             {
             	printf("%s\n",files[nbFiles]);
             	ls(files[nbFiles],options);
+                free(files[nbFiles]);
             }
         }
         free(files);
@@ -144,10 +145,10 @@ void ls(char *directory, char *options)
 
 	DIR *repertoire;
     char *nameFile = NULL;
-    nameFile = malloc(sizeof(char));
+    nameFile = calloc(1,sizeof(char));
     if(nameFile == NULL)
     {
-        perror("malloc");
+        perror("calloc");
         exit(1);
     }
 
@@ -171,10 +172,21 @@ void ls(char *directory, char *options)
 
 	while ((flux = readdir(repertoire)))
 	{
-        concatenateTables(nameFile,directory);
-        concatenateTables(nameFile,"/");
-        concatenateTables(nameFile,flux->d_name);
-		file = openFile(nameFile);
+        if (directory != "./")
+        {
+            if(strlen(nameFile)>1){
+                free(nameFile);
+                nameFile = NULL;
+                nameFile = calloc(1,sizeof(char));
+            }
+            concatenateTables(nameFile,directory);
+            concatenateTables(nameFile,"/");
+            concatenateTables(nameFile,flux->d_name);
+    		file = openFile(nameFile);
+        }
+        else{
+            file = openFile(flux->d_name);
+        }
 
 		if (file == -1)
 		{
@@ -298,8 +310,6 @@ void ls(char *directory, char *options)
 
 			}
 		}
-
-
 
 	}
 	//SAUT DE LIGNE A LA FIN

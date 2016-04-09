@@ -49,6 +49,7 @@ void concatenateTables(char *tab1, char *tab2){
                 i++;
                 j++;
         }
+
 }
 
 

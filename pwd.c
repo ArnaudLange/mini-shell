@@ -4,8 +4,7 @@
 #include <getopt.h>
 //#include "utils.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
 	
 	// -----------------------------------
     // Declaration tableau  pour les options

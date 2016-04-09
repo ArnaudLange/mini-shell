@@ -14,18 +14,9 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
+    
+#include "../../include/commands/mv.h"
 
-#pragma once
-
-#include <stdio.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <getopt.h>
-#include <string.h>
-#include "../utils.h"
-
-int mv_lib(int argc, char *argv[]);
-
-void myMv(char* arg1, char* arg2, char* options, int iOptions);
+int main(int argc, char* argv[]){
+        mv_lib(argc, argv);
+}

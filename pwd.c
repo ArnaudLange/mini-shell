@@ -42,6 +42,7 @@ int main(int argc, char *argv[]){
            printf("\n-----------------------------------------------------------\n");
            printf("Usage: pwd \n");
            printf("Give the current working directory\n\n");
+           printf("    no options available\n");
            printf("\n-----------------------------------------------------------\n\n");
            exit(0);
            break;

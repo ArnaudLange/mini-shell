@@ -178,11 +178,17 @@ void ls(char *directory, char *options)
                 free(nameFile);
                 nameFile = NULL;
                 nameFile = calloc(1,sizeof(char));
+                if (nameFile == NULL){
+                    perror("calloc namefile");
+                    exit(1);
+                }
             }
-            concatenateTables(nameFile,directory);
-            concatenateTables(nameFile,"/");
-            concatenateTables(nameFile,flux->d_name);
+
+            nameFile=concatenateTables(nameFile,directory);
+            nameFile=concatenateTables(nameFile,"/");
+            nameFile=concatenateTables(nameFile,flux->d_name);
     		file = openFile(nameFile);
+
         }
         else{
             file = openFile(flux->d_name);

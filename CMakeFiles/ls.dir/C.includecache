@@ -59,6 +59,8 @@ stdlib.h
 -
 stdio.h
 -
+string.h
+-
 
 /home/cokral/mini-shell/src/commands/ls.c
 ../../include/commands/ls.h

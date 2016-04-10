@@ -14,9 +14,28 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-    
-#include "../../include/commands/fonction.h"
 
-int main(int argc, char* argv[]){
-        fonction_lib(argc, argv);
+//** à décommenter et à completer une fois la fonction finies **//
+//#include "../../include/commands/fonction.h"
+
+#include "echo.h" //à virer une fois les tests effectués
+
+int echo_lib(int argc, char *argv[]){
+
+    int i;
+    int etatN=0;
+
+    for(i=1; i<argc; i++){
+        if (!strcmp(argv[i],"-n")){
+            etatN=1;
+        }
+        else{
+            printf("%s ",argv[i]);
+        }
+    }
+    if(!etatN){
+        printf("\n");
+    }
+    return 0;
 }
+

@@ -100,13 +100,18 @@ int ls_lib(int argc, char *argv[]){
             {
             	nbFiles++;
                 files=realloc(files, (nbFiles)*sizeof(char*));
-                files[nbFiles] = malloc(sizeof(char));
+                if (files == NULL)
+                {
+                    perror("files");
+                    exit(1);
+                }
+                files[nbFiles] = calloc(1,sizeof(char));
                 if (files[nbFiles] == NULL)
                 {
                     perror("files[x]");
                     exit(1);
                 }
-                concatenateTables(files[nbFiles], argv[i]);
+                files[nbFiles-1]=concatenateTables(files[nbFiles-1], argv[i]);
             }
         }
         // if there are 2 files
@@ -119,8 +124,8 @@ int ls_lib(int argc, char *argv[]){
             int k;
             for(k=0; k<nbFiles ; k++)
             {
-            	printf("%s\n",files[nbFiles]);
-            	ls(files[nbFiles],options);
+            	printf("%s\n",files[k]);
+            	ls(files[k],options);
                 free(files[nbFiles]);
             }
         }

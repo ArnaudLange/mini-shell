@@ -30,5 +30,5 @@
 //** A virer une fois les tests finis **//
 #include "utils.h"
 
-int fontion_lib(int argc, char *argv[]);
+int cp_lib(int argc, char *argv[]);
 

@@ -21,7 +21,7 @@
 #include "ps.h" //à virer une fois les tests effectués
 
 
-int ps_lib(int argc, char *argv[]){
+int main(int argc, char *argv[]){
 
     // -----------------------------------
     // Declaration tableau deux dimensions pour les options
@@ -34,29 +34,8 @@ int ps_lib(int argc, char *argv[]){
         exit(1);
     }
 
-
     // -----------------------------------
-    // Declaration tableau deux dimensions pour les files
-
-    char** files = NULL;
-    files = malloc(sizeof(char**));
-    if (files == NULL)
-    {
-        perror("files");
-        exit(1);
-    }
-    files[0] = malloc(sizeof(char*));
-    if (files[0] == NULL)
-    {
-        perror("files[x]");
-        exit(1);
-    }
-
-    // -----------------------------------
-
-    int nbOptions = 0;
-    int nbFiles = 0;
-    int i, c;
+    int c;
 
     // -----------------------------------
     // parcourt des arguments de la fonction
@@ -70,13 +49,13 @@ int ps_lib(int argc, char *argv[]){
         //structure donnant les options gérées par la commande
             //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
         static struct option long_options[] = {
-            {"help",     no_argument,       0, 'h'},
-            {"verbose",  no_argument,       0, 'v'}
+            {"helpArg",     required_argument,       0, 'z'},
+            {"help",     no_argument ,       0, 'h'}
         };
 
         //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
             //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
-        c = getopt_long(argc, argv, "hv", long_options, &option_index);
+        c = getopt_long(argc, argv, "h", long_options, &option_index);
 
         if (c == -1) break;
 
@@ -85,17 +64,41 @@ int ps_lib(int argc, char *argv[]){
 
          case 'h': 
            printf("\n-----------------------------------------------------------\n");
-           printf("Usage: fonction [OPTION]... ARG\n");
-           printf("Rename SOURCE to DEST\n\n");
-           printf("    -v, --verbose        explain what is being done\n");
-           printf("\n-----------------------------------------------------------\n\n");
+           printf("Usage: ps [OPTION]\n\n");
+           printf("\tTry 'ps --helpArg <simple|list|output|threads|misc|all>'\n");
+           printf("\tor 'ps --helpArg <s|l|o|t|m|a>'\n");
+           printf("\tfor additional help text.");
+           printf("\n-----------------------------------------------------------\n");
            exit(0);
            break;
 
-         case 'v':
-           options[nbOptions] = c; 
-           nbOptions++;
-           break;
+         case 'z':
+            if(!strcmp(optarg,"simple") || !strcmp(optarg,"s")){
+                printf("\n-----------------------------------------------------------\n");
+                printf("Basic options:\n");
+                printf("\t-A, -e               all processes\n");
+                printf("\t-a                   all with tty, except session leaders\n");
+                printf("\t-d                   all except session leaders\n");
+                printf("\t-N, --deselect       negate selection");
+                printf("\n-----------------------------------------------------------\n");
+
+            }
+            else if(!strcmp(optarg,"list") || !strcmp(optarg,"l")){
+                printf("On est dans list.\n");
+            }
+            if(!strcmp(optarg,"output") || !strcmp(optarg,"o")){
+                printf("On est dans output.\n");
+            }
+            if(!strcmp(optarg,"threads") || !strcmp(optarg,"t")){
+                printf("On est dans threads.\n");
+            }
+            else if(!strcmp(optarg,"misc") || !strcmp(optarg,"m")){
+                printf("On est dans misc.\n");
+            }
+            else if(!strcmp(optarg,"all") || !strcmp(optarg,"a")){
+                printf("On est dans all.\n");
+            }
+            break;
 
         //message par défaut quand l'option rentrée n'est pas gérée par la commande
         default:
@@ -103,40 +106,8 @@ int ps_lib(int argc, char *argv[]){
             exit(1);
       }
     }
-        //Boucle pour parcourir les arguments qui ne sont pas des options
-        for (i=1; i<argc; i++)
-        {
-            if(argv[i][0] != '-')
-            {
-                nbFiles++;
-                files[nbFiles] = malloc(16*sizeof(char*));
-
-                concatenateTables(files[nbFiles],argv[i]);
-
-
-            }
-        }
-        // if nombre d'arguments invalide
-        if (nbFiles == 2)
-        {
-            myMv(files[1],files[2], options, nbOptions);   
-        }
-        else
-        {
-            printf("fonction : invalid number of arguments\n");
-            printf("Try 'fonction --help' for more information.\n");
-        }
-        free(files);
-        free(options);
-
+    
 
     }
-    //** A changer **//
-    //SI pas d'arguments => on affiche une erreur
-    else
-    {
-        printf("fonction : invalid number of arguments\n");
-    }
-
     return 0;
 }

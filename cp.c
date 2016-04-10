@@ -70,13 +70,16 @@ int cp_lib(int argc, char *argv[]){
         //structure donnant les options gérées par la commande
             //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
         static struct option long_options[] = {
-            {"help",     no_argument,       0, 'h'},
-            {"verbose",  no_argument,       0, 'v'}
+            {"help",                 no_argument,           0, 'h'},
+            {"recursive",            no_argument,           0, 'r'},
+            {"target-directory",     required_argument,     0, 't'},
+            {"no-target-directory",  no_argument,           0, 'T'},
+            {"verbose",              no_argument,           0, 'v'}
         };
 
         //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
             //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
-        c = getopt_long(argc, argv, "hv", long_options, &option_index);
+        c = getopt_long(argc, argv, "hvTrt:", long_options, &option_index);
 
         if (c == -1) break;
 
@@ -85,9 +88,14 @@ int cp_lib(int argc, char *argv[]){
 
          case 'h': 
            printf("\n-----------------------------------------------------------\n");
-           printf("Usage: fonction [OPTION]... ARG\n");
-           printf("Rename SOURCE to DEST\n\n");
-           printf("    -v, --verbose        explain what is being done\n");
+           printf("Usage: cp [OPTION]... [-T] SOURCE DEST\n");
+           printf("       cp [OPTION]... SOURCE... DIRECTORY\n");
+           printf("       cp [OPTION]... -t DIRECTORY SOURCE...\n");
+           printf("Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.\n\n");
+           printf("    -v, --verbose                 explain what is being done\n");
+           printf("    -r, --recursive               copy directories recursively\n");
+           printf("    -t, --target-directory        copy all SOURCE arguments into DIRECTORY\n");
+           printf("    -T, --no-target-directory     treat DEST as a normal file\n");
            printf("\n-----------------------------------------------------------\n\n");
            exit(0);
            break;

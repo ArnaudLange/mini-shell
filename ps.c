@@ -18,10 +18,10 @@
 //** à décommenter et à completer une fois la fonction finies **//
 //#include "../../include/commands/fonction.h"
 
-#include "fonction.h" //à virer une fois les tests effectués
+#include "ps.h" //à virer une fois les tests effectués
 
 
-int fonction_lib(int argc, char *argv[]){
+int ps_lib(int argc, char *argv[]){
 
     // -----------------------------------
     // Declaration tableau deux dimensions pour les options

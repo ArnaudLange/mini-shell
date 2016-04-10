@@ -15,11 +15,13 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+//** à décommenter et à completer une fois la fonction finies **//
+//#include "../../include/commands/fonction.h"
 
-#include "../../include/commands/mv.h"
+#include "fonction.h" //à virer une fois les tests effectués
 
 
-int mv_lib(int argc, char *argv[]){
+int fonction_lib(int argc, char *argv[]){
 
     // -----------------------------------
     // Declaration tableau deux dimensions pour les options
@@ -60,22 +62,30 @@ int mv_lib(int argc, char *argv[]){
     // parcourt des arguments de la fonction
 
     if (argc >1) {
+
+        //Boucle pour parcourir les options, exemple avec les options verbose et help
         while (1) {
         int option_index = 0;
+
+        //structure donnant les options gérées par la commande
+            //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
         static struct option long_options[] = {
             {"help",     no_argument,       0, 'h'},
             {"verbose",  no_argument,       0, 'v'}
         };
 
-       c = getopt_long(argc, argv, "hv", long_options, &option_index);
+        //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
+            //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
+        c = getopt_long(argc, argv, "hv", long_options, &option_index);
 
         if (c == -1) break;
 
-       switch (c) {
+        //switch en fonction des options rentrées par l'user
+        switch (c) {
 
-         case 'h':
+         case 'h': 
            printf("\n-----------------------------------------------------------\n");
-           printf("Usage: mv [OPTION]... SOURCE DEST\n");
+           printf("Usage: fonction [OPTION]... ARG\n");
            printf("Rename SOURCE to DEST\n\n");
            printf("    -v, --verbose        explain what is being done\n");
            printf("\n-----------------------------------------------------------\n\n");
@@ -87,12 +97,13 @@ int mv_lib(int argc, char *argv[]){
            nbOptions++;
            break;
 
-       default:
-            printf("Try 'mv --help' for more information.\n");
+        //message par défaut quand l'option rentrée n'est pas gérée par la commande
+        default:
+            printf("Try 'fonction --help' for more information.\n");
             exit(1);
       }
     }
-
+        //Boucle pour parcourir les arguments qui ne sont pas des options
         for (i=1; i<argc; i++)
         {
             if(argv[i][0] != '-')
@@ -105,63 +116,27 @@ int mv_lib(int argc, char *argv[]){
 
             }
         }
-        // if there are 2 files
+        // if nombre d'arguments invalide
         if (nbFiles == 2)
         {
             myMv(files[1],files[2], options, nbOptions);   
         }
         else
         {
-            printf("mv : invalid number of arguments\n");
-            printf("Try 'mv --help' for more information.\n");
+            printf("fonction : invalid number of arguments\n");
+            printf("Try 'fonction --help' for more information.\n");
         }
         free(files);
         free(options);
 
 
     }
+    //** A changer **//
     //SI pas d'arguments => on affiche une erreur
     else
     {
-        printf("mv : invalid number of arguments\n");
+        printf("fonction : invalid number of arguments\n");
     }
 
     return 0;
-}
-
-void myMv(char* arg1, char* arg2, char* options, int iOptions){
-    // ----------------------------------
-    // Initialisation
-    // ----------------------------------
-    struct stat statbuf;
-
-    // ----------------------------------
-    // Lecture des options
-    // ----------------------------------
-    
-   
-    if (stat(arg1, &statbuf) == -1) { //si il n'existe aucun fichier déjà nommé comme celui qu'on essaye de déplacer
-        printf("mv : '%s' invalid path\n", arg1);
-    }
-    else if(stat(arg2, &statbuf) != -1) { //si le fichier dest existe déjà
-
-        if(S_ISDIR(statbuf.st_mode)){ //si c'est un dossier, déplacement de arg1 dans arg2
-
-            if(strcmp(options, "v") == 0) {
-                printf("Moving %s to %s/\n", arg1, arg2);
-            }
-
-            concatenateTables(arg2, "/");
-            concatenateTables(arg2, arg1);
-            rename(arg1, arg2);
-        }
-        else printf("mv : '%s' already exists\n", arg2);
-    }
-    else{
-    	if(strcmp(options, "v") == 0) {
-        	printf("Renaming %s to %s\n", arg1, arg2);
-    	}
-        rename(arg1, arg2);
-    }
-    
 }

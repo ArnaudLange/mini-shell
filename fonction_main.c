@@ -15,8 +15,8 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
     
-#include "../../include/commands/mv.h"
+#include "../../include/commands/fonction.h"
 
 int main(int argc, char* argv[]){
-        mv_lib(argc, argv);
+        fonction_lib(argc, argv);
 }

@@ -14,18 +14,33 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
+    
+#ifndef UTILS_H
+#define UTILS_H
 
-#pragma once
-
-#include <stdio.h>
-#include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <stdlib.h>
-#include <errno.h>
-#include <getopt.h>
+#include <stdio.h>
 #include <string.h>
-#include "../utils.h"
 
-int mv_lib(int argc, char *argv[]);
+/**
+ * @brief       Concatenates two tables
+ *
+ *
+ */
 
-void myMv(char* arg1, char* arg2, char* options, int iOptions);
+char* concatenateTables(char *tab1, char *tab2);
+
+/**
+ * @brief       Opens a file with the read only mode
+ * 
+ * @return      The file in Integer
+ */
+
+int openFile(char *filename);
+
+
+
+#endif

@@ -28,7 +28,7 @@
 //#include "../utils.h"
 
 //** A virer une fois les tests finis **//
-#include "utlis.h"
+#include "utils.h"
 
 int fontion_lib(int argc, char *argv[]);
 

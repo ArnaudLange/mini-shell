@@ -213,7 +213,7 @@ void cat(char* files, char*options, int *nbLigne)
 	}
 	else
 	{
-		printf("Pas de file en entree\n");
+		printf("Pas de file en entree.\n");
 		exit(0);
 	}
 
@@ -256,11 +256,10 @@ int cat_lib(int argc, char *argv[])
 
     int nbFiles = 0;
     int nbLigne = 1;
-    int i, c;
+    int i, c, j;
 
     // -----------------------------------
     // parcourt des arguments de la fonction
-
     if (argc >1) {
         while (1) {
         int option_index = 0;
@@ -311,20 +310,24 @@ int cat_lib(int argc, char *argv[])
             if(argv[i][0] != '-')
             {
                 nbFiles++;
-                files=realloc(files, (nbFiles)*sizeof(char*));
-                files[nbFiles] = malloc(sizeof(char));
+                files=realloc(files, (nbFiles+1)*sizeof(char*));
+                if(files == NULL){
+                    perror("files");
+                    exit(1);
+                }
+                files[nbFiles] = calloc(1,sizeof(char));
                 if (files[nbFiles] == NULL)
                 {
                     perror("files[x]");
                     exit(1);
                 }
-                concatenateTables(files[nbFiles], argv[i]);
+                files[nbFiles-1]=concatenateTables(files[nbFiles-1], argv[i]);
             }
         }
         // if there are 2 files
-        if (iFiles >=1)
+        if (nbFiles >0)
         {
-            for(j = 0; j <= iFiles; j++)
+            for(j = 0; j < nbFiles; j++)
             {
                 cat(files[j],options, &nbLigne);
                 free(files[j]);
@@ -332,7 +335,7 @@ int cat_lib(int argc, char *argv[])
         }
         else
         {
-            cat("",options,,&nbLigne);
+            cat("",options,&nbLigne);
         }
         free(files);
         free(options);
@@ -356,7 +359,6 @@ void readCatOptions(char *options, Options *etat)
          * Compares options and different types of options handled
          * And updates etat accordingly
          */
-        
         if (options[0] == 1)
         {
             if (options[1]==1)
@@ -365,7 +367,7 @@ void readCatOptions(char *options, Options *etat)
                     *etat=etatETL;
                 }
                 else{
-                    *etat=etatLT;
+                    *etat=etatTL;
                 }
             }
             else
@@ -398,6 +400,6 @@ void readCatOptions(char *options, Options *etat)
                     *etat=etatNormal;
                 }
             }
-          
+        }   
 
 }

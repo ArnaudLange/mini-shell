@@ -15,8 +15,6 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/fonction.h"
 
 #include "echo.h" //à virer une fois les tests effectués
 

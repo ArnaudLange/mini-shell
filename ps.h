@@ -24,6 +24,7 @@
 #include <errno.h>
 #include <getopt.h>
 #include <string.h>
+#include <unistd.h>
 //** A décommenter une fois les test finis **//
 //#include "../utils.h"
 

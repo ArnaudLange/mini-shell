@@ -20,19 +20,24 @@
 
 #include "ps.h" //à virer une fois les tests effectués
 
+void ps(char *option, char* param){
+
+    if (option == NULL){
+        printf("  PID TTY          TIME CMD\n");
+        printf("%d\n",getpid());
+        printf("%d                   Bash\n",getppid());
+
+    }
+    else if (strcmp(option,"u")){
+        printf("  PID TTY          TIME CMD\n");
+    }
+    else if (strcmp(option,"C")){
+        printf("  PID TTY          TIME CMD\n");
+    }
+}
+
 
 int main(int argc, char *argv[]){
-
-    // -----------------------------------
-    // Declaration tableau deux dimensions pour les options
-
-    char* options = NULL;
-    options = (char*) calloc(15, sizeof(*options));
-    if (options == NULL)
-    {
-        perror("options");
-        exit(1);
-    }
 
     // -----------------------------------
     int c;
@@ -49,13 +54,15 @@ int main(int argc, char *argv[]){
         //structure donnant les options gérées par la commande
             //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
         static struct option long_options[] = {
-            {"helpArg",     required_argument,       0, 'z'},
-            {"help",     no_argument ,       0, 'h'}
+            {"help",     no_argument ,       0, 'h'},
+            {"u",     required_argument,       0, 'u'},
+            {"C",     required_argument,       0, 'C'},
+            {0, 0, 0, 0}
         };
 
         //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
             //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
-        c = getopt_long(argc, argv, "h", long_options, &option_index);
+        c = getopt_long(argc, argv, "u:C:h", long_options, &option_index);
 
         if (c == -1) break;
 
@@ -65,49 +72,40 @@ int main(int argc, char *argv[]){
          case 'h': 
            printf("\n-----------------------------------------------------------\n");
            printf("Usage: ps [OPTION]\n\n");
-           printf("\tTry 'ps --helpArg <simple|list|output|threads|misc|all>'\n");
-           printf("\tor 'ps --helpArg <s|l|o|t|m|a>'\n");
-           printf("\tfor additional help text.");
+           printf("\n  -u [USER]             \tfilter processes by user.\n");
+            printf("\n  -C [COMMAND]              \tfilter processes by its name.\n");
            printf("\n-----------------------------------------------------------\n");
            exit(0);
            break;
 
-         case 'z':
-            if(!strcmp(optarg,"simple") || !strcmp(optarg,"s")){
-                printf("\n-----------------------------------------------------------\n");
-                printf("Basic options:\n");
-                printf("\t-A, -e               all processes\n");
-                printf("\t-a                   all with tty, except session leaders\n");
-                printf("\t-d                   all except session leaders\n");
-                printf("\t-N, --deselect       negate selection");
-                printf("\n-----------------------------------------------------------\n");
-
-            }
-            else if(!strcmp(optarg,"list") || !strcmp(optarg,"l")){
-                printf("On est dans list.\n");
-            }
-            if(!strcmp(optarg,"output") || !strcmp(optarg,"o")){
-                printf("On est dans output.\n");
-            }
-            if(!strcmp(optarg,"threads") || !strcmp(optarg,"t")){
-                printf("On est dans threads.\n");
-            }
-            else if(!strcmp(optarg,"misc") || !strcmp(optarg,"m")){
-                printf("On est dans misc.\n");
-            }
-            else if(!strcmp(optarg,"all") || !strcmp(optarg,"a")){
-                printf("On est dans all.\n");
+         case 'u':
+            optind--;
+            for( ;optind < argc && *argv[optind] != '-'; optind++){
+                  //On appelle ps avec l'option u et chaque argument
+                  ps("u",argv[optind]);        
             }
             break;
+
+         case 'C':
+            optind--;
+            for( ;optind < argc && *argv[optind] != '-'; optind++){
+                  //On appelle ps avec l'option C et chaque argument
+                  ps("C",argv[optind]);       
+            }
+            break;
+
 
         //message par défaut quand l'option rentrée n'est pas gérée par la commande
         default:
             printf("Try 'fonction --help' for more information.\n");
             exit(1);
-      }
-    }
+        }
     
-
+    
+        }
+    }
+    else {
+        ps(NULL,"");
     }
     return 0;
 }

@@ -18,45 +18,49 @@
 //** à décommenter et à completer une fois la fonction finies **//
 //#include "../../include/commands/fonction.h"
 
-#include "fonction.h" //à virer une fois les tests effectués
+#include "chmod.h" //à virer une fois les tests effectués
 
 
-int fonction_lib(int argc, char *argv[]){
+void myChmod(int option, char* mode, char* file){
+    if (option){
+        printf("Option verbose.\n");
+        printf("mode of '%s' changed from [...] to %s\n",file,mode);
+    }
+    printf("Mode : %s\n",mode);
+    printf("File : %s\n",file);
+    printf("\n");
 
-    // -----------------------------------
-    // Declaration tableau deux dimensions pour les options
+    int sf;
+    struct stat statbuf;
 
-    char* options = NULL;
-    options = (char*) calloc(15, sizeof(*options));
-    if (options == NULL)
-    {
-        perror("options");
+    sf = openFile(file);
+    if(sf == -1){
+        perror(file);
         exit(1);
     }
+    else{
+        printf("Ouverture de '%s' reussie.\n",file);
+    }
+    
+    if (fstat(sf,&statbuf)==-1){
+        perror("fstat");
+        exit(1);
+    }
+    else{
+        printf("Prise du buffer stat sur '%s' reussie.\n",file);
+    }
+
+    printf("Mode de '%s' : %d\n",file,statbuf.st_mode);
+
+
+}
+
+int main(int argc, char *argv[]){
 
 
     // -----------------------------------
-    // Declaration tableau deux dimensions pour les files
-
-    char** files = NULL;
-    files = malloc(sizeof(char**));
-    if (files == NULL)
-    {
-        perror("files");
-        exit(1);
-    }
-    files[0] = malloc(sizeof(char*));
-    if (files[0] == NULL)
-    {
-        perror("files[x]");
-        exit(1);
-    }
-
-    // -----------------------------------
-
-    int nbOptions = 0;
-    int nbFiles = 0;
     int i, c;
+    int option=0;
 
     // -----------------------------------
     // parcourt des arguments de la fonction
@@ -85,57 +89,42 @@ int fonction_lib(int argc, char *argv[]){
 
          case 'h': 
            printf("\n-----------------------------------------------------------\n");
-           printf("Usage: fonction [OPTION]... ARG\n");
-           printf("Rename SOURCE to DEST\n\n");
-           printf("    -v, --verbose        explain what is being done\n");
+           printf("Usage: chmod [OPTION]... MODE[,MODE]... FILE...\n");
+           printf("Change the mode of each FILE to MODE.\n\n");
+           printf("    -v, --verbose        output a diagnostic for every file processed\n");
            printf("\n-----------------------------------------------------------\n\n");
            exit(0);
            break;
 
          case 'v':
-           options[nbOptions] = c; 
-           nbOptions++;
+           option=1;
            break;
 
         //message par défaut quand l'option rentrée n'est pas gérée par la commande
         default:
-            printf("Try 'fonction --help' for more information.\n");
+            printf("chmod : invalid option.\n");
+            printf("Try 'chmod --help' for more information.\n");
             exit(1);
-      }
+        }
+        }
+        if (argc<3){
+            printf("chmod : invalid option.\n");
+            printf("Try 'chmod --help' for more information.\n");
+            exit(1);
+        }
     }
-        //Boucle pour parcourir les arguments qui ne sont pas des options
-        for (i=1; i<argc; i++)
-        {
-            if(argv[i][0] != '-')
-            {
-                nbFiles++;
-                files[nbFiles] = malloc(16*sizeof(char*));
-
-                concatenateTables(files[nbFiles],argv[i]);
-
-
-            }
-        }
-        // if nombre d'arguments invalide
-        if (nbFiles == 2)
-        {
-            myMv(files[1],files[2], options, nbOptions);   
-        }
-        else
-        {
-            printf("fonction : invalid number of arguments\n");
-            printf("Try 'fonction --help' for more information.\n");
-        }
-        free(files);
-        free(options);
-
-
-    }
-    //** A changer **//
     //SI pas d'arguments => on affiche une erreur
     else
     {
-        printf("fonction : invalid number of arguments\n");
+        printf("chmod : invalid number of arguments.\n");
+        printf("Try 'chmod --help' for more information.\n");
+        exit(1);
+    }
+
+    if (argc>3){
+        for (i=3; i<argc && *argv[i]!='-'; i++){
+            myChmod(option, argv[2], argv[i]);
+        }
     }
 
     return 0;

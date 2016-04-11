@@ -24,11 +24,12 @@
 #include <errno.h>
 #include <getopt.h>
 #include <string.h>
+    
 //** A décommenter une fois les test finis **//
 //#include "../utils.h"
 
 //** A virer une fois les tests finis **//
 #include "utils.h"
 
-int fontion_lib(int argc, char *argv[]);
+int chmod_lib(int argc, char *argv[]);
 

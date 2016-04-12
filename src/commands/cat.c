@@ -15,8 +15,14 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
     
+#define NAME "cat"
+
 #include "../../include/commands/cat.h"
 
+void init(char name[NAME_SIZE], int (*cmd_ptr)(int, char*[])){
+        strncpy(name, NAME, NAME_SIZE);
+        cmd_ptr = &cat_lib;
+}
 void cat(char* files, char**options, int iOptions, int *nbLigne)
 {
 	// ----------------------------------

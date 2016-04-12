@@ -20,7 +20,7 @@
 Shell* initShell(){
         Shell* shell = malloc(sizeof(Shell));
         (*shell).nbCmd = initCommands(shell->commands);
-        strncpy((*shell).currDir, "~", MAXSIZE);
+        shell->nbCmd=0;
         return shell;
 }
 

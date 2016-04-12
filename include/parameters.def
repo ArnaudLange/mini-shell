@@ -1,0 +1,5 @@
+#define MAXSIZE 200
+#define MAXCMD 300
+#define NAME_SIZE 100
+#define MAX_PARAMETERS 100
+#define MAX_OPTIONS 1

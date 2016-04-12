@@ -17,38 +17,32 @@
     
 #include "../include/utils.h"
 
-void concatenateTables(char *tab1, char *tab2){
+char * concatenateTables(char *tab1, char *tab2){
         /**
          * Gets the size of each table
          *
          */
+
         int taille1=0, taille2=0;
-
-        while(tab1[taille1] != '\0')
-        {
-                taille1++;
-        }
-
-        while(tab2[taille2] != '\0')
-        {
-                taille2++;
-        }
-
+        taille1 = strlen(tab1);
+        taille2 = strlen(tab2);
         /**
          * Resets the memory of the table 
          * Sets it to the addition of both tables' size
          */
-        tab1 = realloc(tab1, (taille1 + taille2)*sizeof(char));
-
-        int i = taille1;
-        int j = 0;
-
-        while(tab2[j] != '\0')
-        {
-                tab1[i] = tab2[j];
-                i++;
-                j++;
+        tab1 = realloc(tab1, (taille1 + taille2 + 1)*sizeof(char));
+        if (tab1 == NULL){
+            perror("realloc");
+            exit(1);
         }
+        /**
+         * Concatenate both tables
+         * Using de function strcat()
+         */
+        strcat(tab1,tab2);
+
+        return tab1;
+
 }
 
 

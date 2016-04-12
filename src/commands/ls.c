@@ -18,63 +18,129 @@
 #include "../../include/commands/ls.h"
 
 int ls_lib(int argc, char *argv[]){
-        char *optionTest = "";
 
-        char *options = NULL;
-        options = malloc(sizeof(char));
-        if (options == NULL)
+	// -----------------------------------
+    // Declaration tableau deux dimensions pour les options
+
+    char* options = NULL;
+    options = (char*) calloc(2,sizeof(char));
+    if (options == NULL)
+    {
+        perror("options");
+        exit(1);
+    }
+
+
+    // -----------------------------------
+    // Declaration tableau deux dimensions pour les files
+
+    char** files = NULL;
+    files = calloc(1,sizeof(char**));
+    if (files == NULL)
+    {
+        perror("files");
+        exit(1);
+    }
+    files[0] = calloc(1,sizeof(char*));
+    if (files[0] == NULL)
+    {
+        perror("files[x]");
+        exit(1);
+    }
+    // -----------------------------------
+
+    int nbFiles = 0;
+    int i, c;
+
+    // -----------------------------------
+    // parcourt des arguments de la fonction
+
+    if (argc >1) {
+        while (1) {
+        int option_index = 0;
+        static struct option long_options[] = {
+            {"help",     no_argument,       0, 'h'},
+            {"l",  no_argument,       0, 'l'},
+            {"directory",  no_argument,       0, 'd'}
+        };
+
+       c = getopt_long(argc, argv, "hld", long_options, &option_index);
+
+        if (c == -1) break;
+
+       switch (c) {
+
+         case 'h':
+
+           	printf("Usage: ls [OPTION]... [FILE]...\n");
+			printf("List information about the FILEs (the current directory by default).\n");
+			printf("\n  -l             \tuse a long listing format\n");
+			printf("\n  -d, --directory\tlist directory entries instead of content.\n");
+           	exit(0);
+           	break;
+
+         case 'l':
+           options[0]=1; 
+           break;
+
+         case 'd':
+           options[1]=1; 
+           break;
+
+       default:
+            printf("ls: invalid option -- \"%c\"\n",c);
+            printf("Try 'ls --help' for more information.\n");
+            exit(1);
+      }
+    }
+
+        for (i=1; i<argc; i++)
         {
-                perror("options");
-                exit(-1);
+            if(argv[i][0] != '-')
+            {
+            	nbFiles++;
+                files=realloc(files, (nbFiles)*sizeof(char*));
+                if (files == NULL)
+                {
+                    perror("files");
+                    exit(1);
+                }
+                files[nbFiles] = calloc(1,sizeof(char));
+                if (files[nbFiles] == NULL)
+                {
+                    perror("files[x]");
+                    exit(1);
+                }
+                files[nbFiles-1]=concatenateTables(files[nbFiles-1], argv[i]);
+            }
         }
-
-        int iOptions = -1;
-        int iParam = -1;
-        int i;
-
-        if (argc >0)
+        // if there are 2 files
+        if (nbFiles == 0)
         {
-                for (i=0; i<argc; i++)
-                {
-                        if(argv[i][0] == '-')
-                        {
-                                iOptions = i;
-                                printf("test");
-                                concatenateTables(options,argv[i]);
-                        }
-                        else {
-                                iParam = i;
-                        }
-                }
-
-                if (iOptions == -1)
-                {
-                        if (iParam == -1)
-                        {
-                                ls("./","");
-                        }
-                        else
-                        {
-                                ls(argv[iParam],"");
-                        }
-                }
-                else {
-                        if (iParam == -1)
-                        {
-                                ls("./",options);
-                        }
-                        else
-                        {
-                                ls(argv[iParam],options);
-                        }
-                }
+            ls("./",options);
         }
-        //SI pas d'arguments => on execute dans le dossier courant
         else
         {
-                ls("./",optionTest);
+            int k;
+            for(k=0; k<nbFiles ; k++)
+            {
+            	printf("%s\n",files[k]);
+            	ls(files[k],options);
+                free(files[nbFiles]);
+            }
         }
-        return 0;
+        free(files);
+        free(options);
+
+
+    }
+    //SI pas d'arguments => on affiche une erreur
+    else
+    {
+        ls("./","");
+    }
+
+    return 0;
 }
 
 void ls(char *directory, char *options)
@@ -83,6 +149,13 @@ void ls(char *directory, char *options)
 	readLsOptions(options, &etat);
 
 	DIR *repertoire;
+    char *nameFile = NULL;
+    nameFile = calloc(1,sizeof(char));
+    if(nameFile == NULL)
+    {
+        perror("calloc");
+        exit(1);
+    }
 
 	struct dirent *flux;
 	struct stat statbuf;
@@ -96,26 +169,45 @@ void ls(char *directory, char *options)
 	struct group *groupInfo;
 	struct tm *timeInfo;
 
-
 	if ((repertoire = opendir(directory)) == NULL)
 	{
 		perror(directory);
-		exit(-1);
+		exit(1);
 	}
 
 	while ((flux = readdir(repertoire)))
 	{
-		file = openFile(flux->d_name);
+        if (directory != "./")
+        {
+            if(strlen(nameFile)>1){
+                free(nameFile);
+                nameFile = NULL;
+                nameFile = calloc(1,sizeof(char));
+                if (nameFile == NULL){
+                    perror("calloc namefile");
+                    exit(1);
+                }
+            }
+
+            nameFile=concatenateTables(nameFile,directory);
+            nameFile=concatenateTables(nameFile,"/");
+            nameFile=concatenateTables(nameFile,flux->d_name);
+    		file = openFile(nameFile);
+
+        }
+        else{
+            file = openFile(flux->d_name);
+        }
+
 		if (file == -1)
 		{
-			perror(flux->d_name);
-			exit(-1);
+			perror(nameFile);
+			exit(1);
 		}
-
 		if (fstat(file,&statbuf) == -1)
 		{
 			perror("stat");
-			exit(-1);
+			exit(1);
 		}
 
 		//-----------------SWITCH AVEC LES DIFFERENTES OPTIONS-----------------//
@@ -230,8 +322,6 @@ void ls(char *directory, char *options)
 			}
 		}
 
-
-
 	}
 	//SAUT DE LIGNE A LA FIN
 	printf("\n");
@@ -244,32 +334,28 @@ void readLsOptions(char *options, Options *etat)
          * Compares options and different types of options handled
          * And updates etat accordingly
          */
-        if (strcmp(options, "-l")==0)
+
+        if (options[0] == 1)
         {
-                *etat=etatDetails;
-        }
-        else if (strcmp(options, "-d")==0)
-        {
-                *etat=etatDossiers;
-        }
-        else if (strcmp(options, "")==0)
-        {
-                *etat=etatNormal;
-        }
-        else if ((strcmp(options, "-dl")==0) || (strcmp(options, "-ld")==0) || (strcmp(options, "-d-l")==0) || (strcmp(options, "-l-d")==0))
-        {
-                *etat=etatDetailsDossiers;
+            if (options[1]==1)
+            {
+                *etat = etatDetailsDossiers;
+            }
+            else
+            {
+                *etat = etatDetails;
+            }
         }
         else
         {
-                /**
-                 * Error if the options isn't handled
-                 * Precise which options were at fault
-                 * And quits the program
-                 */
-                printf("ls: invalid option -- \"%s\"\n",options);
-                printf("Get more information on the README.md document.");
-                exit(-1);
+            if (options[1]==1)
+            {
+                *etat = etatDossiers;
+            }
+            else
+            {
+                *etat = etatNormal;
+            }
         }
 
 }

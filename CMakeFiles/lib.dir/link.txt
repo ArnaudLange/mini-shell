@@ -1,0 +1,1 @@
+/usr/bin/cc  -fPIC -std=c99 -D_XOPEN_SOURCE=600  -shared -Wl,-soname,libinsh.so -o lib/libinsh.so CMakeFiles/lib.dir/src/commands/ls.c.o CMakeFiles/lib.dir/src/utils.c.o CMakeFiles/lib.dir/src/main/ls.c.o 

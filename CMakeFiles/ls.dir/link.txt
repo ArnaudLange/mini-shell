@@ -1,0 +1,1 @@
+/usr/bin/cc  -std=c99 -D_XOPEN_SOURCE=600 -ldl   CMakeFiles/ls.dir/src/commands/ls.c.o CMakeFiles/ls.dir/src/utils.c.o CMakeFiles/ls.dir/src/main/ls.c.o  -o bin/ls -rdynamic 

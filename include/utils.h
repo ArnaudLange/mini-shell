@@ -22,6 +22,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 /**
  * @brief       Concatenates two tables
@@ -29,7 +31,7 @@
  *
  */
 
-void concatenateTables(char *tab1, char *tab2);
+char* concatenateTables(char *tab1, char *tab2);
 
 /**
  * @brief       Opens a file with the read only mode

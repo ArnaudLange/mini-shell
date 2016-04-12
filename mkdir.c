@@ -15,13 +15,11 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/mkdir.h"
-
-#include "mkdir.h" //à virer une fois les tests effectués
+#include "../../include/commands/mkdir.h"
 
 
-    int main(int argc, char *argv[]){
+
+    int mkdir_lib(int argc, char *argv[]){
 
     // -----------------------------------
     // Declaration tableau pour les options
@@ -53,7 +51,8 @@
         }
 
     // -----------------------------------
-
+        char* mode = malloc(sizeof(char*));
+        mode = "0777";
         int nbOptions = 0;
         int nbFiles = 0;
         int i, c;
@@ -70,48 +69,66 @@
         //structure donnant les options gérées par la commande
             //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
                 static struct option long_options[] = {
-                    {"help",     no_argument,       0, 'h'},
-                    {"verbose",  no_argument,       0, 'v'}
+                    {"help",     no_argument,             0, 'h'},
+                    {"mode",     required_argument,       0, 'm'},
+                    {"verbose",  no_argument,             0, 'v'}
                 };
 
         //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
             //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
-                c = getopt_long(argc, argv, "hv", long_options, &option_index);
+                c = getopt_long(argc, argv, "hvm:", long_options, &option_index);
 
                 if (c == -1) break;
 
         //switch en fonction des options rentrées par l'user
                 switch (c) {
 
-                   case 'h': 
-                   printf("\n-----------------------------------------------------------\n");
-                   printf("Usage: mkdir [OPTION]... DIRECTORY...\n");
-                   printf("Create the DIRECTORY(ies), if they do not already exist.\n\n");
-                   printf("    -v, --verbose        explain what is being done\n");
-                   printf("\n-----------------------------------------------------------\n\n");
-                   exit(0);
-                   break;
+                 case 'h': 
+                 printf("\n-----------------------------------------------------------\n");
+                 printf("Usage: mkdir [OPTION]... DIRECTORY...\n");
+                 printf("Create the DIRECTORY(ies), if they do not already exist.\n\n");
+                 printf("    -v, --verbose        explain what is being done\n");
+                 printf("    -m, --mode=MODE      set file mode (as in chmod)\n");
+                 printf("\n-----------------------------------------------------------\n\n");
+                 exit(0);
+                 break;
 
-                   case 'v':
-                   options[nbOptions] = c; 
-                   nbOptions++;
-                   break;
+                 case 'v':
+                 
+                 options[nbOptions] = c;
+                 nbOptions++;
+                 
+                 break;
+
+                 case 'm':
+                 if (atoi(optarg)){
+                    mode = optarg;
+                    options[nbOptions] = c;
+                    nbOptions++;
+                    
+                }
+                else {
+                    printf("mkdir : -m option requires a mode as an argument\n");
+                    printf("Try 'mkdir --help' for more information.\n");
+                    exit(1);
+                }
+                break;
 
         //message par défaut quand l'option rentrée n'est pas gérée par la commande
-                   default:
-                   printf("Try 'mkdir --help' for more information.\n");
-                   exit(1);
-               }
-           }
+                default:
+                printf("Try 'mkdir --help' for more information.\n");
+                exit(1);
+            }
+        }
         //Boucle pour parcourir les arguments qui ne sont pas des options
-           for (i=1; i<argc; i++)
-           {
-            if(argv[i][0] != '-')
+        for (i=1; i<argc; i++)
+        {  
+            if(argv[i][0] != '-' && argv[i] != mode) //si l'argument n'est pas une option, et n'est pas le mode donné
             {
                 nbFiles++;
                 files[nbFiles] = malloc(16*sizeof(char*));
 
-                concatenateTables(files[nbFiles],argv[i]);
+                files[nbFiles] = concatenateTables(files[nbFiles],argv[i]);
 
 
             }
@@ -119,14 +136,14 @@
         // if bon nombre d'arguments
         if (nbFiles > 0)
         {
-            create_dir(files, nbFiles, options, nbOptions);   
+            create_dir(files, nbFiles, options, nbOptions, mode);   
         }
         else
         {
             printf("mkdir : invalid number of arguments\n");
             printf("Try 'mkdir --help' for more information.\n");
         }
-        free(files);
+        //free(files);
         free(options);
 
 
@@ -141,27 +158,26 @@
     return 0;
 }
 
-void create_dir(char** files, int nbFiles, char* options, int nbOptions){
+void create_dir(char** files, int nbFiles, char* options, int nbOptions, char* modeS){
     // ----------------------------------
     // Initialisation
     // ----------------------------------
     struct stat statbuf;
-
     // ----------------------------------
     // Lecture des options
     // ----------------------------------
+    mode_t mode;
     int i;
-    for(i=0; i<nbFiles; i++){
+    for(i=1; i<=nbFiles; i++){
         if (stat(files[i], &statbuf) != -1) { //si il existe déjà un dossier/fichier déjà nommé comme celui qu'on essaye de créer
             printf("mkdir : '%s' already exists\n", files[i]);
         }
         else {
-            if(strcmp(options, "v") == 0) {
+            if(strstr(options, "v") != NULL) {
                 printf("Creating %s/\n", files[i]);
             }
-            printf("%s\n", files[i]);
-            //mkdir(files[i], 0777);
+            mode = strtol(modeS, NULL, 8);
+            mkdir(files[i], mode);
         }
     }
-
 }

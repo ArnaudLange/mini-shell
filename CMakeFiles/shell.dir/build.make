@@ -201,9 +201,33 @@ CMakeFiles/shell.dir/src/commands.c.o.provides: CMakeFiles/shell.dir/src/command
 CMakeFiles/shell.dir/src/commands.c.o.provides.build: CMakeFiles/shell.dir/src/commands.c.o
 
 
+CMakeFiles/shell.dir/src/commands/mv.c.o: CMakeFiles/shell.dir/flags.make
+CMakeFiles/shell.dir/src/commands/mv.c.o: src/commands/mv.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/antoine/Workspace/c/Shell/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/shell.dir/src/commands/mv.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/shell.dir/src/commands/mv.c.o   -c /home/antoine/Workspace/c/Shell/src/commands/mv.c
+
+CMakeFiles/shell.dir/src/commands/mv.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/shell.dir/src/commands/mv.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/antoine/Workspace/c/Shell/src/commands/mv.c > CMakeFiles/shell.dir/src/commands/mv.c.i
+
+CMakeFiles/shell.dir/src/commands/mv.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/shell.dir/src/commands/mv.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/antoine/Workspace/c/Shell/src/commands/mv.c -o CMakeFiles/shell.dir/src/commands/mv.c.s
+
+CMakeFiles/shell.dir/src/commands/mv.c.o.requires:
+
+.PHONY : CMakeFiles/shell.dir/src/commands/mv.c.o.requires
+
+CMakeFiles/shell.dir/src/commands/mv.c.o.provides: CMakeFiles/shell.dir/src/commands/mv.c.o.requires
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/mv.c.o.provides.build
+.PHONY : CMakeFiles/shell.dir/src/commands/mv.c.o.provides
+
+CMakeFiles/shell.dir/src/commands/mv.c.o.provides.build: CMakeFiles/shell.dir/src/commands/mv.c.o
+
+
 CMakeFiles/shell.dir/src/commands/cd.c.o: CMakeFiles/shell.dir/flags.make
 CMakeFiles/shell.dir/src/commands/cd.c.o: src/commands/cd.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/antoine/Workspace/c/Shell/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/shell.dir/src/commands/cd.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/antoine/Workspace/c/Shell/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/shell.dir/src/commands/cd.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/shell.dir/src/commands/cd.c.o   -c /home/antoine/Workspace/c/Shell/src/commands/cd.c
 
 CMakeFiles/shell.dir/src/commands/cd.c.i: cmake_force
@@ -227,7 +251,7 @@ CMakeFiles/shell.dir/src/commands/cd.c.o.provides.build: CMakeFiles/shell.dir/sr
 
 CMakeFiles/shell.dir/src/commands/echo.c.o: CMakeFiles/shell.dir/flags.make
 CMakeFiles/shell.dir/src/commands/echo.c.o: src/commands/echo.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/antoine/Workspace/c/Shell/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/shell.dir/src/commands/echo.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/antoine/Workspace/c/Shell/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/shell.dir/src/commands/echo.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/shell.dir/src/commands/echo.c.o   -c /home/antoine/Workspace/c/Shell/src/commands/echo.c
 
 CMakeFiles/shell.dir/src/commands/echo.c.i: cmake_force
@@ -251,7 +275,7 @@ CMakeFiles/shell.dir/src/commands/echo.c.o.provides.build: CMakeFiles/shell.dir/
 
 CMakeFiles/shell.dir/src/commands/ls.c.o: CMakeFiles/shell.dir/flags.make
 CMakeFiles/shell.dir/src/commands/ls.c.o: src/commands/ls.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/antoine/Workspace/c/Shell/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/shell.dir/src/commands/ls.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/antoine/Workspace/c/Shell/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/shell.dir/src/commands/ls.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/shell.dir/src/commands/ls.c.o   -c /home/antoine/Workspace/c/Shell/src/commands/ls.c
 
 CMakeFiles/shell.dir/src/commands/ls.c.i: cmake_force
@@ -275,7 +299,7 @@ CMakeFiles/shell.dir/src/commands/ls.c.o.provides.build: CMakeFiles/shell.dir/sr
 
 CMakeFiles/shell.dir/src/commands/cat.c.o: CMakeFiles/shell.dir/flags.make
 CMakeFiles/shell.dir/src/commands/cat.c.o: src/commands/cat.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/antoine/Workspace/c/Shell/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/shell.dir/src/commands/cat.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/antoine/Workspace/c/Shell/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/shell.dir/src/commands/cat.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/shell.dir/src/commands/cat.c.o   -c /home/antoine/Workspace/c/Shell/src/commands/cat.c
 
 CMakeFiles/shell.dir/src/commands/cat.c.i: cmake_force
@@ -305,6 +329,7 @@ shell_OBJECTS = \
 "CMakeFiles/shell.dir/src/process.c.o" \
 "CMakeFiles/shell.dir/src/shell.c.o" \
 "CMakeFiles/shell.dir/src/commands.c.o" \
+"CMakeFiles/shell.dir/src/commands/mv.c.o" \
 "CMakeFiles/shell.dir/src/commands/cd.c.o" \
 "CMakeFiles/shell.dir/src/commands/echo.c.o" \
 "CMakeFiles/shell.dir/src/commands/ls.c.o" \
@@ -319,13 +344,14 @@ bin/shell: CMakeFiles/shell.dir/src/redirection.c.o
 bin/shell: CMakeFiles/shell.dir/src/process.c.o
 bin/shell: CMakeFiles/shell.dir/src/shell.c.o
 bin/shell: CMakeFiles/shell.dir/src/commands.c.o
+bin/shell: CMakeFiles/shell.dir/src/commands/mv.c.o
 bin/shell: CMakeFiles/shell.dir/src/commands/cd.c.o
 bin/shell: CMakeFiles/shell.dir/src/commands/echo.c.o
 bin/shell: CMakeFiles/shell.dir/src/commands/ls.c.o
 bin/shell: CMakeFiles/shell.dir/src/commands/cat.c.o
 bin/shell: CMakeFiles/shell.dir/build.make
 bin/shell: CMakeFiles/shell.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/antoine/Workspace/c/Shell/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking C executable bin/shell"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/antoine/Workspace/c/Shell/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking C executable bin/shell"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/shell.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -339,6 +365,7 @@ CMakeFiles/shell.dir/requires: CMakeFiles/shell.dir/src/redirection.c.o.requires
 CMakeFiles/shell.dir/requires: CMakeFiles/shell.dir/src/process.c.o.requires
 CMakeFiles/shell.dir/requires: CMakeFiles/shell.dir/src/shell.c.o.requires
 CMakeFiles/shell.dir/requires: CMakeFiles/shell.dir/src/commands.c.o.requires
+CMakeFiles/shell.dir/requires: CMakeFiles/shell.dir/src/commands/mv.c.o.requires
 CMakeFiles/shell.dir/requires: CMakeFiles/shell.dir/src/commands/cd.c.o.requires
 CMakeFiles/shell.dir/requires: CMakeFiles/shell.dir/src/commands/echo.c.o.requires
 CMakeFiles/shell.dir/requires: CMakeFiles/shell.dir/src/commands/ls.c.o.requires

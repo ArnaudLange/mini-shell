@@ -3,11 +3,13 @@
 
 CMakeFiles/cat.dir/src/commands/cat.c.o: include/commands/cat.h
 CMakeFiles/cat.dir/src/commands/cat.c.o: include/parameters.def
+CMakeFiles/cat.dir/src/commands/cat.c.o: include/redirection.h
 CMakeFiles/cat.dir/src/commands/cat.c.o: include/utils.h
 CMakeFiles/cat.dir/src/commands/cat.c.o: src/commands/cat.c
 
 CMakeFiles/cat.dir/src/main/cat.c.o: include/commands/cat.h
 CMakeFiles/cat.dir/src/main/cat.c.o: include/parameters.def
+CMakeFiles/cat.dir/src/main/cat.c.o: include/redirection.h
 CMakeFiles/cat.dir/src/main/cat.c.o: include/utils.h
 CMakeFiles/cat.dir/src/main/cat.c.o: src/main/cat.c
 

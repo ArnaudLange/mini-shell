@@ -14,15 +14,18 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-   
-#define NAME "cat" 
-#include "../../include/commands/cat.h"
 
-void init(char name[NAME_SIZE], int (*cmd_ptr)(int, char*[])){
-        strncpy(name, NAME, NAME_SIZE);
-        cmd_ptr = &cat_lib;
-}
+#pragma once
 
-int main(int argc, char* argv[]){
-        cat_lib(argc, argv);
-}
+#include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <getopt.h>
+#include <string.h>
+#include "../utils.h"
+
+int mv_lib(int argc, char *argv[]);
+
+void myMv(char* arg1, char* arg2, char* options, int iOptions);

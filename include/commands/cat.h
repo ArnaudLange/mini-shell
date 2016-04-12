@@ -22,9 +22,12 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
+#include <getopt.h>
 
+#include "../redirection.h"
 #include "../utils.h"
 #include "../parameters.def"
+
 
 typedef enum
 {
@@ -42,7 +45,7 @@ typedef enum
 void readCatOptions(char *options, Options *etat);
 
 
-void cat(char* files, char**options, int iOptions, int *nbLigne);
+void cat(char* files, char*options, int *nbLigne);
 int cat_lib(int argc, char *argv[]);
 
 

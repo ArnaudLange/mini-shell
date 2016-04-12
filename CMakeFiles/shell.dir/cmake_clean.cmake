@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/shell.dir/src/process.c.o"
   "CMakeFiles/shell.dir/src/shell.c.o"
   "CMakeFiles/shell.dir/src/commands.c.o"
+  "CMakeFiles/shell.dir/src/commands/mv.c.o"
   "CMakeFiles/shell.dir/src/commands/cd.c.o"
   "CMakeFiles/shell.dir/src/commands/echo.c.o"
   "CMakeFiles/shell.dir/src/commands/ls.c.o"

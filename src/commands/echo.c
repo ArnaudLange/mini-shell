@@ -14,15 +14,24 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-   
-#define NAME "cat" 
-#include "../../include/commands/cat.h"
+#include "../../include/commands/echo.h" //à virer une fois les tests effectués
 
-void init(char name[NAME_SIZE], int (*cmd_ptr)(int, char*[])){
-        strncpy(name, NAME, NAME_SIZE);
-        cmd_ptr = &cat_lib;
+int echo_lib(int argc, char *argv[]){
+
+    int i;
+    int etatN=0;
+
+    for(i=1; i<argc; i++){
+        if (!strcmp(argv[i],"-n")){
+            etatN=1;
+        }
+        else{
+            printf("%s ",argv[i]);
+        }
+    }
+    if(!etatN){
+        printf("\n");
+    }
+    return 0;
 }
 
-int main(int argc, char* argv[]){
-        cat_lib(argc, argv);
-}

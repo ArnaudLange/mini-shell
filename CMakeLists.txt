@@ -90,3 +90,17 @@ file(GLOB HEADER_MV
 add_executable(mv ${SRC_MV} ${HEADER_MV})
 add_library(mv_lib SHARED ${SRC_MV})
 set_target_properties(mv_lib PROPERTIES OUTPUT_NAME "mv")
+
+# pwd
+file(GLOB SRC_PWD
+    "src/commands/pwd.c"
+    "src/utils.c"
+    "src/main/pwd.c"
+)
+file(GLOB HEADER_PWD
+    "include/commands/pwd.h"
+    "include/commands.h"
+)
+add_executable(pwd ${SRC_PWD} ${HEADER_PWD})
+add_library(pwd_lib SHARED ${SRC_PWD})
+set_target_properties(pwd_lib PROPERTIES OUTPUT_NAME "pwd")

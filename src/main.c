@@ -100,6 +100,7 @@ int main(int argc, char* argv[]){
         testFunction(shell, "cat");
         testFunction(shell, "echo");
         testFunction(shell, "mv");
+        testFunction(shell, "pwd");
 
         welcomeMessage();
         while(1){

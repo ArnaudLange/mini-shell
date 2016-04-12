@@ -10,6 +10,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/shell.dir/src/commands/echo.c.o"
   "CMakeFiles/shell.dir/src/commands/ls.c.o"
   "CMakeFiles/shell.dir/src/commands/cat.c.o"
+  "CMakeFiles/shell.dir/src/commands/pwd.c.o"
   "bin/shell.pdb"
   "bin/shell"
 )

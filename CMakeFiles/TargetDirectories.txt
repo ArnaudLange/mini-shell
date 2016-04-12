@@ -1,6 +1,8 @@
-/home/antoine/Workspace/c/Shell/CMakeFiles/edit_cache.dir
 /home/antoine/Workspace/c/Shell/CMakeFiles/rebuild_cache.dir
+/home/antoine/Workspace/c/Shell/CMakeFiles/edit_cache.dir
+/home/antoine/Workspace/c/Shell/CMakeFiles/pwd_lib.dir
 /home/antoine/Workspace/c/Shell/CMakeFiles/cd.dir
+/home/antoine/Workspace/c/Shell/CMakeFiles/pwd.dir
 /home/antoine/Workspace/c/Shell/CMakeFiles/ls_lib.dir
 /home/antoine/Workspace/c/Shell/CMakeFiles/ls.dir
 /home/antoine/Workspace/c/Shell/CMakeFiles/shell.dir

@@ -31,6 +31,12 @@ CMakeFiles/shell.dir/src/commands/mv.c.o: include/parameters.def
 CMakeFiles/shell.dir/src/commands/mv.c.o: include/utils.h
 CMakeFiles/shell.dir/src/commands/mv.c.o: src/commands/mv.c
 
+CMakeFiles/shell.dir/src/commands/pwd.c.o: include/commands/pwd.h
+CMakeFiles/shell.dir/src/commands/pwd.c.o: include/parameters.def
+CMakeFiles/shell.dir/src/commands/pwd.c.o: include/redirection.h
+CMakeFiles/shell.dir/src/commands/pwd.c.o: include/utils.h
+CMakeFiles/shell.dir/src/commands/pwd.c.o: src/commands/pwd.c
+
 CMakeFiles/shell.dir/src/main.c.o: include/commands.h
 CMakeFiles/shell.dir/src/main.c.o: include/commands/ls.h
 CMakeFiles/shell.dir/src/main.c.o: include/parameters.def

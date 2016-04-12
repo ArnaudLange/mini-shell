@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /home/antoine/Workspace/c/Shell
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -77,6 +66,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named pwd_lib
+
+# Build rule for target.
+pwd_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pwd_lib
+.PHONY : pwd_lib
+
+# fast build rule for target.
+pwd_lib/fast:
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/build
+.PHONY : pwd_lib/fast
+
+#=============================================================================
 # Target rules for targets named cd
 
 # Build rule for target.
@@ -122,6 +135,19 @@ cd: cmake_check_build_system
 cd/fast:
 	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/build
 .PHONY : cd/fast
+
+#=============================================================================
+# Target rules for targets named pwd
+
+# Build rule for target.
+pwd: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pwd
+.PHONY : pwd
+
+# fast build rule for target.
+pwd/fast:
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/build
+.PHONY : pwd/fast
 
 #=============================================================================
 # Target rules for targets named ls_lib
@@ -429,6 +455,39 @@ src/commands/mv.c.s:
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/commands/mv.c.s
 .PHONY : src/commands/mv.c.s
 
+src/commands/pwd.o: src/commands/pwd.c.o
+
+.PHONY : src/commands/pwd.o
+
+# target to build an object file
+src/commands/pwd.c.o:
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/commands/pwd.c.o
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/commands/pwd.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/pwd.c.o
+.PHONY : src/commands/pwd.c.o
+
+src/commands/pwd.i: src/commands/pwd.c.i
+
+.PHONY : src/commands/pwd.i
+
+# target to preprocess a source file
+src/commands/pwd.c.i:
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/commands/pwd.c.i
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/commands/pwd.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/pwd.c.i
+.PHONY : src/commands/pwd.c.i
+
+src/commands/pwd.s: src/commands/pwd.c.s
+
+.PHONY : src/commands/pwd.s
+
+# target to generate assembly for a file
+src/commands/pwd.c.s:
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/commands/pwd.c.s
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/commands/pwd.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/pwd.c.s
+.PHONY : src/commands/pwd.c.s
+
 src/main.o: src/main.c.o
 
 .PHONY : src/main.o
@@ -603,6 +662,36 @@ src/main/mv.c.s:
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/main/mv.c.s
 .PHONY : src/main/mv.c.s
 
+src/main/pwd.o: src/main/pwd.c.o
+
+.PHONY : src/main/pwd.o
+
+# target to build an object file
+src/main/pwd.c.o:
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/main/pwd.c.o
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/main/pwd.c.o
+.PHONY : src/main/pwd.c.o
+
+src/main/pwd.i: src/main/pwd.c.i
+
+.PHONY : src/main/pwd.i
+
+# target to preprocess a source file
+src/main/pwd.c.i:
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/main/pwd.c.i
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/main/pwd.c.i
+.PHONY : src/main/pwd.c.i
+
+src/main/pwd.s: src/main/pwd.c.s
+
+.PHONY : src/main/pwd.s
+
+# target to generate assembly for a file
+src/main/pwd.c.s:
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/main/pwd.c.s
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/main/pwd.c.s
+.PHONY : src/main/pwd.c.s
+
 src/process.o: src/process.c.o
 
 .PHONY : src/process.o
@@ -690,6 +779,8 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.o
@@ -707,6 +798,8 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.i
@@ -724,6 +817,8 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.s
@@ -741,9 +836,11 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... edit_cache"
+	@echo "... pwd_lib"
 	@echo "... cd"
+	@echo "... pwd"
 	@echo "... ls_lib"
 	@echo "... ls"
 	@echo "... shell"
@@ -771,6 +868,9 @@ help:
 	@echo "... src/commands/mv.o"
 	@echo "... src/commands/mv.i"
 	@echo "... src/commands/mv.s"
+	@echo "... src/commands/pwd.o"
+	@echo "... src/commands/pwd.i"
+	@echo "... src/commands/pwd.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
@@ -789,6 +889,9 @@ help:
 	@echo "... src/main/mv.o"
 	@echo "... src/main/mv.i"
 	@echo "... src/main/mv.s"
+	@echo "... src/main/pwd.o"
+	@echo "... src/main/pwd.i"
+	@echo "... src/main/pwd.s"
 	@echo "... src/process.o"
 	@echo "... src/process.i"
 	@echo "... src/process.s"

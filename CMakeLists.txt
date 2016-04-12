@@ -48,7 +48,7 @@ file(GLOB HEADER_CD
 add_executable(cd ${SRC_CD} ${HEADER_CD})
 
 
-# ECHO
+# cat
 file(GLOB SRC_CAT
     "src/commands/cat.c"
     "src/utils.c"
@@ -75,3 +75,18 @@ file(GLOB HEADER_ECHO
 add_executable(echo ${SRC_ECHO} ${HEADER_ECHO})
 add_library(echo_lib SHARED ${SRC_ECHO})
 set_target_properties(echo_lib PROPERTIES OUTPUT_NAME "echo")
+
+
+# mv
+file(GLOB SRC_MV
+    "src/commands/mv.c"
+    "src/utils.c"
+    "src/main/mv.c"
+)
+file(GLOB HEADER_MV
+    "include/commands/mv.h"
+    "include/commands.h"
+)
+add_executable(mv ${SRC_MV} ${HEADER_MV})
+add_library(mv_lib SHARED ${SRC_MV})
+set_target_properties(mv_lib PROPERTIES OUTPUT_NAME "mv")

@@ -27,6 +27,7 @@ CMakeFiles/shell.dir/src/commands/ls.c.o: include/utils.h
 CMakeFiles/shell.dir/src/commands/ls.c.o: src/commands/ls.c
 
 CMakeFiles/shell.dir/src/commands/mv.c.o: include/commands/mv.h
+CMakeFiles/shell.dir/src/commands/mv.c.o: include/parameters.def
 CMakeFiles/shell.dir/src/commands/mv.c.o: include/utils.h
 CMakeFiles/shell.dir/src/commands/mv.c.o: src/commands/mv.c
 

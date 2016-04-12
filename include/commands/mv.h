@@ -25,7 +25,8 @@
 #include <getopt.h>
 #include <string.h>
 #include "../utils.h"
+#include "../parameters.def"
 
 int mv_lib(int argc, char *argv[]);
 
-void myMv(char* arg1, char* arg2, char* options, int iOptions);
+void mv(char* arg1, char* arg2, char* options, int iOptions);

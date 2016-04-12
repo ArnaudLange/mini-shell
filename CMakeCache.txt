@@ -153,6 +153,9 @@ echo_lib_LIB_DEPENDS:STATIC=
 //Dependencies for target
 ls_lib_LIB_DEPENDS:STATIC=
 
+//Dependencies for target
+mv_lib_LIB_DEPENDS:STATIC=
+
 
 ########################
 # INTERNAL cache entries

@@ -108,7 +108,7 @@ int mv_lib(int argc, char *argv[]){
         // if there are 2 files
         if (nbFiles == 2)
         {
-            myMv(files[1],files[2], options, nbOptions);   
+            mv(files[1],files[2], options, nbOptions);   
         }
         else
         {
@@ -129,7 +129,7 @@ int mv_lib(int argc, char *argv[]){
     return 0;
 }
 
-void myMv(char* arg1, char* arg2, char* options, int iOptions){
+void mv(char* arg1, char* arg2, char* options, int iOptions){
     // ----------------------------------
     // Initialisation
     // ----------------------------------

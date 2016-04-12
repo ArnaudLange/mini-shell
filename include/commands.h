@@ -102,7 +102,7 @@ int startParsedCommand(ParsedCommand* cmd);
  *
  * @return     1 if everything went correctly. 0 otherwise
  */
-int initCommands(Command** array);
+int initCommands(Command* array[MAXCMD]);
 
 /**
  * @brief      Free all the dynamically allocated commands

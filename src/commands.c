@@ -16,17 +16,16 @@
 */
     
 #include "../include/commands.h"
-
 #include "../include/commands/cd.h"
 
 #include "../include/shell.h"
+#include "../include/parameters.def"
 
 #define debugState 1
 
- int initCommands(Command** array){
+ int initCommands(Command* array[MAXCMD]){
         // Internal Shell commands are first added
         // char* name, char** parameters, char** options, int nameLength, int* parameterLength, int* optionLength, int (*cmd_ptr)(int, int)
-        
         addCmdToArray(array, 0, "cd", &cd_internal);
         return 1;
 }

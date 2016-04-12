@@ -52,5 +52,5 @@ Shell* initShell();
 void freeShell(Shell* shell);
 
 int findFunction(Shell* shell, ParsedCommand* command);
-
+int testFunction(Shell* shell, char* name);
 #endif

@@ -76,7 +76,7 @@ int loadLibraries(Shell* shell){
                                 Command* cmd = shell->commands[shell->nbCmd];
                                 Init(cmd->name, cmd->cmd_ptr);
                                 shell->nbCmd++;
-                                printf("successfully loaded %s\n", dp->d_name);
+                                printf("successfully loaded %s at index[%d] with name \'%s\'\n", dp->d_name, shell->nbCmd, cmd->name);
                         }
                 }
         }
@@ -94,6 +94,12 @@ int main(int argc, char* argv[]){
         Shell* shell = initShell();
         
         loadLibraries(shell);
+        printf("\n");
+        testFunction(shell, "cd");
+        testFunction(shell, "ls");
+        testFunction(shell, "cat");
+        testFunction(shell, "echo");
+        testFunction(shell, "mv");
 
         welcomeMessage();
         while(1){

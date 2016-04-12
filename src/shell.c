@@ -20,7 +20,6 @@
 Shell* initShell(){
         Shell* shell = malloc(sizeof(Shell));
         (*shell).nbCmd = initCommands(shell->commands);
-        shell->nbCmd=0;
         return shell;
 }
 
@@ -33,12 +32,26 @@ void freeShell(Shell* shell){
 int findFunction(Shell* shell, ParsedCommand* command){
         int i=0;
         while(i<shell->nbCmd){
-            if(strcmp((*shell->commands)[i].name,(*command).name) == 0){
-                (*command).cmd_ptr = (*shell->commands)[i].cmd_ptr;
-                return 1;
-            }    
-            i++;
+                if(strcmp((*shell->commands)[i].name,(*command).name) == 0){
+                        (*command).cmd_ptr = (*shell->commands)[i].cmd_ptr;
+                        return 1;
+                }    
+                i++;
         }
         (*command).cmd_ptr = NULL;
         return 0;
 }
+
+int testFunction(Shell* shell, char* name){
+        int i=0;
+        while(i<shell->nbCmd){
+                if(strcmp((shell->commands)[i]->name, name) == 0){
+                        printf("%s en état de marche\n", name);
+                        return 1;
+                }    
+                i++;
+        }
+        printf("%s introuvable\n");
+        return 0;
+}
+

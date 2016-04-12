@@ -51,7 +51,7 @@ int testFunction(Shell* shell, char* name){
                 }    
                 i++;
         }
-        printf("%s introuvable\n");
+        printf("%s introuvable\n", name);
         return 0;
 }
 

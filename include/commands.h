@@ -25,9 +25,7 @@
 #include <fcntl.h>
 #include <dirent.h>
 
-#define NAME_SIZE 100
-#define MAX_PARAMETERS 100
-#define MAX_OPTIONS 100
+#include "parameters.def"
 
 
 struct command{

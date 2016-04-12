@@ -18,13 +18,12 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#define MAXSIZE 200
-#define MAXCMD 300
-
 #include <stdlib.h>
 #include <string.h>
 
 #include "commands.h"
+
+#include "parameters.def"
 
 /**
  * @brief      Shell structure
@@ -32,7 +31,7 @@
  */
 struct shell{
         int nbCmd;
-        Command* commands[300];
+        Command* commands[MAXCMD];
         char currDir[MAXSIZE];
 };
 

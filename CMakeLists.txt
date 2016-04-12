@@ -31,6 +31,7 @@ file(GLOB SRC_LS
 )
 file(GLOB HEADER_LS
     "include/commands/ls.h"
+    "include/commands.h"
 )
 add_executable(ls ${SRC_LS} ${HEADER_LS})
 add_library(ls_lib SHARED ${SRC_LS})
@@ -55,6 +56,7 @@ file(GLOB SRC_CAT
 )
 file(GLOB HEADER_CAT
     "include/commands/cat.h"
+    "include/commands.h"
 )
 add_executable(cat ${SRC_CAT} ${HEADER_CAT})
 add_library(cat_lib SHARED ${SRC_CAT})

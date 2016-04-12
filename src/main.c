@@ -29,9 +29,11 @@
 #include "../include/shell.h"
 #include "../include/process.h"
 
+#include "../include/parameters.def"
+
 #define LIB_PATH "lib/"
 
-typedef void (*init)(Shell* shell);
+typedef void (*init)(char name[NAME_SIZE], int (*cmd_ptr)(int, char*[]));
 init Init;
 
 
@@ -70,7 +72,11 @@ int loadLibraries(Shell* shell){
                                 printf("Error loading %s\n", dp->d_name);
                         }
                         else{
-                                Init(shell);
+                                shell->commands[shell->nbCmd] = (Command*) malloc(sizeof(Command));
+                                Command* cmd = shell->commands[shell->nbCmd];
+                                Init(cmd->name, cmd->cmd_ptr);
+                                shell->nbCmd++;
+                                printf("successfully loaded %s\n", dp->d_name);
                         }
                 }
         }

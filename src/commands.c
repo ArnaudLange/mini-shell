@@ -18,7 +18,6 @@
 #include "../include/commands.h"
 
 #include "../include/commands/cd.h"
-#include "../include/commands/ls.h"
 
 #include "../include/shell.h"
 
@@ -28,14 +27,7 @@
         // Internal Shell commands are first added
         // char* name, char** parameters, char** options, int nameLength, int* parameterLength, int* optionLength, int (*cmd_ptr)(int, int)
         
-        int (*cmd_ptr)(int,char*[]);
-        cmd_ptr = &cd_internal;
-
-        int (*ls_ptr)(int,char*[]);
-        ls_ptr = &ls_lib;
-
-        addCmdToArray(array, 0, "cd", cmd_ptr);
-        addCmdToArray(array, 0, "ls", ls_ptr);
+        addCmdToArray(array, 0, "cd", &cd_internal);
         return 1;
 }
 

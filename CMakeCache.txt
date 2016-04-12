@@ -148,6 +148,9 @@ binsh_SOURCE_DIR:STATIC=/home/antoine/Workspace/c/Shell
 cat_lib_LIB_DEPENDS:STATIC=
 
 //Dependencies for target
+echo_lib_LIB_DEPENDS:STATIC=
+
+//Dependencies for target
 ls_lib_LIB_DEPENDS:STATIC=
 
 

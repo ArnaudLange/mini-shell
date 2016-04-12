@@ -111,6 +111,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named echo_lib
+
+# Build rule for target.
+echo_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 echo_lib
+.PHONY : echo_lib
+
+# fast build rule for target.
+echo_lib/fast:
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/build
+.PHONY : echo_lib/fast
+
+#=============================================================================
+# Target rules for targets named echo
+
+# Build rule for target.
+echo: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 echo
+.PHONY : echo
+
+# fast build rule for target.
+echo/fast:
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/build
+.PHONY : echo/fast
+
+#=============================================================================
 # Target rules for targets named cat_lib
 
 # Build rule for target.
@@ -278,6 +304,39 @@ src/commands/cd.c.s:
 	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/commands/cd.c.s
 .PHONY : src/commands/cd.c.s
 
+src/commands/echo.o: src/commands/echo.c.o
+
+.PHONY : src/commands/echo.o
+
+# target to build an object file
+src/commands/echo.c.o:
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/commands/echo.c.o
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/commands/echo.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/echo.c.o
+.PHONY : src/commands/echo.c.o
+
+src/commands/echo.i: src/commands/echo.c.i
+
+.PHONY : src/commands/echo.i
+
+# target to preprocess a source file
+src/commands/echo.c.i:
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/commands/echo.c.i
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/commands/echo.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/echo.c.i
+.PHONY : src/commands/echo.c.i
+
+src/commands/echo.s: src/commands/echo.c.s
+
+.PHONY : src/commands/echo.s
+
+# target to generate assembly for a file
+src/commands/echo.c.s:
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/commands/echo.c.s
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/commands/echo.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/echo.c.s
+.PHONY : src/commands/echo.c.s
+
 src/commands/ls.o: src/commands/ls.c.o
 
 .PHONY : src/commands/ls.o
@@ -394,6 +453,36 @@ src/main/cd.s: src/main/cd.c.s
 src/main/cd.c.s:
 	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/main/cd.c.s
 .PHONY : src/main/cd.c.s
+
+src/main/echo.o: src/main/echo.c.o
+
+.PHONY : src/main/echo.o
+
+# target to build an object file
+src/main/echo.c.o:
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/main/echo.c.o
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/main/echo.c.o
+.PHONY : src/main/echo.c.o
+
+src/main/echo.i: src/main/echo.c.i
+
+.PHONY : src/main/echo.i
+
+# target to preprocess a source file
+src/main/echo.c.i:
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/main/echo.c.i
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/main/echo.c.i
+.PHONY : src/main/echo.c.i
+
+src/main/echo.s: src/main/echo.c.s
+
+.PHONY : src/main/echo.s
+
+# target to generate assembly for a file
+src/main/echo.c.s:
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/main/echo.c.s
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/main/echo.c.s
+.PHONY : src/main/echo.c.s
 
 src/main/ls.o: src/main/ls.c.o
 
@@ -512,6 +601,8 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.o
@@ -525,6 +616,8 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.i
@@ -538,6 +631,8 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.s
@@ -552,6 +647,8 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... echo_lib"
+	@echo "... echo"
 	@echo "... cat_lib"
 	@echo "... cat"
 	@echo "... rebuild_cache"
@@ -568,6 +665,9 @@ help:
 	@echo "... src/commands/cd.o"
 	@echo "... src/commands/cd.i"
 	@echo "... src/commands/cd.s"
+	@echo "... src/commands/echo.o"
+	@echo "... src/commands/echo.i"
+	@echo "... src/commands/echo.s"
 	@echo "... src/commands/ls.o"
 	@echo "... src/commands/ls.i"
 	@echo "... src/commands/ls.s"
@@ -580,6 +680,9 @@ help:
 	@echo "... src/main/cd.o"
 	@echo "... src/main/cd.i"
 	@echo "... src/main/cd.s"
+	@echo "... src/main/echo.o"
+	@echo "... src/main/echo.i"
+	@echo "... src/main/echo.s"
 	@echo "... src/main/ls.o"
 	@echo "... src/main/ls.i"
 	@echo "... src/main/ls.s"

@@ -3,11 +3,8 @@
 
 CMakeFiles/shell.dir/src/commands.c.o: include/commands.h
 CMakeFiles/shell.dir/src/commands.c.o: include/commands/cd.h
-CMakeFiles/shell.dir/src/commands.c.o: include/commands/ls.h
 CMakeFiles/shell.dir/src/commands.c.o: include/parameters.def
-CMakeFiles/shell.dir/src/commands.c.o: include/redirection.h
 CMakeFiles/shell.dir/src/commands.c.o: include/shell.h
-CMakeFiles/shell.dir/src/commands.c.o: include/utils.h
 CMakeFiles/shell.dir/src/commands.c.o: src/commands.c
 
 CMakeFiles/shell.dir/src/commands/cat.c.o: include/commands/cat.h
@@ -18,7 +15,12 @@ CMakeFiles/shell.dir/src/commands/cat.c.o: src/commands/cat.c
 CMakeFiles/shell.dir/src/commands/cd.c.o: include/commands/cd.h
 CMakeFiles/shell.dir/src/commands/cd.c.o: src/commands/cd.c
 
+CMakeFiles/shell.dir/src/commands/echo.c.o: include/commands/echo.h
+CMakeFiles/shell.dir/src/commands/echo.c.o: include/parameters.def
+CMakeFiles/shell.dir/src/commands/echo.c.o: src/commands/echo.c
+
 CMakeFiles/shell.dir/src/commands/ls.c.o: include/commands/ls.h
+CMakeFiles/shell.dir/src/commands/ls.c.o: include/parameters.def
 CMakeFiles/shell.dir/src/commands/ls.c.o: include/redirection.h
 CMakeFiles/shell.dir/src/commands/ls.c.o: include/utils.h
 CMakeFiles/shell.dir/src/commands/ls.c.o: src/commands/ls.c

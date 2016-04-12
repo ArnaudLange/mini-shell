@@ -39,8 +39,6 @@ typedef enum
 
 } Options;
 
-void init(char name[NAME_SIZE], int (*cmd_ptr)(int, char*[]));
-
 void readCatOptions(char *options, Options *etat);
 
 

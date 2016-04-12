@@ -41,6 +41,10 @@ string.h
 /home/antoine/Workspace/c/Shell/include/redirection.h
 ../utils.h
 /home/antoine/Workspace/c/Shell/include/utils.h
+../parameters.def
+/home/antoine/Workspace/c/Shell/include/parameters.def
+
+/home/antoine/Workspace/c/Shell/include/parameters.def
 
 /home/antoine/Workspace/c/Shell/include/redirection.h
 string.h

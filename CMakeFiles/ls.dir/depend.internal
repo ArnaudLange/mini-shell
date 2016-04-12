@@ -3,11 +3,13 @@
 
 CMakeFiles/ls.dir/src/commands/ls.c.o
  /home/antoine/Workspace/c/Shell/include/commands/ls.h
+ /home/antoine/Workspace/c/Shell/include/parameters.def
  /home/antoine/Workspace/c/Shell/include/redirection.h
  /home/antoine/Workspace/c/Shell/include/utils.h
  /home/antoine/Workspace/c/Shell/src/commands/ls.c
 CMakeFiles/ls.dir/src/main/ls.c.o
  /home/antoine/Workspace/c/Shell/include/commands/ls.h
+ /home/antoine/Workspace/c/Shell/include/parameters.def
  /home/antoine/Workspace/c/Shell/include/redirection.h
  /home/antoine/Workspace/c/Shell/include/utils.h
  /home/antoine/Workspace/c/Shell/src/main/ls.c

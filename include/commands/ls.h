@@ -40,7 +40,7 @@
 #include <string.h>
 #include "../redirection.h"
 #include "../utils.h"
-
+#include "../parameters.def"
 
 #define NORMAL "\x1B[0m"
 #define RED     "\x1b[31m"
@@ -50,6 +50,7 @@
 #define MAGENTA "\x1b[35m"
 #define CYAN    "\x1b[36m"
 #define RESET   "\x1b[0m"
+
 
 int ls_lib(int argc, char* argv[]);
 

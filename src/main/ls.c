@@ -15,7 +15,13 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
     
+#define NAME "ls"
 #include "../../include/commands/ls.h"
+
+void init(char name[NAME_SIZE], int (*cmd_ptr)(int, char*[])){
+        strncpy(name, NAME, NAME_SIZE);
+        cmd_ptr = &ls_lib;
+}
 
 int main(int argc, char* argv[]){
         ls_lib(argc, argv);

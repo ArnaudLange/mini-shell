@@ -17,18 +17,22 @@
 
 #pragma once
 
-#include <stdio.h>
-#include <sys/stat.h>
 #include <sys/types.h>
-#include <stdlib.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
 #include <errno.h>
-#include <getopt.h>
+#include <dirent.h>
 #include <string.h>
+#include <utime.h>
+#include <limits.h>
+#include <getopt.h>
 //** A décommenter une fois les test finis **//
 //#include "../utils.h"
 
 //** A virer une fois les tests finis **//
 #include "utils.h"
 
-int cp_lib(int argc, char *argv[]);
+void copy(char* src, char* dst, char* options, int nbOptions);
+//int cp_lib(int argc, char *argv[]);
 

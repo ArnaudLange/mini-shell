@@ -1,1 +1,0 @@
-/usr/bin/cc  -std=c99 -D_XOPEN_SOURCE=600 -ldl   CMakeFiles/cat.dir/src/commands/cat.c.o CMakeFiles/cat.dir/src/utils.c.o CMakeFiles/cat.dir/src/main/cat.c.o  -o bin/cat -rdynamic 

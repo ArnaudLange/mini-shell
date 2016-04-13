@@ -101,6 +101,7 @@ int main(int argc, char* argv[]){
         testFunction(shell, "echo");
         testFunction(shell, "mv");
         testFunction(shell, "pwd");
+        testFunction(shell, "mkdir");
 
         welcomeMessage();
         while(1){

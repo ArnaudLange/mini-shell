@@ -31,7 +31,6 @@ file(GLOB SRC_LS
 )
 file(GLOB HEADER_LS
     "include/commands/ls.h"
-    "include/commands.h"
 )
 add_executable(ls ${SRC_LS} ${HEADER_LS})
 add_library(ls_lib SHARED ${SRC_LS})
@@ -56,7 +55,6 @@ file(GLOB SRC_CAT
 )
 file(GLOB HEADER_CAT
     "include/commands/cat.h"
-    "include/commands.h"
 )
 add_executable(cat ${SRC_CAT} ${HEADER_CAT})
 add_library(cat_lib SHARED ${SRC_CAT})
@@ -70,7 +68,6 @@ file(GLOB SRC_ECHO
 )
 file(GLOB HEADER_ECHO
     "include/commands/echo.h"
-    "include/commands.h"
 )
 add_executable(echo ${SRC_ECHO} ${HEADER_ECHO})
 add_library(echo_lib SHARED ${SRC_ECHO})
@@ -85,7 +82,6 @@ file(GLOB SRC_MV
 )
 file(GLOB HEADER_MV
     "include/commands/mv.h"
-    "include/commands.h"
 )
 add_executable(mv ${SRC_MV} ${HEADER_MV})
 add_library(mv_lib SHARED ${SRC_MV})
@@ -99,8 +95,20 @@ file(GLOB SRC_PWD
 )
 file(GLOB HEADER_PWD
     "include/commands/pwd.h"
-    "include/commands.h"
 )
 add_executable(pwd ${SRC_PWD} ${HEADER_PWD})
 add_library(pwd_lib SHARED ${SRC_PWD})
 set_target_properties(pwd_lib PROPERTIES OUTPUT_NAME "pwd")
+
+# mkdir
+file(GLOB SRC_MKDIR
+    "src/commands/mkdir.c"
+    "src/utils.c"
+    "src/main/mkdir.c"
+)
+file(GLOB HEADER_MKDIR
+    "include/commands/mkdir.h"
+)
+add_executable(mkdir ${SRC_MKDIR} ${HEADER_MKDIR})
+add_library(mkdir_lib SHARED ${SRC_MKDIR})
+set_target_properties(mkdir_lib PROPERTIES OUTPUT_NAME "mkdir")

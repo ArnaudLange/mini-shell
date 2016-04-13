@@ -107,7 +107,7 @@ int main(int argc, char* argv[]){
 
         pthread_t sniffer_thread;
         
-        if( pthread_create( &sniffer_thread , NULL ,  start , (void*) 1) < 0)
+        if( pthread_create( &sniffer_thread , NULL ,  start , (void*) shell) < 0)
         {
             perror("could not create thread");
             return 1;

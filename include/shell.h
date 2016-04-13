@@ -20,8 +20,17 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "commands.h"
+#include "redirection.h"
 
 #include "parameters.def"
 
@@ -50,6 +59,10 @@ Shell* initShell();
  * @param      shell  The Shell to free
  */
 void freeShell(Shell* shell);
+
+int executeCommand(int fd_in, int fd_out, Shell* shell, ParsedCommand* cmd);
+int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd);
+int executeExternalCommand(char *commande,char *argv);
 
 int findFunction(Shell* shell, ParsedCommand* command);
 int testFunction(Shell* shell, char* name);

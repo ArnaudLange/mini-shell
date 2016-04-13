@@ -111,6 +111,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named connect_lib
+
+# Build rule for target.
+connect_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 connect_lib
+.PHONY : connect_lib
+
+# fast build rule for target.
+connect_lib/fast:
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/build
+.PHONY : connect_lib/fast
+
+#=============================================================================
+# Target rules for targets named connect
+
+# Build rule for target.
+connect: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 connect
+.PHONY : connect
+
+# fast build rule for target.
+connect/fast:
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/build
+.PHONY : connect/fast
+
+#=============================================================================
 # Target rules for targets named mkdir_lib
 
 # Build rule for target.
@@ -382,6 +408,39 @@ src/commands/cd.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cd.c.s
 .PHONY : src/commands/cd.c.s
 
+src/commands/connect.o: src/commands/connect.c.o
+
+.PHONY : src/commands/connect.o
+
+# target to build an object file
+src/commands/connect.c.o:
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/commands/connect.c.o
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/commands/connect.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/connect.c.o
+.PHONY : src/commands/connect.c.o
+
+src/commands/connect.i: src/commands/connect.c.i
+
+.PHONY : src/commands/connect.i
+
+# target to preprocess a source file
+src/commands/connect.c.i:
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/commands/connect.c.i
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/commands/connect.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/connect.c.i
+.PHONY : src/commands/connect.c.i
+
+src/commands/connect.s: src/commands/connect.c.s
+
+.PHONY : src/commands/connect.s
+
+# target to generate assembly for a file
+src/commands/connect.c.s:
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/commands/connect.c.s
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/commands/connect.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/connect.c.s
+.PHONY : src/commands/connect.c.s
+
 src/commands/echo.o: src/commands/echo.c.o
 
 .PHONY : src/commands/echo.o
@@ -630,6 +689,36 @@ src/main/cd.s: src/main/cd.c.s
 src/main/cd.c.s:
 	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/main/cd.c.s
 .PHONY : src/main/cd.c.s
+
+src/main/connect.o: src/main/connect.c.o
+
+.PHONY : src/main/connect.o
+
+# target to build an object file
+src/main/connect.c.o:
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/main/connect.c.o
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/main/connect.c.o
+.PHONY : src/main/connect.c.o
+
+src/main/connect.i: src/main/connect.c.i
+
+.PHONY : src/main/connect.i
+
+# target to preprocess a source file
+src/main/connect.c.i:
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/main/connect.c.i
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/main/connect.c.i
+.PHONY : src/main/connect.c.i
+
+src/main/connect.s: src/main/connect.c.s
+
+.PHONY : src/main/connect.s
+
+# target to generate assembly for a file
+src/main/connect.c.s:
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/main/connect.c.s
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/main/connect.c.s
+.PHONY : src/main/connect.c.s
 
 src/main/echo.o: src/main/echo.c.o
 
@@ -895,6 +984,8 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.o
@@ -916,6 +1007,8 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.i
@@ -937,6 +1030,8 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.s
@@ -959,6 +1054,8 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
+	@echo "... connect_lib"
+	@echo "... connect"
 	@echo "... mkdir_lib"
 	@echo "... mkdir"
 	@echo "... edit_cache"
@@ -983,6 +1080,9 @@ help:
 	@echo "... src/commands/cd.o"
 	@echo "... src/commands/cd.i"
 	@echo "... src/commands/cd.s"
+	@echo "... src/commands/connect.o"
+	@echo "... src/commands/connect.i"
+	@echo "... src/commands/connect.s"
 	@echo "... src/commands/echo.o"
 	@echo "... src/commands/echo.i"
 	@echo "... src/commands/echo.s"
@@ -1007,6 +1107,9 @@ help:
 	@echo "... src/main/cd.o"
 	@echo "... src/main/cd.i"
 	@echo "... src/main/cd.s"
+	@echo "... src/main/connect.o"
+	@echo "... src/main/connect.i"
+	@echo "... src/main/connect.s"
 	@echo "... src/main/echo.o"
 	@echo "... src/main/echo.i"
 	@echo "... src/main/echo.s"

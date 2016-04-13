@@ -112,3 +112,16 @@ file(GLOB HEADER_MKDIR
 add_executable(mkdir ${SRC_MKDIR} ${HEADER_MKDIR})
 add_library(mkdir_lib SHARED ${SRC_MKDIR})
 set_target_properties(mkdir_lib PROPERTIES OUTPUT_NAME "mkdir")
+
+# connect
+file(GLOB SRC_CONNECT
+    "src/commands/connect.c"
+    "src/utils.c"
+    "src/main/connect.c"
+)
+file(GLOB HEADER_CONNECT
+    "include/commands/connect.h"
+)
+add_executable(connect ${SRC_CONNECT} ${HEADER_CONNECT})
+add_library(connect_lib SHARED ${SRC_CONNECT})
+set_target_properties(connect_lib PROPERTIES OUTPUT_NAME "connect")

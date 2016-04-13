@@ -18,7 +18,7 @@
 
 #define READ_END 0
 #define WRITE_END 1
-    
+
 #include "../include/shell.h"
 
 Shell* initShell(){
@@ -45,11 +45,24 @@ int findFunction(Shell* shell, ParsedCommand* command){
         return 0;
 }
 
-int testFunction(Shell* shell, char* name){
+int checkFunction(Shell* shell, char* name){
         int i=0;
         while(i<shell->nbCmd){
                 if(strcmp((shell->commands)[i]->name, name) == 0){
-                        printf("%s en état de marche\n", name);
+                        printf("%s est reconnue\n", name);
+                        return 1;
+                }    
+                i++;
+        }
+        printf("%s introuvable\n", name);
+        return 0;
+}
+
+int testFunction(Shell* shell, char* name, int argc, char* argv[]){
+        int i=0;
+        while(i<shell->nbCmd){
+                if(strcmp((shell->commands)[i]->name, name) == 0){
+                        (shell->commands)[i]->cmd_ptr(argc, argv);
                         return 1;
                 }    
                 i++;

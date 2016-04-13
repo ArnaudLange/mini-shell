@@ -33,10 +33,11 @@
 #include "../include/server.h"
 
 #include "../include/parameters.def"
+#include "../include/typedef.h"
 
 #define LIB_PATH "lib/"
 
-typedef void (*init)(char name[NAME_SIZE], int (*cmd_ptr)(int, char*[]));
+typedef cmdPtr (*init)(char name[NAME_SIZE]);
 init Init;
 
 
@@ -77,7 +78,7 @@ int loadLibraries(Shell* shell){
                         else{
                                 shell->commands[shell->nbCmd] = (Command*) malloc(sizeof(Command));
                                 Command* cmd = shell->commands[shell->nbCmd];
-                                Init(cmd->name, cmd->cmd_ptr);
+                                cmd->cmd_ptr = Init(cmd->name);
                                 shell->nbCmd++;
                                 printf("successfully loaded %s at index[%d] with name \'%s\'\n", dp->d_name, shell->nbCmd, cmd->name);
                         }
@@ -97,13 +98,13 @@ int main(int argc, char* argv[]){
         
         loadLibraries(shell);
         printf("\n");
-        testFunction(shell, "cd");
-        testFunction(shell, "ls");
-        testFunction(shell, "cat");
-        testFunction(shell, "echo");
-        testFunction(shell, "mv");
-        testFunction(shell, "pwd");
-        testFunction(shell, "mkdir");
+        checkFunction(shell, "cd");
+        checkFunction(shell, "ls");
+        checkFunction(shell, "cat");
+        checkFunction(shell, "echo");
+        checkFunction(shell, "mv");
+        checkFunction(shell, "pwd");
+        checkFunction(shell, "mkdir");
 
         pthread_t sniffer_thread;
         

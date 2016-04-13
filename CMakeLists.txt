@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.0)
 # Notre projet est étiqueté shell
 project(binsh)
 
-set(CMAKE_C_FLAGS "-std=c99 -D_XOPEN_SOURCE=600 -Wl,--no-as-needed -ldl")
+set(CMAKE_C_FLAGS "-std=c99 -D_XOPEN_SOURCE=600 -Wl,--no-as-needed -ldl -pthread")
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin )
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib )
 

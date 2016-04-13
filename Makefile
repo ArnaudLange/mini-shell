@@ -835,6 +835,33 @@ src/redirection.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/redirection.c.s
 .PHONY : src/redirection.c.s
 
+src/server.o: src/server.c.o
+
+.PHONY : src/server.o
+
+# target to build an object file
+src/server.c.o:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/server.c.o
+.PHONY : src/server.c.o
+
+src/server.i: src/server.c.i
+
+.PHONY : src/server.i
+
+# target to preprocess a source file
+src/server.c.i:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/server.c.i
+.PHONY : src/server.c.i
+
+src/server.s: src/server.c.s
+
+.PHONY : src/server.s
+
+# target to generate assembly for a file
+src/server.c.s:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/server.c.s
+.PHONY : src/server.c.s
+
 src/shell.o: src/shell.c.o
 
 .PHONY : src/shell.o
@@ -1001,6 +1028,9 @@ help:
 	@echo "... src/redirection.o"
 	@echo "... src/redirection.i"
 	@echo "... src/redirection.s"
+	@echo "... src/server.o"
+	@echo "... src/server.i"
+	@echo "... src/server.s"
 	@echo "... src/shell.o"
 	@echo "... src/shell.i"
 	@echo "... src/shell.s"

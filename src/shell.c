@@ -24,7 +24,6 @@ Shell* initShell(){
 }
 
 void freeShell(Shell* shell){
-        //printf("nbCmd=%d\n", (*shell).nbCmd);
         int res = freeCommands((*shell).nbCmd, (*shell).commands);
         free(shell);
 }

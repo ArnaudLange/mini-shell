@@ -22,6 +22,7 @@
 
 
 void myChmod(int option, char* mode, char* file){
+
     if (option){
         printf("Option verbose.\n");
         printf("mode of '%s' changed from [...] to %s\n",file,mode);
@@ -50,7 +51,9 @@ void myChmod(int option, char* mode, char* file){
         printf("Prise du buffer stat sur '%s' reussie.\n",file);
     }
 
-    printf("Mode de '%s' : %d\n",file,statbuf.st_mode);
+    printf("Mode de '%s' : %d\n\n",file,statbuf.st_mode);
+
+    chmod(file, 777);
 
 
 }
@@ -75,12 +78,13 @@ int main(int argc, char *argv[]){
             //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
         static struct option long_options[] = {
             {"help",     no_argument,       0, 'h'},
-            {"verbose",  no_argument,       0, 'v'}
+            {"verbose",  no_argument,       0, 'v'},
+            {"example",  no_argument,       0, 'e'}
         };
 
         //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
             //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
-        c = getopt_long(argc, argv, "hv", long_options, &option_index);
+        c = getopt_long(argc, argv, "hve", long_options, &option_index);
 
         if (c == -1) break;
 
@@ -92,6 +96,7 @@ int main(int argc, char *argv[]){
            printf("Usage: chmod [OPTION]... MODE[,MODE]... FILE...\n");
            printf("Change the mode of each FILE to MODE.\n\n");
            printf("    -v, --verbose        output a diagnostic for every file processed\n");
+           printf("    -e, --example        shows an example\n");
            printf("\n-----------------------------------------------------------\n\n");
            exit(0);
            break;
@@ -100,17 +105,25 @@ int main(int argc, char *argv[]){
            option=1;
            break;
 
+         case 'e':
+           printf("\n-----------------------------------------------------------\n");
+           printf("chmod: example\n");
+           printf("\tchmod [OPTION]... MODE[,MODE]... FILE...\n");
+           printf("\tchmod -v u+x,g-r file1 file2\n");
+           printf("\nHere, the option 'verbose' is activated\n");
+           printf("chmod will add the right to execute for the user, and remove\n");
+           printf("for the group, the right to read.\n");
+           printf("And this, on both files : file1 and file2.\n");
+           printf("\n-----------------------------------------------------------\n\n");
+           exit(0);
+           break;
+
         //message par défaut quand l'option rentrée n'est pas gérée par la commande
         default:
             printf("chmod : invalid option.\n");
             printf("Try 'chmod --help' for more information.\n");
             exit(1);
         }
-        }
-        if (argc<3){
-            printf("chmod : invalid option.\n");
-            printf("Try 'chmod --help' for more information.\n");
-            exit(1);
         }
     }
     //SI pas d'arguments => on affiche une erreur
@@ -121,10 +134,35 @@ int main(int argc, char *argv[]){
         exit(1);
     }
 
-    if (argc>3){
-        for (i=3; i<argc && *argv[i]!='-'; i++){
-            myChmod(option, argv[2], argv[i]);
+    if (argc>2 && option != 1){
+        for (i=2; i<argc && *argv[i]!='-'; i++){
+            myChmod(0, argv[1], argv[i]);
         }
+    }
+    else if (argc > 3 && option){
+        int iOption=0;
+        int k;
+        for (i=1; i<argc; i++){
+            if (*argv[i] == '-'){
+                iOption=i+1;
+            }
+        }
+        if (argc-2<iOption){
+            printf("chmod : invalid number of arguments.\n");
+            printf("Try 'chmod --help' for more information.\n");
+            exit(1);
+        }
+        else{
+            for(k = iOption+1; k<argc; k++){
+                printf("Here\n");
+                myChmod(option,argv[iOption],argv[k]);
+            }
+        }
+    }
+    else{
+        printf("chmod : invalid number of arguments.\n");
+        printf("Try 'chmod --help' for more information.\n");
+        exit(1);
     }
 
     return 0;

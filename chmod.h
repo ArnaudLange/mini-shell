@@ -32,4 +32,6 @@
 #include "utils.h"
 
 int chmod_lib(int argc, char *argv[]);
+void myChmod(int option, char* mode, char* file);
+int chmod(const char*path, mode_t mode);
 

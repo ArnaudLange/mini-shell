@@ -21,43 +21,6 @@
 #include "chmod.h" //à virer une fois les tests effectués
 
 
-void myChmod(int option, char* mode, char* file){
-
-    if (option){
-        printf("Option verbose.\n");
-        printf("mode of '%s' changed from [...] to %s\n",file,mode);
-    }
-    printf("Mode : %s\n",mode);
-    printf("File : %s\n",file);
-    printf("\n");
-
-    int sf;
-    struct stat statbuf;
-
-    sf = openFile(file);
-    if(sf == -1){
-        perror(file);
-        exit(1);
-    }
-    else{
-        printf("Ouverture de '%s' reussie.\n",file);
-    }
-    
-    if (fstat(sf,&statbuf)==-1){
-        perror("fstat");
-        exit(1);
-    }
-    else{
-        printf("Prise du buffer stat sur '%s' reussie.\n",file);
-    }
-
-    printf("Mode de '%s' : %d\n\n",file,statbuf.st_mode);
-
-    chmod(file, 777);
-
-
-}
-
 int main(int argc, char *argv[]){
 
 
@@ -154,7 +117,6 @@ int main(int argc, char *argv[]){
         }
         else{
             for(k = iOption+1; k<argc; k++){
-                printf("Here\n");
                 myChmod(option,argv[iOption],argv[k]);
             }
         }
@@ -166,4 +128,96 @@ int main(int argc, char *argv[]){
     }
 
     return 0;
+}
+
+void myChmod(int option, char* mode, char* file){
+
+    int sf;
+    struct stat statbuf;
+    char modeAvant[9];
+    char modeApres[9];
+
+    //initialisation des tableaux
+    int w;
+    for (w=0; w<9; w++){
+        modeAvant[w]='-';
+        modeApres[w]='-';
+    }
+
+    // Prise des donnees avant changement
+    sf = openFile(file);
+    if(sf == -1){
+        perror(file);
+        exit(1);
+    }
+    
+    if (fstat(sf,&statbuf)==-1){
+        perror("fstat");
+        exit(1);
+    }
+
+    //Recuperation du mode
+    int valUsr=0;
+    if (statbuf.st_mode & S_IRUSR){
+        valUsr+=4;
+        modeAvant[0]='r';
+    }
+    if (statbuf.st_mode & S_IWUSR){
+        valUsr+=2;
+        modeAvant[1]='w';
+    }
+    if (statbuf.st_mode & S_IXUSR){
+        valUsr+=1;
+        modeAvant[2]='x';
+    }
+    int valGrp=0;
+    if (statbuf.st_mode & S_IRGRP){
+        valGrp+=4;
+        modeAvant[3]='r';
+    }
+    if (statbuf.st_mode & S_IWGRP){
+        valGrp+=2;
+        modeAvant[4]='w';
+    }
+    if (statbuf.st_mode & S_IXGRP){
+        valGrp+=1;
+        modeAvant[5]='x';
+    }
+    int valOth=0;
+    if (statbuf.st_mode & S_IROTH){
+        valOth+=4;
+        modeAvant[6]='r';
+    }
+    if (statbuf.st_mode & S_IWOTH){
+        valOth+=2;
+        modeAvant[7]='w';
+    }
+    if (statbuf.st_mode & S_IXOTH){
+        valOth+=1;
+        modeAvant[8]='x';
+    }
+
+    int intMAvant=0;
+    intMAvant=100*valUsr+10*valGrp+valOth;
+    /*
+    printf( (statbuf.st_mode & S_IRUSR) ? "r" : "-");
+    printf( (statbuf.st_mode & S_IWUSR) ? "w" : "-");
+    printf( (statbuf.st_mode & S_IXUSR) ? "x" : "-");
+    printf( (statbuf.st_mode & S_IRGRP) ? "r" : "-");
+    printf( (statbuf.st_mode & S_IWGRP) ? "w" : "-");
+    printf( (statbuf.st_mode & S_IXGRP) ? "x" : "-");
+    printf( (statbuf.st_mode & S_IROTH) ? "r" : "-");
+    printf( (statbuf.st_mode & S_IWOTH) ? "w" : "-");
+    printf( (statbuf.st_mode & S_IXOTH) ? "x" : "-");
+    printf("\n");
+    */
+    printf("%s\n",modeAvant);
+
+    chmod(file, 0777);
+
+    /*if (option){
+        printf("mode of '%s' changed from 0%d (%s) to 0%d (%s)\n",file,intMAvant, strMAvant, mode);
+    }
+    */
+
 }

@@ -31,7 +31,6 @@
 
 #include "../utils.h"
 
-
 void copy(char* src, char* dst, char* options, int nbOptions);
 int cp_lib(int argc, char *argv[]);
 

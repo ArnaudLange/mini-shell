@@ -17,7 +17,6 @@
 
 #include "../../include/commands/cp.h"
 
-
 int cp_lib(int argc, char *argv[]){
 
 // -----------------------------------
@@ -172,7 +171,24 @@ int cp_lib(int argc, char *argv[]){
 void copy(char* src, char* dst, char* options, int nbOptions){
 
     struct stat statbuf1,statbuf2;
-    char recur[PATH_MAX],recur2[PATH_MAX],*srcFile;
+    char *srcFile;
+    //--------------------------------------
+    char* recur = NULL;
+    recur = malloc(PATH_MAX*sizeof(char));
+    if (recur == NULL)
+    {
+        perror("recur");
+        exit(1);
+    }
+
+    char* recur2 = NULL;
+    recur2 = malloc(PATH_MAX*sizeof(char));
+    if (recur2 == NULL)
+    {
+        perror("recur");
+        exit(1);
+    }
+    //-------------------------------------
     DIR *dirp;
     struct dirent *dptr;
     int fileDest1,fileDest2,i;

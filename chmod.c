@@ -130,6 +130,128 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
+char* lectureMode(char* mode){
+
+    printf("Dans la fonction lectureMode\n");
+    char* tabMode=calloc(9,sizeof(char));
+    
+    printf("%s\n",tabMode);
+
+    int u[3]={0,1,2};
+    int g[3]={3,4,5};
+    int o[3]={6,7,8};
+
+    int taille = strlen(mode);
+
+    char which=' ';
+    char etat=' ';
+    int h;
+
+    typedef enum{
+        etatDebut,
+        etatOpe,
+        etatFin,
+        etatFin2
+    } Etat;
+
+    Etat curEtat = etatDebut;
+
+    printf("Entree dans le for()\n");
+    for(h=0;h<taille;h++){
+        printf("Tour n°%d\n",h);
+        switch (curEtat){
+            case etatDebut:
+                printf("Etat debut\n");
+                if(mode[h]=='o' || mode[h]=='g' || mode[h]=='u'){
+                    which=mode[h];
+                    curEtat=etatOpe;
+                    break;
+                }
+                else{
+                    printf("chmod: invalid mode: '%c'\n",mode[h]);
+                    printf("Try 'chmod --help' for more information.\n");
+                    exit(0);
+                }
+            case etatOpe:
+                printf("Etat ope\n");
+                if(mode[h]=='=' || mode[h]=='+' || mode[h]=='-'){
+                    etat=mode[h];
+                    curEtat=etatFin;
+                    break;
+                }
+                else{
+                    printf("chmod: invalid mode: '%c'\n",mode[h]);
+                    printf("Try 'chmod --help' for more information.\n");
+                    exit(0);
+                }
+            case etatFin:
+                printf("Etat fin\n");
+                if(mode[h]=='x'){
+                    if(which == 'u'){
+                        tabMode[u[3]]=etat;
+                    }
+                    else if(which == 'g'){
+                        tabMode[g[3]]=etat;
+                    }
+                    else if(which == 'o'){
+                        tabMode[o[3]]=etat;
+                    }
+                    etat=etatFin2;
+                    break;
+                }
+                else if(mode[h]=='w'){
+                    if(which == 'u'){
+                        tabMode[u[2]]=etat;
+                    }
+                    else if(which == 'g'){
+                        tabMode[g[2]]=etat;
+                    }
+                    else if(which == 'o'){
+                        tabMode[o[2]]=etat;
+                    }
+                    etat=etatFin2;
+                    break;
+                }
+                else if(mode[h]=='r'){
+                    if(which == 'u'){
+                        tabMode[u[1]]=etat;
+                    }
+                    else if(which == 'g'){
+                        tabMode[g[1]]=etat;
+                    }
+                    else if(which == 'o'){
+                        tabMode[o[1]]=etat;
+                    }
+                    etat=etatFin2;
+                    break;
+                }
+                else{
+                    printf("chmod: invalid mode: '%c'\n",mode[h]);
+                    printf("Try 'chmod --help' for more information.\n");
+                    exit(0);
+                }
+            case etatFin2:
+                if (mode[h]==','){
+                    which=' ';
+                    etat=' ';
+                    curEtat=etatDebut;
+                    break;
+                }
+                else{
+                    curEtat=etatFin;
+                }
+
+        }
+
+    }
+
+
+    
+    printf("%s\n",tabMode);
+    return (char*)tabMode;
+
+}
+
 void myChmod(int option, char* mode, char* file){
 
     int sf;
@@ -139,6 +261,8 @@ void myChmod(int option, char* mode, char* file){
 
     //initialisation des tableaux
     int w;
+
+
     for (w=0; w<9; w++){
         modeAvant[w]='-';
         modeApres[w]='-';
@@ -155,6 +279,10 @@ void myChmod(int option, char* mode, char* file){
         perror("fstat");
         exit(1);
     }
+
+    printf("Entree dans fonction\n");
+    char* modeApr = lectureMode(mode);
+    printf("Sortie fonction\n");
 
     //Recuperation du mode
     int valUsr=0;
@@ -200,6 +328,8 @@ void myChmod(int option, char* mode, char* file){
     int intMAvant=0;
     intMAvant=100*valUsr+10*valGrp+valOth;
 
+
+    lectureMode(mode);
     mode_t modeConv=strtol(mode,NULL,8);
 
     if (atoi(mode)==0){

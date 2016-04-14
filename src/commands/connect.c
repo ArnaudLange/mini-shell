@@ -51,7 +51,7 @@ int connect_lib(int argc, char* argv[]){
 
         if(inet_pton(AF_INET, address, &serv_addr.sin_addr)<=0)
         {
-                printf("erreur du nom de connexion : %s non valide\n", address, port);
+                printf("erreur du nom de connexion : %s non valide\n", address);
                 return 1;
         } 
 

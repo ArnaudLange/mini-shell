@@ -21,91 +21,98 @@
 #include "rm.h" //à virer une fois les tests effectués
 
 
-int main(int argc, char *argv[]){
+    int main(int argc, char *argv[]){
 
-    // -----------------------------------
-    // Declaration tableau deux dimensions pour les options
+        // -----------------------------------
+        // Declaration tableau deux dimensions pour les options
 
-    char* options = NULL;
-    options = (char*) calloc(15, sizeof(*options));
-    if (options == NULL)
-    {
-        perror("options");
-        exit(1);
-    }
-
-
-    // -----------------------------------
-    // Declaration tableau deux dimensions pour les files
-
-    char** files = NULL;
-    files = malloc(sizeof(char**));
-    if (files == NULL)
-    {
-        perror("files");
-        exit(1);
-    }
-    files[0] = malloc(sizeof(char*));
-    if (files[0] == NULL)
-    {
-        perror("files[x]");
-        exit(1);
-    }
-
-    // -----------------------------------
-
-    int nbOptions = 0;
-    int nbFiles = 0;
-    int i, c;
-
-    // -----------------------------------
-    // parcourt des arguments de la fonction
-
-    if (argc >1) {
-
-        //Boucle pour parcourir les options, exemple avec les options verbose et help
-        while (1) {
-        int option_index = 0;
-
-        //structure donnant les options gérées par la commande
-            //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
-        static struct option long_options[] = {
-            {"help",     no_argument,       0, 'h'},
-            {"verbose",  no_argument,       0, 'v'}
-        };
-
-        //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
-            //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
-        c = getopt_long(argc, argv, "hv", long_options, &option_index);
-
-        if (c == -1) break;
-
-        //switch en fonction des options rentrées par l'user
-        switch (c) {
-
-         case 'h': 
-           printf("\n-----------------------------------------------------------\n");
-           printf("Usage: fonction [OPTION]... ARG\n");
-           printf("Rename SOURCE to DEST\n\n");
-           printf("    -v, --verbose        explain what is being done\n");
-           printf("\n-----------------------------------------------------------\n\n");
-           exit(0);
-           break;
-
-         case 'v':
-           options[nbOptions] = c; 
-           nbOptions++;
-           break;
-
-        //message par défaut quand l'option rentrée n'est pas gérée par la commande
-        default:
-            printf("Try 'fonction --help' for more information.\n");
-            exit(1);
-      }
-    }
-        //Boucle pour parcourir les arguments qui ne sont pas des options
-        for (i=1; i<argc; i++)
+        char* options = NULL;
+        options = (char*) calloc(16, sizeof(*options));
+        if (options == NULL)
         {
+            perror("options");
+            exit(1);
+        }
+
+
+        // -----------------------------------
+        // Declaration tableau deux dimensions pour les files
+
+        char** files = NULL;
+        files = malloc(32*sizeof(char**));
+        if (files == NULL)
+        {
+            perror("files");
+            exit(1);
+        }
+        files[0] = malloc(32*sizeof(char*));
+        if (files[0] == NULL)
+        {
+            perror("files[x]");
+            exit(1);
+        }
+
+        // -----------------------------------
+
+        int nbOptions = 0;
+        int nbFiles = 0;
+        int i, c, j, k;
+
+        // -----------------------------------
+        // parcourt des arguments de la fonction
+
+        if (argc >1) {
+
+            //Boucle pour parcourir les options, exemple avec les options verbose et help
+            while (1) {
+                int option_index = 0;
+
+                //structure donnant les options gérées par la commande
+                    //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
+                static struct option long_options[] = {
+                    {"help",        no_argument,       0, 'h'},
+                    {"recursive",   no_argument,       0, 'r'},
+                    {"verbose",     no_argument,       0, 'v'}
+                };
+
+                //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
+                    //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
+                c = getopt_long(argc, argv, "hvr", long_options, &option_index);
+
+                if (c == -1) break;
+
+                //switch en fonction des options rentrées par l'user
+                switch (c) {
+
+                    case 'h': 
+                    printf("\n-----------------------------------------------------------\n");
+                    printf("Usage: rm [OPTION]... FILE...\n");
+                    printf("Remove FILE(s)\n\n");
+                    printf("    -v, --verbose        explain what is being done\n");
+                    printf("    -r, --recursive      remove directories and their contents recursively\n");
+                    printf("\n-----------------------------------------------------------\n\n");
+                    exit(0);
+                    break;
+ 
+                    case 'v':
+                    options[nbOptions] = c; 
+                    nbOptions++;
+                    break;
+
+                    case 'r':
+                    options[nbOptions] = c; 
+                    nbOptions++;
+                    break;
+ 
+                    //message par défaut quand l'option rentrée n'est pas gérée par la commande
+                    default:
+                    printf("Try 'rm --help' for more information.\n");
+                    exit(1);
+                }
+           }
+        //Boucle pour parcourir les arguments qui ne sont pas des options
+           for (i=1; i<argc; i++)
+           {
             if(argv[i][0] != '-')
             {
                 nbFiles++;
@@ -117,26 +124,55 @@ int main(int argc, char *argv[]){
             }
         }
         // if nombre d'arguments invalide
-        if (nbFiles == 2)
+        if (nbFiles >= 1)
         {
-            myMv(files[1],files[2], options, nbOptions);   
+            for(j=1; j<=nbFiles; j++){
+                suppression(files[j], options)
+            }   
         }
         else
         {
-            printf("fonction : invalid number of arguments\n");
-            printf("Try 'fonction --help' for more information.\n");
+            printf("rm : invalid number of arguments\n");
+            printf("Try 'rm --help' for more information.\n");
         }
-        free(files);
-        free(options);
+        
 
 
     }
-    //** A changer **//
     //SI pas d'arguments => on affiche une erreur
     else
     {
-        printf("fonction : invalid number of arguments\n");
+        printf("rm : invalid number of arguments\n");
+        printf("Try 'rm --help' for more information.\n");
+    }
+    for(k=1; k<=nbFiles; k++){
+        free(files[k]);
+    }
+    free(files);
+    free(options);
+    return 0;
+}
+
+void suppression(char * file, char * options){
+    struct stat statbuf;
+
+    long int size = 0;
+    DIR *dirp;
+    struct dirent *dptr;
+    
+    char* recur = NULL;
+    recur = malloc(PATH_MAX*sizeof(char));
+    if (recur == NULL)
+    {
+        perror("recur");
+        exit(1);
     }
 
-    return 0;
+    if (lstat(file,&statbuf)==-1) {
+        printf("rm : '%s' n'existe pas\n", file);
+        //fprintf(stderr,"error (%d) %s\n",errno,strerror(errno));
+        exit(1);
+    }
+
+    
 }

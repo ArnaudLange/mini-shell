@@ -31,4 +31,4 @@
 #include "utils.h"
 
 //int rm_lib(int argc, char *argv[]);
-
+void suppression(char * file, char * options);

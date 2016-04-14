@@ -14,6 +14,14 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+/**
+ * @file pwd.h
+ * @author Arnaud Langelier
+ * @date 14 April 2016
+ * @brief pwd command
+ */
+
 #pragma once
 
 #include <stdlib.h>

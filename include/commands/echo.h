@@ -15,6 +15,13 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file echo.h
+ * @author Thomas Cokral
+ * @date 14 April 2016
+ * @brief echo command
+ */
+
 #pragma once
 
 #include <stdio.h>

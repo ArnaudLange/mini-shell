@@ -14,6 +14,13 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+/**
+ * @file redirection.h
+ * @author Antoine Sauray
+ * @date 14 April 2016
+ * @brief output redirection
+ */
     
 #ifndef REDIRECTION_H
 #define REDIRECTION_H
@@ -35,6 +42,12 @@
  */
 void redirectFlow(int fd_in, int fd_out);
 
+/**
+ * @brief      Redirect string to output
+ *
+ * @param      fd   File descriptor of output
+ * @param      input  The string to output
+ */
 void output(int fd, char* input);
 
 #endif

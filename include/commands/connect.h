@@ -14,6 +14,14 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+/**
+ * @file connect.h
+ * @author Antoine Sauray
+ * @date 14 April 2016
+ * @brief connect command allows remote shell access
+ */
+
 #define _DEFAULT_SOURCE
 
 #ifndef CONNECT_H

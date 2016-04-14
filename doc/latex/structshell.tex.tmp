@@ -1,0 +1,35 @@
+\hypertarget{structshell}{}\section{shell Struct Reference}
+\label{structshell}\index{shell@{shell}}
+
+
+Shell structure Manages the internal commands and the current directory.  
+
+
+
+
+{\ttfamily \#include $<$shell.\+h$>$}
+
+
+
+Collaboration diagram for shell\+:
+% FIG 0
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries nb\+Cmd}\hypertarget{structshell_a6af1c77a7c907bb661761db9e2fddac3}{}\label{structshell_a6af1c77a7c907bb661761db9e2fddac3}
+
+\item 
+\hyperlink{structcommand}{Command} $\ast$ {\bfseries commands} \mbox{[}M\+A\+X\+C\+MD\mbox{]}\hypertarget{structshell_a384878d149b67196fe47cf0644fd2831}{}\label{structshell_a384878d149b67196fe47cf0644fd2831}
+
+\item 
+char {\bfseries curr\+Dir} \mbox{[}M\+A\+X\+S\+I\+ZE\mbox{]}\hypertarget{structshell_accea21735529d21667cddbac2a33457b}{}\label{structshell_accea21735529d21667cddbac2a33457b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Shell structure Manages the internal commands and the current directory. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/shell.\+h\end{DoxyCompactItemize}

@@ -15,6 +15,13 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file mkdir.h
+ * @author Arnaud Langelier
+ * @date 14 April 2016
+ * @brief mkdir command
+ */
+
 #pragma once
 
 #include <stdio.h>

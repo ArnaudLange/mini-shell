@@ -14,6 +14,14 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+/**
+ * @file ls.h
+ * @author Thomas Cokral
+ * @date 14 April 2016
+ * @brief ls command
+ */
+
 #ifndef LS_H
 #define LS_H
 

@@ -15,6 +15,13 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file cat.h
+ * @author Thomas Cokral
+ * @date 14 April 2016
+ * @brief cat command
+ */
+
 #ifndef CAT_H
 #define CAT_H
 

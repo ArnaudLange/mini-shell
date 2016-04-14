@@ -21,7 +21,7 @@
 #include "du.h" //à virer une fois les tests effectués
 
 
-int du_lib(int argc, char *argv[]){
+int main(int argc, char *argv[]){
 
     // -----------------------------------
     // Declaration tableau deux dimensions pour les options
@@ -54,10 +54,10 @@ int du_lib(int argc, char *argv[]){
 
     // -----------------------------------
 
-    int nbOptions = 0;
+    //int nbOptions = 0;
     int nbFiles = 0;
-    int i, c;
-
+    int i, c, size;
+    size = 0;
     // -----------------------------------
     // parcourt des arguments de la fonction
 
@@ -70,13 +70,12 @@ int du_lib(int argc, char *argv[]){
         //structure donnant les options gérées par la commande
             //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
         static struct option long_options[] = {
-            {"help",     no_argument,       0, 'h'},
-            {"verbose",  no_argument,       0, 'v'}
+            {"help",            no_argument,       0, 'h'},
         };
 
         //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
             //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
-        c = getopt_long(argc, argv, "hv", long_options, &option_index);
+        c = getopt_long(argc, argv, "hH", long_options, &option_index);
 
         if (c == -1) break;
 
@@ -87,15 +86,11 @@ int du_lib(int argc, char *argv[]){
            printf("\n-----------------------------------------------------------\n");
            printf("Usage: du [OPTION]... FILE\n");
            printf("estimate FILE space usage\n\n");
-           printf("    -v, --verbose        explain what is being done\n");
+           printf("    no options available\n");
            printf("\n-----------------------------------------------------------\n\n");
            exit(0);
            break;
 
-         case 'v':
-           options[nbOptions] = c; 
-           nbOptions++;
-           break;
 
         //message par défaut quand l'option rentrée n'est pas gérée par la commande
         default:
@@ -117,14 +112,20 @@ int du_lib(int argc, char *argv[]){
             }
         }
         // if nombre d'arguments invalide
-        if (nbFiles == 2)
-        {
-            myMv(files[1],files[2], options, nbOptions);   
+        if (nbFiles == 1){
+
+            size = giveSize(files[1]);   
+        }
+        else if(nbFiles == 0){
+
+            size = giveSize(".");
         }
         else
         {
-            printf("du : invalid number of arguments\n");
-            printf("Try 'du --help' for more information.\n");
+            size=0;
+            for (i=1;i<nbFiles;i++){
+                size+=giveSize(files[nbFiles]);
+            }
         }
         free(files);
         free(options);
@@ -135,8 +136,76 @@ int du_lib(int argc, char *argv[]){
     //SI pas d'arguments => on affiche une erreur
     else
     {
-        printf("du : invalid number of arguments\n");
+        size = giveSize(".");
     }
 
+    printf("Taille totale : %d\n", size);
     return 0;
+}
+
+int giveSize(char* file) {
+    struct stat st;
+
+    int size = 0;
+    DIR *dirp;
+    struct dirent *dptr;
+
+    char* slash = "/";
+    
+    char* recur = NULL;
+    recur = malloc(sizeof(char*));
+    if (recur == NULL)
+    {
+        perror("recur");
+        exit(1);
+    }
+
+
+    if (lstat(file,&st)==-1)
+    {
+        fprintf(stderr,"error (%d) %s\n",errno,strerror(errno));
+        return 0;
+    }
+    size=st.st_size;
+    printf("taille : %d\n", size);
+
+    if (S_ISDIR(st.st_mode)){
+
+        if ((dirp=opendir(file))==NULL){
+            fprintf(stderr,"error (%d) %s\n",errno,strerror(errno));
+        }
+        else{
+
+            while((dptr=readdir(dirp))){
+                printf("taille2 : %d\n", size);
+
+                if (file[strlen(file)-1]=='/'){
+                    /*
+                    printf("taille2.5 : %s\n", dptr->d_name);
+                    recur= concatenateTables(file,dptr->d_name);
+                    printf("taille3 : %d\n", size);
+                    */
+                    printf("%s%s\n",file,dptr->d_name);
+                    sprintf(recur,"%s%s",file,dptr->d_name);
+                } 
+                else{
+                    /*
+                    printf("taille3.5 : %s\n", dptr->d_name);
+                    recur = concatenateTables(file,slash);
+                    printf("taille3.6 : %d\n", size);
+                    recur = concatenateTables(recur,dptr->d_name);
+                    printf("taille4 : %d\n", size);
+                    */
+                    printf("%s/%s\n",file,dptr->d_name);
+                    sprintf(recur,"%s/%s",file,dptr->d_name);
+                }
+                printf("taille5 : %d\n", size);
+                size += giveSize(recur);
+                printf("taille6 : %d\n", size);
+            }
+            closedir(dirp);
+        }
+    }
+    printf("taille7 : %d\n", size);
+    return size;
 }

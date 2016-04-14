@@ -24,11 +24,16 @@
 #include <errno.h>
 #include <getopt.h>
 #include <string.h>
+#include <fcntl.h>
+#include <dirent.h>
+#include <limits.h>
+
 //** A décommenter une fois les test finis **//
 //#include "../utils.h"
 
 //** A virer une fois les tests finis **//
 #include "utils.h"
 
-int du_lib(int argc, char *argv[]);
+//int du_lib(int argc, char *argv[]);
+int giveSize(char* file);
 

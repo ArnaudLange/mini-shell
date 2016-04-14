@@ -200,8 +200,8 @@ void myChmod(int option, char* mode, char* file){
     int intMAvant=0;
     intMAvant=100*valUsr+10*valGrp+valOth;
 
-    int a = strtol(mode,0,8);
-    printf("MODE : %d\n",a);
+    mode_t modeConv=strtol(mode,NULL,8);
+
     if (atoi(mode)==0){
         printf("%s n'est pas un nombre \n",mode);
     }
@@ -212,9 +212,10 @@ void myChmod(int option, char* mode, char* file){
             }
         }
         else{
-            printf("%d\n",chmod(file,atoi(mode)));
+            modeConv=strtol(mode,NULL,8);
+            chmod(file,modeConv);
             if (option){
-                printf("mode of '%s' changed from 0%d to %o\n",file,intMAvant,atoi(mode));
+                printf("mode of '%s' changed from 0%d to %o\n",file,intMAvant,modeConv);
             }
         }
     }

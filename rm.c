@@ -16,12 +16,12 @@
 */
 
 //** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/fonction.h"
+//#include "../../include/commands/rm.h"
 
-#include "fonction.h" //à virer une fois les tests effectués
+#include "rm.h" //à virer une fois les tests effectués
 
 
-int fonction_lib(int argc, char *argv[]){
+int main(int argc, char *argv[]){
 
     // -----------------------------------
     // Declaration tableau deux dimensions pour les options

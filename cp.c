@@ -15,12 +15,10 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/cp.h"
+#include "../../include/commands/cp.h"
 
-#include "cp.h" //à virer une fois les tests effectués
 
-int main(int argc, char *argv[]){
+int cp_lib(int argc, char *argv[]){
 
 // -----------------------------------
 // Declaration tableau deux dimensions pour les options
@@ -55,7 +53,7 @@ int main(int argc, char *argv[]){
 
     int nbOptions = 0;
     int nbFiles = 0;
-    int i, c, j;
+    int i, c, j, k;
     struct stat statbuf;
 
 // -----------------------------------
@@ -71,13 +69,12 @@ int main(int argc, char *argv[]){
         //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
             static struct option long_options[] = {
                 {"help",                 no_argument,           0, 'h'},
-                {"target-directory",     required_argument,     0, 't'},
                 {"verbose",              no_argument,           0, 'v'}
             };
 
     //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
         //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
-            c = getopt_long(argc, argv, "hvrt:", long_options, &option_index);
+            c = getopt_long(argc, argv, "hv", long_options, &option_index);
 
             if (c == -1) break;
 
@@ -88,25 +85,14 @@ int main(int argc, char *argv[]){
                 printf("\n-----------------------------------------------------------\n");
                 printf("Usage: cp [OPTION]... SOURCE DEST\n");
                 printf("       cp [OPTION]... SOURCE... DIRECTORY\n");
-                printf("       cp [OPTION]... -t DIRECTORY SOURCE...\n");
-                printf("Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.\n\n");
+                printf("       cp [OPTION]... DIRECTORY1 DIRECTORY2\n");
+                printf("Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY, or recursively DIRECTORY1 to DIRECTORY2.\n\n");
                 printf("    -v, --verbose                 explain what is being done\n");
-                printf("    -t, --target-directory        copy all SOURCE arguments into DIRECTORY\n");
                 printf("\n-----------------------------------------------------------\n\n");
                 exit(0);
                 break;
 
                 case 'v':
-                options[nbOptions] = c; 
-                nbOptions++;
-                break;
-
-                case 'r':
-                options[nbOptions] = c; 
-                nbOptions++;
-                break;
-
-                case 't':
                 options[nbOptions] = c; 
                 nbOptions++;
                 break;
@@ -136,7 +122,7 @@ int main(int argc, char *argv[]){
             copy(files[1],files[2], options, nbOptions);   
         }
 
-        if (nbFiles > 2) //si plus de deux fichiers en argument
+        else if (nbFiles > 2) //si plus de deux fichiers en argument
         {
             if (lstat(files[nbFiles],&statbuf)==-1){ //si le dernier fichier n'existe pas
 
@@ -161,13 +147,12 @@ int main(int argc, char *argv[]){
         }
 
 
-        else
-        {
+        else {
+
             printf("cp : invalid number of arguments\n");
             printf("Try 'cp --help' for more information.\n");
         }
-        free(files);
-        free(options);
+        
 
 
     }
@@ -176,7 +161,11 @@ int main(int argc, char *argv[]){
     {
         printf("cp : invalid number of arguments\n");
     }
-
+    for(k=1; k<nbFiles; k++){
+        free(files[nbFiles]);
+    }
+    free(files);
+    free(options);
     return 0;
 }
 

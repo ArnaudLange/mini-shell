@@ -28,12 +28,10 @@
 #include <limits.h>
 #include <getopt.h>
 #include <unistd.h>
-//** A décommenter une fois les test finis **//
-//#include "../utils.h"
 
-//** A virer une fois les tests finis **//
-#include "utils.h"
+#include "../utils.h"
+
 
 void copy(char* src, char* dst, char* options, int nbOptions);
-//int cp_lib(int argc, char *argv[]);
+int cp_lib(int argc, char *argv[]);
 

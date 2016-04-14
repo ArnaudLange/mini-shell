@@ -27,6 +27,7 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <limits.h>
+#include <math.h>
 
 //** A décommenter une fois les test finis **//
 //#include "../utils.h"
@@ -36,4 +37,5 @@
 
 //int du_lib(int argc, char *argv[]);
 int giveSize(char* file);
+void affichePropre(int size, char * string);
 

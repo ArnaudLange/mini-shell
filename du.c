@@ -17,7 +17,7 @@
 
 //** à décommenter et à completer une fois la fonction finies **//
 //#include "../../include/commands/du.h"
-
+#include <math.h>
 #include "du.h" //à virer une fois les tests effectués
 
 
@@ -174,10 +174,10 @@ int giveSize(char* file){
         }
         else {
             if (file[strlen(file)-1]=='/'){
-                printf("%d    %s\n",size, file);
+                affichePropre(size, file);
             }
             else{
-                printf("%d    %s/\n",size, file);
+                affichePropre(size, file);
             }
 
             while((dptr=readdir(dirp))){
@@ -198,8 +198,26 @@ int giveSize(char* file){
         }
     }
     else {
-        printf("%d    %s\n",size, file);
+        affichePropre(size, file);
     }
     free(recur);
     return size;
+}
+
+void affichePropre(int size, char * string){
+    int nbDigits = floor(log10(abs(size))) + 1;
+    int i;
+    char * spaces = NULL;
+    spaces = malloc(8*sizeof(char*));
+    if (spaces == NULL)
+    {
+        perror("files[x]");
+        exit(1);
+    }
+
+    for(i=0; i<=(16-nbDigits); i++){
+        spaces=strcat(spaces, " ");
+    }
+
+    printf("%d%s%s", size, spaces, string);
 }

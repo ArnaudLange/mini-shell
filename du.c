@@ -188,7 +188,6 @@ int giveSize(char* file, char * options){
 
     if (lstat(file,&statbuf)==-1) {
         printf("du : '%s' n'existe pas\n", file);
-        //fprintf(stderr,"error (%d) %s\n",errno,strerror(errno));
         return 0;
     }
     size=statbuf.st_size;

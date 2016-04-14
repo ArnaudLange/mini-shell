@@ -199,25 +199,24 @@ void myChmod(int option, char* mode, char* file){
 
     int intMAvant=0;
     intMAvant=100*valUsr+10*valGrp+valOth;
-    /*
-    printf( (statbuf.st_mode & S_IRUSR) ? "r" : "-");
-    printf( (statbuf.st_mode & S_IWUSR) ? "w" : "-");
-    printf( (statbuf.st_mode & S_IXUSR) ? "x" : "-");
-    printf( (statbuf.st_mode & S_IRGRP) ? "r" : "-");
-    printf( (statbuf.st_mode & S_IWGRP) ? "w" : "-");
-    printf( (statbuf.st_mode & S_IXGRP) ? "x" : "-");
-    printf( (statbuf.st_mode & S_IROTH) ? "r" : "-");
-    printf( (statbuf.st_mode & S_IWOTH) ? "w" : "-");
-    printf( (statbuf.st_mode & S_IXOTH) ? "x" : "-");
-    printf("\n");
-    */
-    printf("%s\n",modeAvant);
 
-    chmod(file, 0777);
-
-    /*if (option){
-        printf("mode of '%s' changed from 0%d (%s) to 0%d (%s)\n",file,intMAvant, strMAvant, mode);
+    int a = strtol(mode,0,8);
+    printf("MODE : %d\n",a);
+    if (atoi(mode)==0){
+        printf("%s n'est pas un nombre \n",mode);
     }
-    */
+    else{
+        if(intMAvant == atoi(mode)){
+            if (option){
+                printf("mode of '%s' retained as 0%d (%s)\n",file, intMAvant,modeAvant);
+            }
+        }
+        else{
+            printf("%d\n",chmod(file,atoi(mode)));
+            if (option){
+                printf("mode of '%s' changed from 0%d to %o\n",file,intMAvant,atoi(mode));
+            }
+        }
+    }
 
 }

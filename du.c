@@ -16,12 +16,12 @@
 */
 
 //** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/fonction.h"
+//#include "../../include/commands/du.h"
 
-#include "fonction.h" //à virer une fois les tests effectués
+#include "du.h" //à virer une fois les tests effectués
 
 
-int fonction_lib(int argc, char *argv[]){
+int du_lib(int argc, char *argv[]){
 
     // -----------------------------------
     // Declaration tableau deux dimensions pour les options
@@ -85,8 +85,8 @@ int fonction_lib(int argc, char *argv[]){
 
          case 'h': 
            printf("\n-----------------------------------------------------------\n");
-           printf("Usage: fonction [OPTION]... ARG\n");
-           printf("Rename SOURCE to DEST\n\n");
+           printf("Usage: du [OPTION]... FILE\n");
+           printf("estimate FILE space usage\n\n");
            printf("    -v, --verbose        explain what is being done\n");
            printf("\n-----------------------------------------------------------\n\n");
            exit(0);
@@ -99,7 +99,7 @@ int fonction_lib(int argc, char *argv[]){
 
         //message par défaut quand l'option rentrée n'est pas gérée par la commande
         default:
-            printf("Try 'fonction --help' for more information.\n");
+            printf("Try 'du --help' for more information.\n");
             exit(1);
       }
     }
@@ -123,8 +123,8 @@ int fonction_lib(int argc, char *argv[]){
         }
         else
         {
-            printf("fonction : invalid number of arguments\n");
-            printf("Try 'fonction --help' for more information.\n");
+            printf("du : invalid number of arguments\n");
+            printf("Try 'du --help' for more information.\n");
         }
         free(files);
         free(options);
@@ -135,7 +135,7 @@ int fonction_lib(int argc, char *argv[]){
     //SI pas d'arguments => on affiche une erreur
     else
     {
-        printf("fonction : invalid number of arguments\n");
+        printf("du : invalid number of arguments\n");
     }
 
     return 0;

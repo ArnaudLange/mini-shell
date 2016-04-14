@@ -1,3 +1,7 @@
+
+
+// constants parameters for our shell
+
 #define MAXSIZE 200
 #define MAXCMD 300
 #define NAME_SIZE 100

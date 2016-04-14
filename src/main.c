@@ -1,12 +1,12 @@
 /*
     This file is part of Binsh.
 
-    Foobar is free software: you can redistribute it and/or modify
+    Binsh is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Foobar is distributed in the hope that it will be useful,
+    Binsh is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -23,17 +23,21 @@
 #include <string.h>
 #include <sys/types.h>
 #include <dlfcn.h>
+#include <pthread.h>
 
 #include <dirent.h>
 
 #include "../include/shell.h"
 #include "../include/process.h"
 
+#include "../include/server.h"
+
 #include "../include/parameters.def"
+#include "../include/typedef.h"
 
 #define LIB_PATH "lib/"
 
-typedef void (*init)(char name[NAME_SIZE], int (*cmd_ptr)(int, char*[]));
+typedef cmdPtr (*init)(char name[NAME_SIZE]);
 init Init;
 
 
@@ -74,13 +78,12 @@ int loadLibraries(Shell* shell){
                         else{
                                 shell->commands[shell->nbCmd] = (Command*) malloc(sizeof(Command));
                                 Command* cmd = shell->commands[shell->nbCmd];
-                                Init(cmd->name, cmd->cmd_ptr);
+                                cmd->cmd_ptr = Init(cmd->name);
                                 shell->nbCmd++;
                                 printf("successfully loaded %s at index[%d] with name \'%s\'\n", dp->d_name, shell->nbCmd, cmd->name);
                         }
                 }
         }
-                
    (void)closedir(dirp);
 }
 
@@ -95,12 +98,22 @@ int main(int argc, char* argv[]){
         
         loadLibraries(shell);
         printf("\n");
-        testFunction(shell, "cd");
-        testFunction(shell, "ls");
-        testFunction(shell, "cat");
-        testFunction(shell, "echo");
-        testFunction(shell, "mv");
-        testFunction(shell, "pwd");
+        checkFunction(shell, "cd");
+        checkFunction(shell, "ls");
+        checkFunction(shell, "cat");
+        checkFunction(shell, "echo");
+        checkFunction(shell, "mv");
+        checkFunction(shell, "pwd");
+        checkFunction(shell, "mkdir");
+
+        pthread_t sniffer_thread;
+        
+        if( pthread_create( &sniffer_thread , NULL ,  start , (void*) shell) < 0)
+        {
+            perror("could not create thread");
+            return 1;
+        }
+        //pthread_cancel(sniffer_thread);
 
         welcomeMessage();
         while(1){

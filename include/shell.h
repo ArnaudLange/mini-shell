@@ -1,12 +1,12 @@
 /*
     This file is part of Binsh.
 
-    Foobar is free software: you can redistribute it and/or modify
+    Binsh is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Foobar is distributed in the hope that it will be useful,
+    Binsh is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -20,8 +20,17 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include "commands.h"
+#include "redirection.h"
 
 #include "parameters.def"
 
@@ -51,6 +60,53 @@ Shell* initShell();
  */
 void freeShell(Shell* shell);
 
+/**
+ * @brief      Execute a commands and redirects the flow to the right file descriptor
+ *
+ * @param      fd_in the input file descriptor
+ * @param      fd_out the ouput file descriptor
+ * @param      shell the shell context
+ * @param      cmd the command to execute           
+ */
+int executeCommand(int fd_in, int fd_out, Shell* shell, ParsedCommand* cmd);
+/**
+ * @brief      Execute an internal command and redirects the flow to the right file descriptor
+ *
+ * @param      fd_in the input file descriptor
+ * @param      fd_out the ouput file descriptor
+ * @param      cmd the command to execute           
+ */
+int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd);
+/**
+ * @brief      Execute an external command
+ *
+ * @param      commande the command string
+ * @param      argv the arguments     
+ */
+int executeExternalCommand(char *commande,char *argv);
+
+/**
+ * @brief      Find a function within a Shell based on its name
+ *
+ * @param      shell  The Shell in which to look
+ * @param      command the command to look for
+ */
 int findFunction(Shell* shell, ParsedCommand* command);
-int testFunction(Shell* shell, char* name);
+/**
+ * @brief      Check if a function exists in a shell
+ *
+ * @param      shell  The Shell in which to look
+ * @param      name the name of the function to look for
+ */
+int checkFunction(Shell* shell, char* name);
+/**
+ * @brief      Check and a function if it exists in a shell
+ *
+ * @param      shell  The Shell in which to look
+ * @param      name the name of the function to look for
+ * @param      argc the number of parameters
+ * @param      argv the parameters
+ */
+int testFunction(Shell* shell, char* name, int argc, char* argv[]);
+
 #endif

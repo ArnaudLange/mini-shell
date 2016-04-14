@@ -151,7 +151,7 @@ char* lectureMode(char* mode){
         etatDebut,
         etatOpe,
         etatFin,
-        etatFin2
+        etatVirgule
     } Etat;
 
     Etat curEtat = etatDebut;
@@ -162,6 +162,7 @@ char* lectureMode(char* mode){
         switch (curEtat){
             case etatDebut:
                 printf("Etat debut\n");
+                printf("  %c\n",mode[h]);
                 if(mode[h]=='o' || mode[h]=='g' || mode[h]=='u'){
                     which=mode[h];
                     curEtat=etatOpe;
@@ -174,6 +175,7 @@ char* lectureMode(char* mode){
                 }
             case etatOpe:
                 printf("Etat ope\n");
+                printf("  %c\n",mode[h]);
                 if(mode[h]=='=' || mode[h]=='+' || mode[h]=='-'){
                     etat=mode[h];
                     curEtat=etatFin;
@@ -186,51 +188,78 @@ char* lectureMode(char* mode){
                 }
             case etatFin:
                 printf("Etat fin\n");
+                printf("  %c\n",mode[h]);
                 if(mode[h]=='x'){
                     if(which == 'u'){
                         tabMode[u[3]]=etat;
+                        curEtat=etatVirgule;
+                        break;
                     }
                     else if(which == 'g'){
                         tabMode[g[3]]=etat;
+                        curEtat=etatVirgule;
+                        break;
                     }
                     else if(which == 'o'){
                         tabMode[o[3]]=etat;
+                        curEtat=etatVirgule;
+                        break;
                     }
-                    etat=etatFin2;
-                    break;
+                    else{
+                        printf("Error while parsing.\n");
+                        exit(1);
+                    }
                 }
                 else if(mode[h]=='w'){
                     if(which == 'u'){
                         tabMode[u[2]]=etat;
+                        curEtat=etatVirgule;
+                        break;
                     }
                     else if(which == 'g'){
                         tabMode[g[2]]=etat;
+                        curEtat=etatVirgule;
+                        break;
                     }
                     else if(which == 'o'){
                         tabMode[o[2]]=etat;
+                        curEtat=etatVirgule;
+                        break;
                     }
-                    etat=etatFin2;
-                    break;
+                    else{
+                        printf("Error while parsing.\n");
+                        exit(1);
+                    }
                 }
                 else if(mode[h]=='r'){
                     if(which == 'u'){
                         tabMode[u[1]]=etat;
+                        curEtat=etatVirgule;
+                        break;
                     }
                     else if(which == 'g'){
                         tabMode[g[1]]=etat;
+                        curEtat=etatVirgule;
+                        break;
                     }
                     else if(which == 'o'){
                         tabMode[o[1]]=etat;
+                        curEtat=etatVirgule;
+                        break;
                     }
-                    etat=etatFin2;
-                    break;
+                    else{
+                        printf("Error while parsing.\n");
+                        exit(1);
+                    }
                 }
                 else{
                     printf("chmod: invalid mode: '%c'\n",mode[h]);
                     printf("Try 'chmod --help' for more information.\n");
                     exit(0);
                 }
-            case etatFin2:
+            case etatVirgule:
+                printf("Etat virgule\n");
+                printf("  %c\n",mode[h]);
                 if (mode[h]==','){
                     which=' ';
                     etat=' ';
@@ -239,6 +268,7 @@ char* lectureMode(char* mode){
                 }
                 else{
                     curEtat=etatFin;
+                    h=h-1;
                 }
 
         }
@@ -280,6 +310,8 @@ void myChmod(int option, char* mode, char* file){
         exit(1);
     }
 
+
+    printf("File : %s\n",file);
     printf("Entree dans fonction\n");
     char* modeApr = lectureMode(mode);
     printf("Sortie fonction\n");

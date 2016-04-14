@@ -15,13 +15,10 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/du.h"
-#include <math.h>
-#include "du.h" //à virer une fois les tests effectués
+#include "../../include/commands/du.h"
 
 
-    int main(int argc, char *argv[]){
+    int du_lib(int argc, char *argv[]){
 
         // -----------------------------------
         // Declaration tableau deux dimensions pour les options
@@ -54,10 +51,11 @@
         
         // -----------------------------------
 
-        //int nbOptions = 0;
+        int nbOptions = 0;
         int nbFiles = 0;
-        int i, c, size;
-        size = 0;
+        int i, c;
+        long int size = 0;
+
         // -----------------------------------
         // parcourt des arguments de la fonction
 
@@ -70,25 +68,45 @@
                 //structure donnant les options gérées par la commande
                 //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
                 static struct option long_options[] = {
-                    {"help",            no_argument,       0, 'h'},
+                    {"help",            no_argument,       0,   0},
+                    {"all",             no_argument,       0, 'a'},
+                    {"human-readable",  no_argument,       0, 'h'},
+                    {"total",           no_argument,       0, 'c'}
                 };
 
                 //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
                 //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
-                c = getopt_long(argc, argv, "hH", long_options, &option_index);
+                c = getopt_long(argc, argv, "hca0", long_options, &option_index);
 
                 if (c == -1) break;
 
                 //switch en fonction des options rentrées par l'user
                 switch (c) {
 
-                    case 'h': 
+                    case 0: 
                     printf("\n-----------------------------------------------------------\n");
                     printf("Usage: du [OPTION]... FILE\n");
                     printf("estimate FILE space usage\n\n");
-                    printf("    no options available\n");
+                    printf("    -c, --total               produce a grand total\n");
+                    printf("    -a, --all                 write counts for all files, not just directories\n");
+                    printf("    -h, --human-readable      print sizes in human readable format\n");
                     printf("\n-----------------------------------------------------------\n\n");
                     exit(0);
+                    break;
+
+                    case 'c':
+                    options[nbOptions] = c;
+                    nbOptions++;
+                    break;
+
+                    case 'a':
+                    options[nbOptions] = c;
+                    nbOptions++;
+                    break;
+
+                    case 'h':
+                    options[nbOptions] = c;
+                    nbOptions++;
                     break;
 
 
@@ -114,41 +132,49 @@
         // if nombre d'arguments invalide
         if (nbFiles == 1){
 
-            size = giveSize(files[1]);   
+            size = giveSize(files[1], options);   
         }
         else if(nbFiles == 0){
 
-            size = giveSize(".");
+            size = giveSize(".", options);
         }
         else
         {
             for (i=1;i<=nbFiles;i++){
-                size += giveSize(files[i]);
+                size += giveSize(files[i], options);
             }
         }
-        for (i=1;i<=nbFiles;i++){
-                free(files[i]);
-        }
-
-        free(files);
-        free(options);
+        
 
 
     }
     //SI pas d'arguments 
     else
     {
-        size = giveSize(".");
+        size = giveSize(".", options);
+    }
+    printf("\n");
+    if(strstr(options, "c") !=NULL){
+        if(strstr(options, "h") != NULL){
+            affichePropreConv(size, "Taille totale");
+        }
+        else affichePropre(size, "Taille totale");
+        
     }
 
-    printf("\nTaille totale : %d\n", size);
+    for (i=1;i<=nbFiles;i++){
+        free(files[i]);
+    }
+
+        free(files);
+        free(options);
     return 0;
 }
 
-int giveSize(char* file){
+int giveSize(char* file, char * options){
     struct stat statbuf;
 
-    int size = 0;
+    long int size = 0;
     DIR *dirp;
     struct dirent *dptr;
     
@@ -173,13 +199,7 @@ int giveSize(char* file){
             printf("du : impossible d'ouvrir '%s'\n", file);
         }
         else {
-            if (file[strlen(file)-1]=='/'){
-                affichePropre(size, file);
-            }
-            else{
-                affichePropre(size, file);
-            }
-
+            
             while((dptr=readdir(dirp))){
 
                 if (!strcmp(dptr->d_name,".") || !strcmp(dptr->d_name,"..")){
@@ -192,32 +212,126 @@ int giveSize(char* file){
                 else { 
                     sprintf(recur,"%s/%s",file,dptr->d_name);
                 }
-                size += giveSize(recur);
+                size += giveSize(recur, options);
+            }
+            //affichage de la taille des dossiers
+            if (file[strlen(file)-1]=='/'){
+                affichePropre(size, file);
+            }
+            else{
+                if(strstr(options, "h") !=NULL){
+                    affichePropreConv(size, file);
+                }
+
+                else affichePropre(size, file);
             }
             closedir(dirp);
         }
     }
     else {
-        affichePropre(size, file);
+        //affichage de la taille des fichiers
+        if(strstr(options, "a") !=NULL){
+            if(strstr(options, "h") !=NULL){
+                affichePropreConv(size, file);
+            }
+
+            else affichePropre(size, file);
+        }
+
     }
     free(recur);
     return size;
 }
 
-void affichePropre(int size, char * string){
+void affichePropre(long int size, char * string){
     int nbDigits = floor(log10(abs(size))) + 1;
     int i;
+    char * monoSpace = " ";
     char * spaces = NULL;
-    spaces = malloc(8*sizeof(char*));
+    spaces = calloc(16, sizeof(char*));
     if (spaces == NULL)
     {
         perror("files[x]");
         exit(1);
     }
 
-    for(i=0; i<=(16-nbDigits); i++){
-        spaces=strcat(spaces, " ");
+    for(i=0; i<=(10-nbDigits); i++){
+
+        spaces=concatenateTables(spaces, monoSpace);
     }
 
-    printf("%d%s%s", size, spaces, string);
+    printf("%ld%s%s\n",size, spaces, string);
+    free(spaces);
+}
+
+void affichePropreConv(long int size, char * string){
+    int nbDigits = floor(log10(abs(size))) + 1;
+    int i;
+    double nSize =0.0;
+    char * monoSpace = " ";
+
+    char * spaces = NULL;
+    spaces = calloc(16, sizeof(char*));
+    if (spaces == NULL)
+    {
+        perror("files[x]");
+        exit(1);
+    }
+
+    if(nbDigits<=3){
+        nSize = (double) size;
+
+        nbDigits = floor(log10(abs(nSize))) + 1;
+        for(i=0; i<=(8-nbDigits); i++){
+
+            spaces=concatenateTables(spaces, monoSpace);
+        }
+        printf("%.1lf%s%s\n", nSize, spaces, string);
+    }
+
+    if(nbDigits>3 && nbDigits<=6){
+        nSize = (double) size/1000;
+
+        nbDigits = floor(log10(abs(nSize))) + 1;
+        for(i=0; i<=(7-nbDigits); i++){
+
+            spaces=concatenateTables(spaces, monoSpace);
+        }
+        printf("%.1lfK%s%s\n", nSize, spaces, string);
+    }
+
+    if(nbDigits>6 && nbDigits<=9){
+        nSize = (double) size/1000000;
+
+        nbDigits = floor(log10(abs(nSize))) + 1;
+        for(i=0; i<=(7-nbDigits); i++){
+
+            spaces=concatenateTables(spaces, monoSpace);
+        }
+        printf("%.1lfM%s%s\n", nSize, spaces, string);
+    }
+
+    if(nbDigits>9 && nbDigits<=12){
+        nSize = (double) size/1000000000;
+
+        nbDigits = floor(log10(abs(nSize))) + 1;
+        for(i=0; i<=(7-nbDigits); i++){
+
+            spaces=concatenateTables(spaces, monoSpace);
+        }
+        printf("%.1lfG%s%s\n", nSize, spaces, string);
+    }
+
+    if(nbDigits>12 && nbDigits<=15){
+        nSize = (double) size/1000000000000;
+
+        nbDigits = floor(log10(abs(nSize))) + 1;
+        for(i=0; i<=(7-nbDigits); i++){
+
+            spaces=concatenateTables(spaces, monoSpace);
+        }
+        printf("%.1lfT%s%s\n", nSize, spaces, string);
+    }
+   
+    free(spaces);
 }

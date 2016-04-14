@@ -29,13 +29,11 @@
 #include <limits.h>
 #include <math.h>
 
-//** A décommenter une fois les test finis **//
-//#include "../utils.h"
+#include "../utils.h"
 
-//** A virer une fois les tests finis **//
-#include "utils.h"
 
-//int du_lib(int argc, char *argv[]);
-int giveSize(char* file);
-void affichePropre(int size, char * string);
+int du_lib(int argc, char *argv[]);
+int giveSize(char* file, char* options);
+void affichePropre(long int size, char * string);
+void affichePropreConv(long int size, char * string);
 

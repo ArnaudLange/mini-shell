@@ -24,11 +24,15 @@
 #include <errno.h>
 #include <getopt.h>
 #include <string.h>
-//** A décommenter une fois les test finis **//
-//#include "../utils.h"
+#include <dirent.h>
+#include <limits.h>
+#include <pwd.h>
+#include <unistd.h>
 
-//** A virer une fois les tests finis **//
-#include "utils.h"
+#include "../utils.h"
+
+
 
 int chgrp_lib(int argc, char *argv[]);
+void changeGrp(char * file, char * group, char * options);
 

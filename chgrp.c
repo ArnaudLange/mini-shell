@@ -127,7 +127,7 @@ int chgrp_lib(int argc, char *argv[]){
         }
         else{
             printf("chgrp : invalid number of arguments\n");
-            printf("Try 'chown --help' for more information.\n");
+            printf("Try 'chgrp --help' for more information.\n");
         }
         
 
@@ -136,7 +136,7 @@ int chgrp_lib(int argc, char *argv[]){
     //SI pas d'arguments => on affiche une erreur
     else{
         printf("chgrp : invalid number of arguments\n");
-        printf("Try 'chown --help' for more information.\n");
+        printf("Try 'chgrp --help' for more information.\n");
     }
     for(k=1; k<=nbFiles; k++){
         free(files[k]);
@@ -212,7 +212,7 @@ void changeGrp(char * file, char * group, char * options){
                     printf("Modification du groupe propriétaire de '%s' en '%s'\n", file, group);
                 }
                 if (chown(file, -1, gid) == -1) { //on modifie le groupe
-                    printf("chown : erreur de modification groupe propriétaire '%s'\n", file);
+                    printf("chgrp : erreur de modification groupe propriétaire '%s'\n", file);
                     exit(1);
                 }
 
@@ -224,7 +224,7 @@ void changeGrp(char * file, char * group, char * options){
                     printf("Modification du groupe propriétaire de '%s' en '%s'\n", file, group);
                 }
                 if (chown(file, -1, gid) == -1) { //on modifie le groupe
-                    printf("chown : erreur de modification groupe propriétaire '%s'\n", file);
+                    printf("chgrp : erreur de modification groupe propriétaire '%s'\n", file);
                     exit(1);
                 }
             }
@@ -235,7 +235,7 @@ void changeGrp(char * file, char * group, char * options){
             printf("Modification du groupe propriétaire de '%s' en '%s'\n", file, group);
         }
         if (chown(file, -1, gid) == -1) { //on modifie le proprio/groupe
-            printf("chown : erreur de modification groupe propriétaire '%s'\n", file);
+            printf("chgrp : erreur de modification groupe propriétaire '%s'\n", file);
             exit(1);
         }
     }   

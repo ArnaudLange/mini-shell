@@ -22,6 +22,8 @@
 
 void ps(char *option, char* param){
 
+    // BALEK
+    /*
     if (option == NULL){
         printf("  PID TTY          TIME CMD\n");
         printf("%d\n",getpid());
@@ -33,6 +35,126 @@ void ps(char *option, char* param){
     }
     else if (strcmp(option,"C")){
         printf("  PID TTY          TIME CMD\n");
+    }
+    */
+    char character;
+    int i,j=0;
+
+    FILE *fichier=NULL;
+
+    //dossier ou se trouvent tous les process
+    char *directory = "/proc";
+
+    //on va ouvrir le dossier proc, puis les sous dossier a l'interieur
+    DIR *repertoire;
+    DIR *sous_repertoire;
+
+    char nomCommande[15];
+    for(i=0;i<15;i++){
+        nomCommande[i]=' ';
+    }
+    nomCommande[15]='\0';
+
+    //struct utiliser pour lire le dossier
+    struct dirent *flux;
+
+    //on initialise namefile qui contiendra le nom du fichier lu
+    char *nameFile = NULL;
+    nameFile = calloc(1,sizeof(char));
+    if(nameFile==NULL){
+        perror("Calloc");
+        exit(1);
+    }
+
+    //on initialise namefile qui contiendra le nom du fichier lu
+    char *sous_nameFile = NULL;
+    sous_nameFile = calloc(1,sizeof(char));
+    if(sous_nameFile==NULL){
+        perror("Calloc");
+        exit(1);
+    }
+
+    //ouverture du dossier
+    if ((repertoire = opendir(directory)) == NULL){
+        perror(directory);
+        exit(1);
+    }
+
+    //on parcourt le dossier a present pour trouver tous les sous dossiers qui nous interessent
+    while((flux = readdir(repertoire))){
+        if (strlen(nameFile)>1){
+            free(nameFile);
+            nameFile = NULL;
+            nameFile = calloc(1,sizeof(char));
+            if(nameFile==NULL){
+                perror("Calloc");
+                exit(1);
+            }
+        }
+
+        if(atoi(flux->d_name)!=0){
+            nameFile=concatenateTables(nameFile,directory);
+            nameFile=concatenateTables(nameFile,"/");
+            nameFile=concatenateTables(nameFile,flux->d_name);
+
+            if ((sous_repertoire = opendir(nameFile)) == NULL){
+                perror(nameFile);
+                exit(1);
+            }
+            printf("%s  ",flux->d_name);
+            if (strlen(sous_nameFile)>1){
+                free(sous_nameFile);
+                sous_nameFile = NULL;
+                sous_nameFile = calloc(1,sizeof(char));
+                if(sous_nameFile==NULL){
+                    perror("Calloc");
+                    exit(1);
+                }
+            }
+            sous_nameFile=concatenateTables(sous_nameFile,nameFile);
+            sous_nameFile=concatenateTables(sous_nameFile,"/");
+            sous_nameFile=concatenateTables(sous_nameFile,"cmdline");
+
+            fichier = fopen(sous_nameFile,"r");
+            if(fichier == NULL){
+                perror(sous_nameFile);
+                exit(1);
+            }
+
+            while((character=fgetc(fichier)) != EOF){
+                //printf("%c",character);
+                if(character == '/' || character == 10){
+                    for(i=0;i<15;i++){
+                        nomCommande[i]=' ';
+                        j=0;
+                    }
+                }
+                else{
+                    nomCommande[j]=character;
+                    j++;
+                }
+            }
+            printf("%s\n",nomCommande);
+            //printf("\n");
+
+            /*
+            while((sous_flux = readdir(sous_repertoire))){
+                if (strlen(sous_nameFile)>1){
+                    free(sous_nameFile);
+                    sous_nameFile = NULL;
+                    sous_nameFile = calloc(1,sizeof(char));
+                    if(sous_nameFile==NULL){
+                        perror("Calloc");
+                        exit(1);
+                    }
+                }
+                sous_nameFile=concatenateTables(sous_nameFile,nameFile);
+                sous_nameFile=concatenateTables(sous_nameFile,"/");
+                sous_nameFile=concatenateTables(sous_nameFile,sous_flux->d_name);
+
+                printf("%s\n",sous_nameFile);
+            }*/
+        }
     }
 }
 

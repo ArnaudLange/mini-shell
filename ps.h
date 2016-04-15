@@ -25,6 +25,7 @@
 #include <getopt.h>
 #include <string.h>
 #include <unistd.h>
+#include <dirent.h>
 //** A décommenter une fois les test finis **//
 //#include "../utils.h"
 

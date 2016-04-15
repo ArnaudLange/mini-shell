@@ -27,7 +27,7 @@ int fonction_lib(int argc, char *argv[]){
     // Declaration tableau deux dimensions pour les options
 
     char* options = NULL;
-    options = (char*) calloc(15, sizeof(*options));
+    options = (char*) calloc(16, sizeof(*options));
     if (options == NULL)
     {
         perror("options");
@@ -39,13 +39,13 @@ int fonction_lib(int argc, char *argv[]){
     // Declaration tableau deux dimensions pour les files
 
     char** files = NULL;
-    files = malloc(sizeof(char**));
+    files = malloc(36*sizeof(char**));
     if (files == NULL)
     {
         perror("files");
         exit(1);
     }
-    files[0] = malloc(sizeof(char*));
+    files[0] = malloc(36*sizeof(char*));
     if (files[0] == NULL)
     {
         perror("files[x]");

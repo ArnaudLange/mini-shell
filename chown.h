@@ -27,13 +27,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <pwd.h>
-//** A décommenter une fois les test finis **//
-//#include "../utils.h"
+#include <dirent.h>
 
-//** A virer une fois les tests finis **//
-#include "utils.h"
+#include "../utils.h"
+
 
 int chown_lib(int argc, char *argv[]);
 
-changeOwn(char * file,char * ownGr,char * options);
+void changeOwn(char * file,char * ownGr,char * options);
 

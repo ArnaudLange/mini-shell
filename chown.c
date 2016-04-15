@@ -15,13 +15,11 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/chown.h"
-
-#include "chown.h" //à virer une fois les tests effectués
+#include "../../include/commands/chown.h"
 
 
-int main(int argc, char *argv[]){
+
+int chown_lib(int argc, char *argv[]){
 
     // -----------------------------------
     // Declaration tableau deux dimensions pour les options
@@ -129,7 +127,7 @@ int main(int argc, char *argv[]){
         }
         else{
             printf("chown : invalid number of arguments\n");
-            printf("Try 'fonction --help' for more information.\n");
+            printf("Try 'chown --help' for more information.\n");
         }
         
 
@@ -138,7 +136,7 @@ int main(int argc, char *argv[]){
     //SI pas d'arguments => on affiche une erreur
     else{
         printf("chown : invalid number of arguments\n");
-        printf("Try 'fonction --help' for more information.\n");
+        printf("Try 'chown --help' for more information.\n");
     }
     for(k=1; k<=nbFiles; k++){
         free(files[k]);
@@ -148,10 +146,28 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-changeOwn(char * file, char * ownGr, char * options){
+void changeOwn(char * file, char * ownGr, char * options){
     struct stat statbuf;
 
     char c;
+    int i, j, etat;
+
+    char* owner = NULL;
+    owner = (char*) calloc(16, sizeof(*owner));
+    if (owner == NULL)
+    {
+        perror("owner");
+        exit(1);
+    }
+
+    char* group = NULL;
+    group = (char*) calloc(16, sizeof(*group));
+    if (group == NULL)
+    {
+        perror("options");
+        exit(1);
+    }
+
 
     DIR *dirp;
     struct dirent *dptr;
@@ -164,10 +180,69 @@ changeOwn(char * file, char * ownGr, char * options){
         exit(1);
     }
 
+    uid_t uid;
+    gid_t gid;
+
+    char *endptr, *endptr2;
+    struct passwd *pwd;
+
     //-----------------------------
     //Parsing de ownGr pour en extraire l'owner et le groupe
+    if(strstr(ownGr, ":") != NULL){ //si on donne le groupe en plus du nouveau propriétaire
+        j = 0;
+        etat = 0;
+        for(i=0; i<=strlen(ownGr); i++){
+            c = ownGr[i];
+            if(etat == 0){
+                if(c != ':'){
+                    owner[i] = c;
+                }
+                else {
+                    owner[i] = '\0';
+                    etat++;
+                }
+            }
+            else {
+                group[j] = c;
+                j++;
+            }
+            
+        }
+        group[j] = '\0';
+    }
+    else {
+        owner = ownGr;
+        gid = -1;
+    }
 
+    
+    
 
+    uid = strtol(owner, &endptr, 10);  // si l'id rentré est un nombre
+
+    if (*endptr != '\0') {         // si non
+        pwd = getpwnam(owner);   // on essaye d'obtenir l'uid de l'username spécifié
+        if (pwd == NULL) {
+            printf("chown : l'utilisateur '%s' n'existe pas\n", owner);
+            exit(1);
+        }
+
+       uid = pwd->pw_uid;
+    }
+
+    if(strstr(ownGr, ":") != NULL){ //si on donne le groupe en plus du nouveau propriétaire
+        gid = strtol(group, &endptr2, 10);
+        if (*endptr2 != '\0') {         // si non
+            pwd = getpwnam(group);   // on essaye d'obtenir le gid du groupe spécifié
+            if (pwd == NULL) {
+                printf("chown : le groupe '%s' n'existe pas\n", group);
+                exit(1);
+            }
+
+            gid = pwd->pw_gid;
+        }
+    }
+    
     //-----------------------------
 
     if (lstat(file,&statbuf)==-1) { //si le fichier n'existe pas
@@ -177,11 +252,12 @@ changeOwn(char * file, char * ownGr, char * options){
 
     if(S_ISDIR(statbuf.st_mode)){ //si le fichier est un répertoire
 
+
         if((dirp=opendir(file))==NULL){ //si impossible de l'ouvrir
-            printf("rm : impossible d'ouvrir '%s'\n", file);
+            printf("chown : impossible d'ouvrir '%s'\n", file);
         }
         else {
-            if(strstr(options, "r") != NULL){ //si on a l'option -r on rentre dans la procédure pour supprmimer le dossier de manière récursive
+            if(strstr(options, "R") != NULL){ //si on a l'option -r on rentre dans la procédure pour changer le propriétaire du dossier de manière récursive
                 while((dptr=readdir(dirp))){
 
                     if (!strcmp(dptr->d_name,".") || !strcmp(dptr->d_name,"..")){ //pour que l'on ne supprime pas le dossier ou le dossier parent
@@ -195,75 +271,49 @@ changeOwn(char * file, char * ownGr, char * options){
                         sprintf(recur,"%s/%s",file,dptr->d_name);
                     }
                     //récursion
-                    suppression(recur, options);
+                    changeOwn(recur, ownGr, options);
                 }
-                if(strstr(options, "i")){ //si on a l'option -i
-                    printf("Supprimer le repertoire '%s' (y/n) ? ", file); //on demande confirmation de suppression
-                    c='\n';
-                    while(c =='\n') c=getchar(); //petit tricks pour pas prendre le retour chariot
-                    if((c == 'y')){
-                        if(strstr(options, "v") != NULL){ //si option --verbose, on affiche ce que l'on fait
-                            printf("Suppression du répertoire '%s'\n", file);
-                        }
-
-                        remove(file);
-                    }
+                if(strstr(options, "v") != NULL){
+                    printf("Modification du propriétaire de '%s' en '%s'\n", file, owner);
+                    if(gid != -1) printf("Modification du groupe propriétaire de '%s' en '%s'\n", file, group);
                 }
-                else { //si pas l'option -i, on ne demande pas confirmation
-                    if(strstr(options, "v") != NULL){
-                        printf("Suppression du répertoire '%s'\n", file);
-                    }
-                    remove(file);
+                if (chown(file, uid, gid) == -1) { //on modifie le proprio/groupe
+                    printf("chown : erreur de modification propriétaire '%s'\n", file);
+                    exit(1);
                 }
-
 
                 closedir(dirp);
             }
 
             else{ //si on a pas l'option -r
-                printf("rm: impossible de supprimer '%s': est un dossier\n", file);
+                if(strstr(options, "v") != NULL){
+                    printf("Modification du propriétaire de '%s' en '%s'\n", file, owner);
+                    if(gid != -1) printf("Modification du groupe propriétaire de '%s' en '%s'\n", file, group);
+                }
+                if (chown(file, uid, gid) == -1) { //on modifie le proprio/groupe
+                    printf("chown : erreur de modification propriétaire '%s'\n", file);
+                    exit(1);
+                }
             }
         }
     }
     else{
-        if(strstr(options, "i")){
-            printf("Supprimer '%s' (y/n) ? ", file);
-            c='\n';
-            while(c=='\n') c=getchar();
-            if((c == 'y')){
-                if(strstr(options, "v") != NULL){
-                    printf("Suppression de '%s'\n", file);
-                }
-                remove(file);
-            }
+        if(strstr(options, "v") != NULL){
+            printf("Modification du propriétaire de '%s' en '%s'\n", file, owner);
+            if(gid != -1) printf("Modification du groupe propriétaire de '%s' en '%s'\n", file, group);
         }
-        else {
-            if(strstr(options, "v") != NULL){
-                printf("Suppression de '%s'\n", file);
-            }
-            remove(file);
+        if (chown(file, uid, gid) == -1) { //on modifie le proprio/groupe
+            printf("chown : erreur de modification propriétaire '%s'\n", file);
+            exit(1);
         }
-    }  
+    }   
+    
+    if(strstr(ownGr, ":") != NULL){
+        free(group);
+        free(owner);
+    }
+
+    if(strstr(options, "R") != NULL){
+        free(recur);
+    }
 }
-
-
-
-    uid_t uid;
-    char * endptr;
-
-    uid = strtol(owner, &endptr, 10);  /* Allow a numeric string */
-
-   if (*endptr != '\0') {         /* Was not pure numeric string */
-        pwd = getpwnam(argv[1]);   /* Try getting UID for username */
-        if (pwd == NULL) {
-            perror("getpwnam");
-            exit(EXIT_FAILURE);
-        }
-
-       uid = pwd->pw_uid;
-    }
-
-   if (chown(argv[2], uid, -1) == -1) {
-        perror("chown");
-        exit(EXIT_FAILURE);
-    }

@@ -15,6 +15,7 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 #pragma once
 
 #include <stdio.h>
@@ -24,6 +25,7 @@
 #include <errno.h>
 #include <getopt.h>
 #include <string.h>
+#include <unistd.h>
 //** A décommenter une fois les test finis **//
 //#include "../utils.h"
 

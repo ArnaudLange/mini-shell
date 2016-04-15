@@ -147,3 +147,8 @@ int main(int argc, char *argv[]){
     free(options);
     return 0;
 }
+
+changeOwn(char * file, char * owner, char * options){
+
+
+}

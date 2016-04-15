@@ -14,9 +14,21 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-    
-#include "../../include/commands/fonction.h"
 
-int main(int argc, char* argv[]){
-        fonction_lib(argc, argv);
-}
+#pragma once
+
+#include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <getopt.h>
+#include <string.h>
+//** A décommenter une fois les test finis **//
+//#include "../utils.h"
+
+//** A virer une fois les tests finis **//
+#include "utils.h"
+
+int chgrp_lib(int argc, char *argv[]);
+

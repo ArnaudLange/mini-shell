@@ -6,6 +6,7 @@ Build:
        - cd build
        - cmake ..
        - make
+       - bin/shell
   only:
     - develop
   tags:

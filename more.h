@@ -26,22 +26,19 @@
 #include <string.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
-//** A décommenter une fois les test finis **//
-//#include "../utils.h"
-
-//** A virer une fois les tests finis **//
-#include "utils.h"
+#include ../"utils.h"
 
 typedef enum{
     etatSpace, // espace
     etatEntree,
     etatExit, // q ou Q
-    etatSkipKLignes, // s
+    etatSkipLignes, // s
     etatSkipScreenLignes, // f
     etatLigneNumber // =
 } Etat;
 
 int fontion_lib(int argc, char *argv[]);
-void more(char *file, char *option, int *nbLigne);
-void getEtat(Etat *curEtat, char c);
+void more(char *file, int *nbLigne);
+void getEtat(Etat *curEtat, char c, int taille, int nbLigne);
+int getLength(char *file);
 

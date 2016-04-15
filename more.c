@@ -15,24 +15,9 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/fonction.h"
-
-#include "more.h" //à virer une fois les tests effectués
-
+#include "../../include/commands/more.h"
 
 int main(int argc, char *argv[]){
-
-    // -----------------------------------
-    // Declaration tableau une dimension pour les options
-
-    char* options = NULL;
-    options = (char*) calloc(3,sizeof(char));
-    if (options == NULL)
-    {
-        perror("options");
-        exit(1);
-    }
 
 
     // -----------------------------------
@@ -122,16 +107,15 @@ int main(int argc, char *argv[]){
         {
             for(j = 0; j < nbFiles; j++)
             {
-                more(files[j],options, &nbLigne);
+                more(files[j], &nbLigne);
                 free(files[j]);
             }   
         }
         else
         {
-            more("",options,&nbLigne);
+            more("",&nbLigne);
         }
         free(files);
-        free(options);
 
 
     }
@@ -146,12 +130,23 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
+//Fonction qui etablit l'etat actuel
+//On prend l'etat en entree, le char lu par la fonction a ce moment
+//Ainsi que la taille du fichier et la ligne ou nous sommes rendus
+void getEtat(Etat *curEtat, char c, int taille, int nbLigne){
+   //On calcule le pourcentage de parcourt du fichier
+   double pourcentage = (double)nbLigne/taille*100;
+   //L'affichage pour que l'on rentre notre commande, avec les pourcentage
+   printf("--More-- (%d%c)",(int)pourcentage,37);
+   //On recupere l'entree de l'utilisateur
+   char command=getchar();
+   //On supprime la ligne du dessus pour que ca n'influe pas sur l'affichage du more
+   printf("\033[A\33[2K");
+   while('\n'!=getchar());
 
-void getEtat(Etat *curEtat, char c){
-    char command=getchar();
-
+   //Si c'est un h, on affiche l'aide
     if (command == 'h'){
-        printf("\n----------------------------------------\n");
+        printf("----------------------------------------\n");
         printf("<space> \t\t\tDisplay next k lines of text [current screen size]\n");
         printf("<return>\t\t\tDisplay next 1 line of text\n");
         printf("q or Q  \t\t\tExit from more\n");
@@ -159,27 +154,46 @@ void getEtat(Etat *curEtat, char c){
         printf("f       \t\t\tSkip forward k screenfuls of text\n");
         printf("=       \t\t\tDisplay current line number\n");
         printf("----------------------------------------\n");
+        //Puis on reprend l'entree clavier
+        command=getchar();
+        //Et on efface l'aide
+        printf("\033[A\33[2K");
+        printf("\033[A\33[2K");
+        printf("\033[A\33[2K");
+        printf("\033[A\33[2K");
+        printf("\033[A\33[2K");
+        printf("\033[A\33[2K");
+        printf("\033[A\33[2K");
+        printf("\033[A\33[2K");
     }
 
-    command=getchar();
-
+    //Si on a "Entree"
+    //On efface la ligne du dessus, si le caractere en parametre n'est pas entree, on l'affiche (car sinon cela fera un saut de ligne intempestif)
     if (command == 10){
-        printf("\33[2K");
-        printf("\033[A\r%c",c);
+        printf("\033[A\33[2K");
+        if (c!=10){
+            printf("%c",c);
+        }
+        //On met l'etat sur etat entree
         *curEtat = etatEntree;
     }
+    //Si on a "espace"
     else if (command == ' '){
-        printf("\33[2K");
-        printf("\033[A\r%c",c);
+        //Meme chose pour l'affichage du parametre en entree
+        if(c!=10){
+            printf("%c",c);
+        }
+        //On met l'etat a etat espace
         *curEtat = etatSpace;
     }
+    //Pour les autres cas on change juste l'etat
     else if (command == 'q' || command == 'Q'){
         *curEtat = etatExit;
     }
-    else if (command == 'f'){
-        *curEtat = etatSkipKLignes;
-    }
     else if (command == 's'){
+        *curEtat = etatSkipLignes;
+    }
+    else if (command == 'f'){
         *curEtat = etatSkipScreenLignes;
     }
     else if (command == '='){
@@ -187,53 +201,82 @@ void getEtat(Etat *curEtat, char c){
     }
 }
 
-void more(char *file, char *option, int *nbLigne){
-    printf("Nom du fichier : %s\n",file);
+//Fonction qui renvoie le nombre de ligne total d'un fichier
+int getLength(char *file){
+    int length=0;
+    char c;
 
+    //On va ouvrir le fichier et le parcourir normalement
+    FILE *fichier = NULL;
+    fichier = fopen(file,"r");
+    if(fichier == NULL){
+        perror(file);
+        exit(1);
+    }
+    while((c=fgetc(fichier)) != EOF){
+        if(c == 10){
+            //En incrementatant la variable "length" a chaque ligne
+            length++;
+        }
+    }
+    return length;
+}
+
+void more(char *file, int *nbLigne){
     FILE *fichier = NULL;
     char character;
 
     int i=1;
-    char command;
 
+    //On recupere la taille de la fenetre via ces commandes
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
-
+    //Cela permettra de gerer les commandes "espace" ainsi que "f"
     int ligneScreen = w.ws_row;
+    int lengthFile;
 
+    //puis on ouvre le fichier normalement
     if(strcmp(file,"")){
         fichier = fopen(file,"r");
         if(fichier == NULL){
             perror(file);
             exit(1);
         }
-
+        lengthFile=getLength(file);
         Etat curEtat;
+        //De base more effectue l'etat "space" au lancement
         curEtat=etatSpace;
 
         while((character=fgetc(fichier)) != EOF){
 
             switch (curEtat){
                 case etatSpace:
+                    //Pour faire l'etat space on affiche le fichier caractere par caractere,
+                    //jusqu'a atteindre le nombre de ligne correspondant a la taille de la fenetre
                     if (i<ligneScreen){
                         printf("%c",character);
 
                         if (character == 10){
                             i++;
-                            nbLigne++;
+                            (*nbLigne)++;
                         }
                         break;
                     }
                     else{
-                        getEtat(&curEtat,character);
+                        //Si c'est le cas on appelle la fonction qui va reinitialiser l'etat avec l'entree de l'utilisateur
+                        getEtat(&curEtat,character,lengthFile,*nbLigne);
+                        //Sans oublier de remettre i a 1
                         i=1;
                         break;
                     }
 
                 case etatEntree:
+                    //On affiche une ligne de caracteres, donc jusqu'au caractere 10
                     if (character == 10){
-                            getEtat(&curEtat,character);
+                            printf("%c",character);
+                            (*nbLigne)++;
+                            getEtat(&curEtat,10,lengthFile,*nbLigne);
                             break;
                         }
                     else{
@@ -242,19 +285,40 @@ void more(char *file, char *option, int *nbLigne){
                     break;
 
                 case etatExit:
+                    //on quitte le programme
                     exit(0);
 
-                case etatSkipKLignes:
-                    printf("Etat SkipKLignes\n");
+                case etatSkipLignes:
+                    //On fait comme etatEntree mais sans afficher
+                    if (character == 10){
+                            (*nbLigne)++;
+                            printf("\n...skipping one line\n");
+                            getEtat(&curEtat,10,lengthFile,*nbLigne);
+                            break;
+                        }
                     break;
 
                 case etatSkipScreenLignes:
-                    printf("Etat SkipScreenLignes\n");
+                    //On fait comment etatSpace mais sans afficher
+                    if (i<ligneScreen){
+                        if (character == 10){
+                            i++;
+                            (*nbLigne)++;
+                        }
+                        break;
+                    }
+                    else{
+                        printf("\n...skipping %d line\n",ligneScreen);
+                        getEtat(&curEtat,character,lengthFile,*nbLigne);
+                        i=1;
+                        break;
+                    }
                     break;
 
                 case etatLigneNumber:
-                    printf("etatLigneNumber\n");
-                    printf("%c",character);
+                    //On affiche le numero de la ligne ou nous sommes rendus
+                    printf("Ligne n° : %d | ",*nbLigne);
+                    getEtat(&curEtat,character,lengthFile,*nbLigne);
                     break;
 
 

@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.0)
 # Notre projet est étiqueté shell
 project(binsh)
 
-set(CMAKE_C_FLAGS "-std=c99 -D_XOPEN_SOURCE=600 -Wl,--no-as-needed -ldl -pthread")
+set(CMAKE_C_FLAGS "-std=c99 -D_XOPEN_SOURCE=600 -Wl,--no-as-needed -ldl -pthread -lm")
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin )
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib )
 
@@ -125,3 +125,42 @@ file(GLOB HEADER_CONNECT
 add_executable(connect ${SRC_CONNECT} ${HEADER_CONNECT})
 add_library(connect_lib SHARED ${SRC_CONNECT})
 set_target_properties(connect_lib PROPERTIES OUTPUT_NAME "connect")
+
+# du
+file(GLOB SRC_DU
+    "src/commands/du.c"
+    "src/utils.c"
+    "src/main/du.c"
+)
+file(GLOB HEADER_DU
+    "include/commands/du.h"
+)
+add_executable(du ${SRC_DU} ${HEADER_DU})
+add_library(du_lib SHARED ${SRC_DU})
+set_target_properties(du_lib PROPERTIES OUTPUT_NAME "du")
+
+# rm
+file(GLOB SRC_RM
+    "src/commands/rm.c"
+    "src/utils.c"
+    "src/main/rm.c"
+)
+file(GLOB HEADER_RM
+    "include/commands/rm.h"
+)
+add_executable(rm ${SRC_RM} ${HEADER_RM})
+add_library(rm_lib SHARED ${SRC_RM})
+set_target_properties(rm_lib PROPERTIES OUTPUT_NAME "rm")
+
+# cp
+file(GLOB SRC_CP
+    "src/commands/cp.c"
+    "src/utils.c"
+    "src/main/cp.c"
+)
+file(GLOB HEADER_CP
+    "include/commands/cp.h"
+)
+add_executable(cp ${SRC_CP} ${HEADER_CP})
+add_library(cp_lib SHARED ${SRC_CP})
+set_target_properties(cp_lib PROPERTIES OUTPUT_NAME "cp")

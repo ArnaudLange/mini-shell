@@ -105,6 +105,8 @@ int main(int argc, char* argv[]){
         checkFunction(shell, "mv");
         checkFunction(shell, "pwd");
         checkFunction(shell, "mkdir");
+	checkFunction(shell, "du");
+	checkFunction(shell, "cp");
 
         pthread_t sniffer_thread;
         

@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /home/antoine/Workspace/c/Shell
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -77,6 +66,17 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -111,186 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named connect_lib
+# Target rules for targets named mv_lib
 
 # Build rule for target.
-connect_lib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 connect_lib
-.PHONY : connect_lib
+mv_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 mv_lib
+.PHONY : mv_lib
 
 # fast build rule for target.
-connect_lib/fast:
-	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/build
-.PHONY : connect_lib/fast
-
-#=============================================================================
-# Target rules for targets named connect
-
-# Build rule for target.
-connect: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 connect
-.PHONY : connect
-
-# fast build rule for target.
-connect/fast:
-	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/build
-.PHONY : connect/fast
-
-#=============================================================================
-# Target rules for targets named mkdir_lib
-
-# Build rule for target.
-mkdir_lib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 mkdir_lib
-.PHONY : mkdir_lib
-
-# fast build rule for target.
-mkdir_lib/fast:
-	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/build
-.PHONY : mkdir_lib/fast
-
-#=============================================================================
-# Target rules for targets named mkdir
-
-# Build rule for target.
-mkdir: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 mkdir
-.PHONY : mkdir
-
-# fast build rule for target.
-mkdir/fast:
-	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/build
-.PHONY : mkdir/fast
-
-#=============================================================================
-# Target rules for targets named pwd_lib
-
-# Build rule for target.
-pwd_lib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 pwd_lib
-.PHONY : pwd_lib
-
-# fast build rule for target.
-pwd_lib/fast:
-	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/build
-.PHONY : pwd_lib/fast
-
-#=============================================================================
-# Target rules for targets named cd
-
-# Build rule for target.
-cd: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 cd
-.PHONY : cd
-
-# fast build rule for target.
-cd/fast:
-	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/build
-.PHONY : cd/fast
-
-#=============================================================================
-# Target rules for targets named pwd
-
-# Build rule for target.
-pwd: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 pwd
-.PHONY : pwd
-
-# fast build rule for target.
-pwd/fast:
-	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/build
-.PHONY : pwd/fast
-
-#=============================================================================
-# Target rules for targets named ls_lib
-
-# Build rule for target.
-ls_lib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ls_lib
-.PHONY : ls_lib
-
-# fast build rule for target.
-ls_lib/fast:
-	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/build
-.PHONY : ls_lib/fast
-
-#=============================================================================
-# Target rules for targets named ls
-
-# Build rule for target.
-ls: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ls
-.PHONY : ls
-
-# fast build rule for target.
-ls/fast:
-	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/build
-.PHONY : ls/fast
-
-#=============================================================================
-# Target rules for targets named shell
-
-# Build rule for target.
-shell: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 shell
-.PHONY : shell
-
-# fast build rule for target.
-shell/fast:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/build
-.PHONY : shell/fast
-
-#=============================================================================
-# Target rules for targets named cat
-
-# Build rule for target.
-cat: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 cat
-.PHONY : cat
-
-# fast build rule for target.
-cat/fast:
-	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/build
-.PHONY : cat/fast
-
-#=============================================================================
-# Target rules for targets named cat_lib
-
-# Build rule for target.
-cat_lib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 cat_lib
-.PHONY : cat_lib
-
-# fast build rule for target.
-cat_lib/fast:
-	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/build
-.PHONY : cat_lib/fast
-
-#=============================================================================
-# Target rules for targets named echo
-
-# Build rule for target.
-echo: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 echo
-.PHONY : echo
-
-# fast build rule for target.
-echo/fast:
-	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/build
-.PHONY : echo/fast
-
-#=============================================================================
-# Target rules for targets named mv
-
-# Build rule for target.
-mv: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 mv
-.PHONY : mv
-
-# fast build rule for target.
-mv/fast:
-	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/build
-.PHONY : mv/fast
+mv_lib/fast:
+	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/build
+.PHONY : mv_lib/fast
 
 #=============================================================================
 # Target rules for targets named echo_lib
@@ -306,17 +137,264 @@ echo_lib/fast:
 .PHONY : echo_lib/fast
 
 #=============================================================================
-# Target rules for targets named mv_lib
+# Target rules for targets named cp
 
 # Build rule for target.
-mv_lib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 mv_lib
-.PHONY : mv_lib
+cp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 cp
+.PHONY : cp
 
 # fast build rule for target.
-mv_lib/fast:
-	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/build
-.PHONY : mv_lib/fast
+cp/fast:
+	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/build
+.PHONY : cp/fast
+
+#=============================================================================
+# Target rules for targets named echo
+
+# Build rule for target.
+echo: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 echo
+.PHONY : echo
+
+# fast build rule for target.
+echo/fast:
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/build
+.PHONY : echo/fast
+
+#=============================================================================
+# Target rules for targets named shell
+
+# Build rule for target.
+shell: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 shell
+.PHONY : shell
+
+# fast build rule for target.
+shell/fast:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/build
+.PHONY : shell/fast
+
+#=============================================================================
+# Target rules for targets named du_lib
+
+# Build rule for target.
+du_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 du_lib
+.PHONY : du_lib
+
+# fast build rule for target.
+du_lib/fast:
+	$(MAKE) -f CMakeFiles/du_lib.dir/build.make CMakeFiles/du_lib.dir/build
+.PHONY : du_lib/fast
+
+#=============================================================================
+# Target rules for targets named cat_lib
+
+# Build rule for target.
+cat_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 cat_lib
+.PHONY : cat_lib
+
+# fast build rule for target.
+cat_lib/fast:
+	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/build
+.PHONY : cat_lib/fast
+
+#=============================================================================
+# Target rules for targets named ls
+
+# Build rule for target.
+ls: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ls
+.PHONY : ls
+
+# fast build rule for target.
+ls/fast:
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/build
+.PHONY : ls/fast
+
+#=============================================================================
+# Target rules for targets named ls_lib
+
+# Build rule for target.
+ls_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ls_lib
+.PHONY : ls_lib
+
+# fast build rule for target.
+ls_lib/fast:
+	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/build
+.PHONY : ls_lib/fast
+
+#=============================================================================
+# Target rules for targets named pwd
+
+# Build rule for target.
+pwd: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pwd
+.PHONY : pwd
+
+# fast build rule for target.
+pwd/fast:
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/build
+.PHONY : pwd/fast
+
+#=============================================================================
+# Target rules for targets named cd
+
+# Build rule for target.
+cd: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 cd
+.PHONY : cd
+
+# fast build rule for target.
+cd/fast:
+	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/build
+.PHONY : cd/fast
+
+#=============================================================================
+# Target rules for targets named cat
+
+# Build rule for target.
+cat: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 cat
+.PHONY : cat
+
+# fast build rule for target.
+cat/fast:
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/build
+.PHONY : cat/fast
+
+#=============================================================================
+# Target rules for targets named pwd_lib
+
+# Build rule for target.
+pwd_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pwd_lib
+.PHONY : pwd_lib
+
+# fast build rule for target.
+pwd_lib/fast:
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/build
+.PHONY : pwd_lib/fast
+
+#=============================================================================
+# Target rules for targets named rm
+
+# Build rule for target.
+rm: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rm
+.PHONY : rm
+
+# fast build rule for target.
+rm/fast:
+	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/build
+.PHONY : rm/fast
+
+#=============================================================================
+# Target rules for targets named mv
+
+# Build rule for target.
+mv: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 mv
+.PHONY : mv
+
+# fast build rule for target.
+mv/fast:
+	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/build
+.PHONY : mv/fast
+
+#=============================================================================
+# Target rules for targets named mkdir
+
+# Build rule for target.
+mkdir: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 mkdir
+.PHONY : mkdir
+
+# fast build rule for target.
+mkdir/fast:
+	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/build
+.PHONY : mkdir/fast
+
+#=============================================================================
+# Target rules for targets named mkdir_lib
+
+# Build rule for target.
+mkdir_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 mkdir_lib
+.PHONY : mkdir_lib
+
+# fast build rule for target.
+mkdir_lib/fast:
+	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/build
+.PHONY : mkdir_lib/fast
+
+#=============================================================================
+# Target rules for targets named rm_lib
+
+# Build rule for target.
+rm_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rm_lib
+.PHONY : rm_lib
+
+# fast build rule for target.
+rm_lib/fast:
+	$(MAKE) -f CMakeFiles/rm_lib.dir/build.make CMakeFiles/rm_lib.dir/build
+.PHONY : rm_lib/fast
+
+#=============================================================================
+# Target rules for targets named du
+
+# Build rule for target.
+du: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 du
+.PHONY : du
+
+# fast build rule for target.
+du/fast:
+	$(MAKE) -f CMakeFiles/du.dir/build.make CMakeFiles/du.dir/build
+.PHONY : du/fast
+
+#=============================================================================
+# Target rules for targets named connect
+
+# Build rule for target.
+connect: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 connect
+.PHONY : connect
+
+# fast build rule for target.
+connect/fast:
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/build
+.PHONY : connect/fast
+
+#=============================================================================
+# Target rules for targets named connect_lib
+
+# Build rule for target.
+connect_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 connect_lib
+.PHONY : connect_lib
+
+# fast build rule for target.
+connect_lib/fast:
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/build
+.PHONY : connect_lib/fast
+
+#=============================================================================
+# Target rules for targets named cp_lib
+
+# Build rule for target.
+cp_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 cp_lib
+.PHONY : cp_lib
+
+# fast build rule for target.
+cp_lib/fast:
+	$(MAKE) -f CMakeFiles/cp_lib.dir/build.make CMakeFiles/cp_lib.dir/build
+.PHONY : cp_lib/fast
 
 src/commands.o: src/commands.c.o
 
@@ -352,8 +430,8 @@ src/commands/cat.o: src/commands/cat.c.o
 # target to build an object file
 src/commands/cat.c.o:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cat.c.o
-	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/commands/cat.c.o
 	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/commands/cat.c.o
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/commands/cat.c.o
 .PHONY : src/commands/cat.c.o
 
 src/commands/cat.i: src/commands/cat.c.i
@@ -363,8 +441,8 @@ src/commands/cat.i: src/commands/cat.c.i
 # target to preprocess a source file
 src/commands/cat.c.i:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cat.c.i
-	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/commands/cat.c.i
 	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/commands/cat.c.i
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/commands/cat.c.i
 .PHONY : src/commands/cat.c.i
 
 src/commands/cat.s: src/commands/cat.c.s
@@ -374,8 +452,8 @@ src/commands/cat.s: src/commands/cat.c.s
 # target to generate assembly for a file
 src/commands/cat.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cat.c.s
-	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/commands/cat.c.s
 	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/commands/cat.c.s
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/commands/cat.c.s
 .PHONY : src/commands/cat.c.s
 
 src/commands/cd.o: src/commands/cd.c.o
@@ -384,8 +462,8 @@ src/commands/cd.o: src/commands/cd.c.o
 
 # target to build an object file
 src/commands/cd.c.o:
-	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/commands/cd.c.o
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cd.c.o
+	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/commands/cd.c.o
 .PHONY : src/commands/cd.c.o
 
 src/commands/cd.i: src/commands/cd.c.i
@@ -394,8 +472,8 @@ src/commands/cd.i: src/commands/cd.c.i
 
 # target to preprocess a source file
 src/commands/cd.c.i:
-	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/commands/cd.c.i
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cd.c.i
+	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/commands/cd.c.i
 .PHONY : src/commands/cd.c.i
 
 src/commands/cd.s: src/commands/cd.c.s
@@ -404,8 +482,8 @@ src/commands/cd.s: src/commands/cd.c.s
 
 # target to generate assembly for a file
 src/commands/cd.c.s:
-	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/commands/cd.c.s
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cd.c.s
+	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/commands/cd.c.s
 .PHONY : src/commands/cd.c.s
 
 src/commands/connect.o: src/commands/connect.c.o
@@ -414,9 +492,9 @@ src/commands/connect.o: src/commands/connect.c.o
 
 # target to build an object file
 src/commands/connect.c.o:
-	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/commands/connect.c.o
-	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/commands/connect.c.o
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/connect.c.o
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/commands/connect.c.o
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/commands/connect.c.o
 .PHONY : src/commands/connect.c.o
 
 src/commands/connect.i: src/commands/connect.c.i
@@ -425,9 +503,9 @@ src/commands/connect.i: src/commands/connect.c.i
 
 # target to preprocess a source file
 src/commands/connect.c.i:
-	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/commands/connect.c.i
-	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/commands/connect.c.i
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/connect.c.i
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/commands/connect.c.i
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/commands/connect.c.i
 .PHONY : src/commands/connect.c.i
 
 src/commands/connect.s: src/commands/connect.c.s
@@ -436,10 +514,76 @@ src/commands/connect.s: src/commands/connect.c.s
 
 # target to generate assembly for a file
 src/commands/connect.c.s:
-	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/commands/connect.c.s
-	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/commands/connect.c.s
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/connect.c.s
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/commands/connect.c.s
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/commands/connect.c.s
 .PHONY : src/commands/connect.c.s
+
+src/commands/cp.o: src/commands/cp.c.o
+
+.PHONY : src/commands/cp.o
+
+# target to build an object file
+src/commands/cp.c.o:
+	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/commands/cp.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cp.c.o
+	$(MAKE) -f CMakeFiles/cp_lib.dir/build.make CMakeFiles/cp_lib.dir/src/commands/cp.c.o
+.PHONY : src/commands/cp.c.o
+
+src/commands/cp.i: src/commands/cp.c.i
+
+.PHONY : src/commands/cp.i
+
+# target to preprocess a source file
+src/commands/cp.c.i:
+	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/commands/cp.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cp.c.i
+	$(MAKE) -f CMakeFiles/cp_lib.dir/build.make CMakeFiles/cp_lib.dir/src/commands/cp.c.i
+.PHONY : src/commands/cp.c.i
+
+src/commands/cp.s: src/commands/cp.c.s
+
+.PHONY : src/commands/cp.s
+
+# target to generate assembly for a file
+src/commands/cp.c.s:
+	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/commands/cp.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cp.c.s
+	$(MAKE) -f CMakeFiles/cp_lib.dir/build.make CMakeFiles/cp_lib.dir/src/commands/cp.c.s
+.PHONY : src/commands/cp.c.s
+
+src/commands/du.o: src/commands/du.c.o
+
+.PHONY : src/commands/du.o
+
+# target to build an object file
+src/commands/du.c.o:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/du.c.o
+	$(MAKE) -f CMakeFiles/du_lib.dir/build.make CMakeFiles/du_lib.dir/src/commands/du.c.o
+	$(MAKE) -f CMakeFiles/du.dir/build.make CMakeFiles/du.dir/src/commands/du.c.o
+.PHONY : src/commands/du.c.o
+
+src/commands/du.i: src/commands/du.c.i
+
+.PHONY : src/commands/du.i
+
+# target to preprocess a source file
+src/commands/du.c.i:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/du.c.i
+	$(MAKE) -f CMakeFiles/du_lib.dir/build.make CMakeFiles/du_lib.dir/src/commands/du.c.i
+	$(MAKE) -f CMakeFiles/du.dir/build.make CMakeFiles/du.dir/src/commands/du.c.i
+.PHONY : src/commands/du.c.i
+
+src/commands/du.s: src/commands/du.c.s
+
+.PHONY : src/commands/du.s
+
+# target to generate assembly for a file
+src/commands/du.c.s:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/du.c.s
+	$(MAKE) -f CMakeFiles/du_lib.dir/build.make CMakeFiles/du_lib.dir/src/commands/du.c.s
+	$(MAKE) -f CMakeFiles/du.dir/build.make CMakeFiles/du.dir/src/commands/du.c.s
+.PHONY : src/commands/du.c.s
 
 src/commands/echo.o: src/commands/echo.c.o
 
@@ -447,9 +591,9 @@ src/commands/echo.o: src/commands/echo.c.o
 
 # target to build an object file
 src/commands/echo.c.o:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/echo.c.o
-	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/commands/echo.c.o
 	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/commands/echo.c.o
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/commands/echo.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/echo.c.o
 .PHONY : src/commands/echo.c.o
 
 src/commands/echo.i: src/commands/echo.c.i
@@ -458,9 +602,9 @@ src/commands/echo.i: src/commands/echo.c.i
 
 # target to preprocess a source file
 src/commands/echo.c.i:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/echo.c.i
-	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/commands/echo.c.i
 	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/commands/echo.c.i
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/commands/echo.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/echo.c.i
 .PHONY : src/commands/echo.c.i
 
 src/commands/echo.s: src/commands/echo.c.s
@@ -469,9 +613,9 @@ src/commands/echo.s: src/commands/echo.c.s
 
 # target to generate assembly for a file
 src/commands/echo.c.s:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/echo.c.s
-	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/commands/echo.c.s
 	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/commands/echo.c.s
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/commands/echo.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/echo.c.s
 .PHONY : src/commands/echo.c.s
 
 src/commands/ls.o: src/commands/ls.c.o
@@ -480,9 +624,9 @@ src/commands/ls.o: src/commands/ls.c.o
 
 # target to build an object file
 src/commands/ls.c.o:
-	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/commands/ls.c.o
-	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.o
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.o
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.o
+	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/commands/ls.c.o
 .PHONY : src/commands/ls.c.o
 
 src/commands/ls.i: src/commands/ls.c.i
@@ -491,9 +635,9 @@ src/commands/ls.i: src/commands/ls.c.i
 
 # target to preprocess a source file
 src/commands/ls.c.i:
-	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/commands/ls.c.i
-	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.i
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.i
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.i
+	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/commands/ls.c.i
 .PHONY : src/commands/ls.c.i
 
 src/commands/ls.s: src/commands/ls.c.s
@@ -502,9 +646,9 @@ src/commands/ls.s: src/commands/ls.c.s
 
 # target to generate assembly for a file
 src/commands/ls.c.s:
-	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/commands/ls.c.s
-	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.s
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ls.c.s
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/commands/ls.c.s
+	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/commands/ls.c.s
 .PHONY : src/commands/ls.c.s
 
 src/commands/mkdir.o: src/commands/mkdir.c.o
@@ -513,9 +657,9 @@ src/commands/mkdir.o: src/commands/mkdir.c.o
 
 # target to build an object file
 src/commands/mkdir.c.o:
-	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/commands/mkdir.c.o
-	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/commands/mkdir.c.o
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/mkdir.c.o
+	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/commands/mkdir.c.o
+	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/commands/mkdir.c.o
 .PHONY : src/commands/mkdir.c.o
 
 src/commands/mkdir.i: src/commands/mkdir.c.i
@@ -524,9 +668,9 @@ src/commands/mkdir.i: src/commands/mkdir.c.i
 
 # target to preprocess a source file
 src/commands/mkdir.c.i:
-	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/commands/mkdir.c.i
-	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/commands/mkdir.c.i
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/mkdir.c.i
+	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/commands/mkdir.c.i
+	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/commands/mkdir.c.i
 .PHONY : src/commands/mkdir.c.i
 
 src/commands/mkdir.s: src/commands/mkdir.c.s
@@ -535,9 +679,9 @@ src/commands/mkdir.s: src/commands/mkdir.c.s
 
 # target to generate assembly for a file
 src/commands/mkdir.c.s:
-	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/commands/mkdir.c.s
-	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/commands/mkdir.c.s
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/mkdir.c.s
+	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/commands/mkdir.c.s
+	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/commands/mkdir.c.s
 .PHONY : src/commands/mkdir.c.s
 
 src/commands/mv.o: src/commands/mv.c.o
@@ -546,9 +690,9 @@ src/commands/mv.o: src/commands/mv.c.o
 
 # target to build an object file
 src/commands/mv.c.o:
+	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/commands/mv.c.o
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/mv.c.o
 	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/commands/mv.c.o
-	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/commands/mv.c.o
 .PHONY : src/commands/mv.c.o
 
 src/commands/mv.i: src/commands/mv.c.i
@@ -557,9 +701,9 @@ src/commands/mv.i: src/commands/mv.c.i
 
 # target to preprocess a source file
 src/commands/mv.c.i:
+	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/commands/mv.c.i
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/mv.c.i
 	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/commands/mv.c.i
-	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/commands/mv.c.i
 .PHONY : src/commands/mv.c.i
 
 src/commands/mv.s: src/commands/mv.c.s
@@ -568,9 +712,9 @@ src/commands/mv.s: src/commands/mv.c.s
 
 # target to generate assembly for a file
 src/commands/mv.c.s:
+	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/commands/mv.c.s
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/mv.c.s
 	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/commands/mv.c.s
-	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/commands/mv.c.s
 .PHONY : src/commands/mv.c.s
 
 src/commands/pwd.o: src/commands/pwd.c.o
@@ -579,9 +723,9 @@ src/commands/pwd.o: src/commands/pwd.c.o
 
 # target to build an object file
 src/commands/pwd.c.o:
-	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/commands/pwd.c.o
-	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/commands/pwd.c.o
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/pwd.c.o
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/commands/pwd.c.o
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/commands/pwd.c.o
 .PHONY : src/commands/pwd.c.o
 
 src/commands/pwd.i: src/commands/pwd.c.i
@@ -590,9 +734,9 @@ src/commands/pwd.i: src/commands/pwd.c.i
 
 # target to preprocess a source file
 src/commands/pwd.c.i:
-	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/commands/pwd.c.i
-	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/commands/pwd.c.i
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/pwd.c.i
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/commands/pwd.c.i
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/commands/pwd.c.i
 .PHONY : src/commands/pwd.c.i
 
 src/commands/pwd.s: src/commands/pwd.c.s
@@ -601,10 +745,43 @@ src/commands/pwd.s: src/commands/pwd.c.s
 
 # target to generate assembly for a file
 src/commands/pwd.c.s:
-	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/commands/pwd.c.s
-	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/commands/pwd.c.s
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/pwd.c.s
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/commands/pwd.c.s
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/commands/pwd.c.s
 .PHONY : src/commands/pwd.c.s
+
+src/commands/rm.o: src/commands/rm.c.o
+
+.PHONY : src/commands/rm.o
+
+# target to build an object file
+src/commands/rm.c.o:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/rm.c.o
+	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/commands/rm.c.o
+	$(MAKE) -f CMakeFiles/rm_lib.dir/build.make CMakeFiles/rm_lib.dir/src/commands/rm.c.o
+.PHONY : src/commands/rm.c.o
+
+src/commands/rm.i: src/commands/rm.c.i
+
+.PHONY : src/commands/rm.i
+
+# target to preprocess a source file
+src/commands/rm.c.i:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/rm.c.i
+	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/commands/rm.c.i
+	$(MAKE) -f CMakeFiles/rm_lib.dir/build.make CMakeFiles/rm_lib.dir/src/commands/rm.c.i
+.PHONY : src/commands/rm.c.i
+
+src/commands/rm.s: src/commands/rm.c.s
+
+.PHONY : src/commands/rm.s
+
+# target to generate assembly for a file
+src/commands/rm.c.s:
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/rm.c.s
+	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/commands/rm.c.s
+	$(MAKE) -f CMakeFiles/rm_lib.dir/build.make CMakeFiles/rm_lib.dir/src/commands/rm.c.s
+.PHONY : src/commands/rm.c.s
 
 src/main.o: src/main.c.o
 
@@ -639,8 +816,8 @@ src/main/cat.o: src/main/cat.c.o
 
 # target to build an object file
 src/main/cat.c.o:
-	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/main/cat.c.o
 	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/main/cat.c.o
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/main/cat.c.o
 .PHONY : src/main/cat.c.o
 
 src/main/cat.i: src/main/cat.c.i
@@ -649,8 +826,8 @@ src/main/cat.i: src/main/cat.c.i
 
 # target to preprocess a source file
 src/main/cat.c.i:
-	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/main/cat.c.i
 	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/main/cat.c.i
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/main/cat.c.i
 .PHONY : src/main/cat.c.i
 
 src/main/cat.s: src/main/cat.c.s
@@ -659,8 +836,8 @@ src/main/cat.s: src/main/cat.c.s
 
 # target to generate assembly for a file
 src/main/cat.c.s:
-	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/main/cat.c.s
 	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/main/cat.c.s
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/main/cat.c.s
 .PHONY : src/main/cat.c.s
 
 src/main/cd.o: src/main/cd.c.o
@@ -696,8 +873,8 @@ src/main/connect.o: src/main/connect.c.o
 
 # target to build an object file
 src/main/connect.c.o:
-	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/main/connect.c.o
 	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/main/connect.c.o
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/main/connect.c.o
 .PHONY : src/main/connect.c.o
 
 src/main/connect.i: src/main/connect.c.i
@@ -706,8 +883,8 @@ src/main/connect.i: src/main/connect.c.i
 
 # target to preprocess a source file
 src/main/connect.c.i:
-	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/main/connect.c.i
 	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/main/connect.c.i
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/main/connect.c.i
 .PHONY : src/main/connect.c.i
 
 src/main/connect.s: src/main/connect.c.s
@@ -716,9 +893,69 @@ src/main/connect.s: src/main/connect.c.s
 
 # target to generate assembly for a file
 src/main/connect.c.s:
-	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/main/connect.c.s
 	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/main/connect.c.s
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/main/connect.c.s
 .PHONY : src/main/connect.c.s
+
+src/main/cp.o: src/main/cp.c.o
+
+.PHONY : src/main/cp.o
+
+# target to build an object file
+src/main/cp.c.o:
+	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/main/cp.c.o
+	$(MAKE) -f CMakeFiles/cp_lib.dir/build.make CMakeFiles/cp_lib.dir/src/main/cp.c.o
+.PHONY : src/main/cp.c.o
+
+src/main/cp.i: src/main/cp.c.i
+
+.PHONY : src/main/cp.i
+
+# target to preprocess a source file
+src/main/cp.c.i:
+	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/main/cp.c.i
+	$(MAKE) -f CMakeFiles/cp_lib.dir/build.make CMakeFiles/cp_lib.dir/src/main/cp.c.i
+.PHONY : src/main/cp.c.i
+
+src/main/cp.s: src/main/cp.c.s
+
+.PHONY : src/main/cp.s
+
+# target to generate assembly for a file
+src/main/cp.c.s:
+	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/main/cp.c.s
+	$(MAKE) -f CMakeFiles/cp_lib.dir/build.make CMakeFiles/cp_lib.dir/src/main/cp.c.s
+.PHONY : src/main/cp.c.s
+
+src/main/du.o: src/main/du.c.o
+
+.PHONY : src/main/du.o
+
+# target to build an object file
+src/main/du.c.o:
+	$(MAKE) -f CMakeFiles/du_lib.dir/build.make CMakeFiles/du_lib.dir/src/main/du.c.o
+	$(MAKE) -f CMakeFiles/du.dir/build.make CMakeFiles/du.dir/src/main/du.c.o
+.PHONY : src/main/du.c.o
+
+src/main/du.i: src/main/du.c.i
+
+.PHONY : src/main/du.i
+
+# target to preprocess a source file
+src/main/du.c.i:
+	$(MAKE) -f CMakeFiles/du_lib.dir/build.make CMakeFiles/du_lib.dir/src/main/du.c.i
+	$(MAKE) -f CMakeFiles/du.dir/build.make CMakeFiles/du.dir/src/main/du.c.i
+.PHONY : src/main/du.c.i
+
+src/main/du.s: src/main/du.c.s
+
+.PHONY : src/main/du.s
+
+# target to generate assembly for a file
+src/main/du.c.s:
+	$(MAKE) -f CMakeFiles/du_lib.dir/build.make CMakeFiles/du_lib.dir/src/main/du.c.s
+	$(MAKE) -f CMakeFiles/du.dir/build.make CMakeFiles/du.dir/src/main/du.c.s
+.PHONY : src/main/du.c.s
 
 src/main/echo.o: src/main/echo.c.o
 
@@ -726,8 +963,8 @@ src/main/echo.o: src/main/echo.c.o
 
 # target to build an object file
 src/main/echo.c.o:
-	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/main/echo.c.o
 	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/main/echo.c.o
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/main/echo.c.o
 .PHONY : src/main/echo.c.o
 
 src/main/echo.i: src/main/echo.c.i
@@ -736,8 +973,8 @@ src/main/echo.i: src/main/echo.c.i
 
 # target to preprocess a source file
 src/main/echo.c.i:
-	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/main/echo.c.i
 	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/main/echo.c.i
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/main/echo.c.i
 .PHONY : src/main/echo.c.i
 
 src/main/echo.s: src/main/echo.c.s
@@ -746,8 +983,8 @@ src/main/echo.s: src/main/echo.c.s
 
 # target to generate assembly for a file
 src/main/echo.c.s:
-	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/main/echo.c.s
 	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/main/echo.c.s
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/main/echo.c.s
 .PHONY : src/main/echo.c.s
 
 src/main/ls.o: src/main/ls.c.o
@@ -756,8 +993,8 @@ src/main/ls.o: src/main/ls.c.o
 
 # target to build an object file
 src/main/ls.c.o:
-	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/main/ls.c.o
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.o
+	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/main/ls.c.o
 .PHONY : src/main/ls.c.o
 
 src/main/ls.i: src/main/ls.c.i
@@ -766,8 +1003,8 @@ src/main/ls.i: src/main/ls.c.i
 
 # target to preprocess a source file
 src/main/ls.c.i:
-	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/main/ls.c.i
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.i
+	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/main/ls.c.i
 .PHONY : src/main/ls.c.i
 
 src/main/ls.s: src/main/ls.c.s
@@ -776,8 +1013,8 @@ src/main/ls.s: src/main/ls.c.s
 
 # target to generate assembly for a file
 src/main/ls.c.s:
-	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/main/ls.c.s
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/main/ls.c.s
+	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/main/ls.c.s
 .PHONY : src/main/ls.c.s
 
 src/main/mkdir.o: src/main/mkdir.c.o
@@ -786,8 +1023,8 @@ src/main/mkdir.o: src/main/mkdir.c.o
 
 # target to build an object file
 src/main/mkdir.c.o:
-	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/main/mkdir.c.o
 	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/main/mkdir.c.o
+	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/main/mkdir.c.o
 .PHONY : src/main/mkdir.c.o
 
 src/main/mkdir.i: src/main/mkdir.c.i
@@ -796,8 +1033,8 @@ src/main/mkdir.i: src/main/mkdir.c.i
 
 # target to preprocess a source file
 src/main/mkdir.c.i:
-	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/main/mkdir.c.i
 	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/main/mkdir.c.i
+	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/main/mkdir.c.i
 .PHONY : src/main/mkdir.c.i
 
 src/main/mkdir.s: src/main/mkdir.c.s
@@ -806,8 +1043,8 @@ src/main/mkdir.s: src/main/mkdir.c.s
 
 # target to generate assembly for a file
 src/main/mkdir.c.s:
-	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/main/mkdir.c.s
 	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/main/mkdir.c.s
+	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/main/mkdir.c.s
 .PHONY : src/main/mkdir.c.s
 
 src/main/mv.o: src/main/mv.c.o
@@ -816,8 +1053,8 @@ src/main/mv.o: src/main/mv.c.o
 
 # target to build an object file
 src/main/mv.c.o:
-	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/main/mv.c.o
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/main/mv.c.o
+	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/main/mv.c.o
 .PHONY : src/main/mv.c.o
 
 src/main/mv.i: src/main/mv.c.i
@@ -826,8 +1063,8 @@ src/main/mv.i: src/main/mv.c.i
 
 # target to preprocess a source file
 src/main/mv.c.i:
-	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/main/mv.c.i
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/main/mv.c.i
+	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/main/mv.c.i
 .PHONY : src/main/mv.c.i
 
 src/main/mv.s: src/main/mv.c.s
@@ -836,8 +1073,8 @@ src/main/mv.s: src/main/mv.c.s
 
 # target to generate assembly for a file
 src/main/mv.c.s:
-	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/main/mv.c.s
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/main/mv.c.s
+	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/main/mv.c.s
 .PHONY : src/main/mv.c.s
 
 src/main/pwd.o: src/main/pwd.c.o
@@ -846,8 +1083,8 @@ src/main/pwd.o: src/main/pwd.c.o
 
 # target to build an object file
 src/main/pwd.c.o:
-	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/main/pwd.c.o
 	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/main/pwd.c.o
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/main/pwd.c.o
 .PHONY : src/main/pwd.c.o
 
 src/main/pwd.i: src/main/pwd.c.i
@@ -856,8 +1093,8 @@ src/main/pwd.i: src/main/pwd.c.i
 
 # target to preprocess a source file
 src/main/pwd.c.i:
-	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/main/pwd.c.i
 	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/main/pwd.c.i
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/main/pwd.c.i
 .PHONY : src/main/pwd.c.i
 
 src/main/pwd.s: src/main/pwd.c.s
@@ -866,9 +1103,39 @@ src/main/pwd.s: src/main/pwd.c.s
 
 # target to generate assembly for a file
 src/main/pwd.c.s:
-	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/main/pwd.c.s
 	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/main/pwd.c.s
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/main/pwd.c.s
 .PHONY : src/main/pwd.c.s
+
+src/main/rm.o: src/main/rm.c.o
+
+.PHONY : src/main/rm.o
+
+# target to build an object file
+src/main/rm.c.o:
+	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/main/rm.c.o
+	$(MAKE) -f CMakeFiles/rm_lib.dir/build.make CMakeFiles/rm_lib.dir/src/main/rm.c.o
+.PHONY : src/main/rm.c.o
+
+src/main/rm.i: src/main/rm.c.i
+
+.PHONY : src/main/rm.i
+
+# target to preprocess a source file
+src/main/rm.c.i:
+	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/main/rm.c.i
+	$(MAKE) -f CMakeFiles/rm_lib.dir/build.make CMakeFiles/rm_lib.dir/src/main/rm.c.i
+.PHONY : src/main/rm.c.i
+
+src/main/rm.s: src/main/rm.c.s
+
+.PHONY : src/main/rm.s
+
+# target to generate assembly for a file
+src/main/rm.c.s:
+	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/main/rm.c.s
+	$(MAKE) -f CMakeFiles/rm_lib.dir/build.make CMakeFiles/rm_lib.dir/src/main/rm.c.s
+.PHONY : src/main/rm.c.s
 
 src/process.o: src/process.c.o
 
@@ -984,21 +1251,27 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
-	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/utils.c.o
-	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/du_lib.dir/build.make CMakeFiles/du_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/rm_lib.dir/build.make CMakeFiles/rm_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/du.dir/build.make CMakeFiles/du.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/cp_lib.dir/build.make CMakeFiles/cp_lib.dir/src/utils.c.o
 .PHONY : src/utils.c.o
 
 src/utils.i: src/utils.c.i
@@ -1007,21 +1280,27 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
-	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/utils.c.i
-	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/du_lib.dir/build.make CMakeFiles/du_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/rm_lib.dir/build.make CMakeFiles/rm_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/du.dir/build.make CMakeFiles/du.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/cp_lib.dir/build.make CMakeFiles/cp_lib.dir/src/utils.c.i
 .PHONY : src/utils.c.i
 
 src/utils.s: src/utils.c.s
@@ -1030,21 +1309,27 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
-	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/utils.c.s
-	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/echo.dir/build.make CMakeFiles/echo.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/du_lib.dir/build.make CMakeFiles/du_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/cat_lib.dir/build.make CMakeFiles/cat_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/mkdir.dir/build.make CMakeFiles/mkdir.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/rm_lib.dir/build.make CMakeFiles/rm_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/du.dir/build.make CMakeFiles/du.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/connect.dir/build.make CMakeFiles/connect.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/connect_lib.dir/build.make CMakeFiles/connect_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/cp_lib.dir/build.make CMakeFiles/cp_lib.dir/src/utils.c.s
 .PHONY : src/utils.c.s
 
 # Help Target
@@ -1053,24 +1338,30 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... edit_cache"
+	@echo "... mv_lib"
+	@echo "... echo_lib"
+	@echo "... cp"
+	@echo "... echo"
+	@echo "... shell"
+	@echo "... du_lib"
+	@echo "... cat_lib"
+	@echo "... ls"
+	@echo "... ls_lib"
+	@echo "... pwd"
+	@echo "... cd"
+	@echo "... cat"
+	@echo "... pwd_lib"
+	@echo "... rm"
+	@echo "... mv"
+	@echo "... mkdir"
+	@echo "... mkdir_lib"
+	@echo "... rm_lib"
+	@echo "... du"
+	@echo "... connect"
 	@echo "... rebuild_cache"
 	@echo "... connect_lib"
-	@echo "... connect"
-	@echo "... mkdir_lib"
-	@echo "... mkdir"
-	@echo "... edit_cache"
-	@echo "... pwd_lib"
-	@echo "... cd"
-	@echo "... pwd"
-	@echo "... ls_lib"
-	@echo "... ls"
-	@echo "... shell"
-	@echo "... cat"
-	@echo "... cat_lib"
-	@echo "... echo"
-	@echo "... mv"
-	@echo "... echo_lib"
-	@echo "... mv_lib"
+	@echo "... cp_lib"
 	@echo "... src/commands.o"
 	@echo "... src/commands.i"
 	@echo "... src/commands.s"
@@ -1083,6 +1374,12 @@ help:
 	@echo "... src/commands/connect.o"
 	@echo "... src/commands/connect.i"
 	@echo "... src/commands/connect.s"
+	@echo "... src/commands/cp.o"
+	@echo "... src/commands/cp.i"
+	@echo "... src/commands/cp.s"
+	@echo "... src/commands/du.o"
+	@echo "... src/commands/du.i"
+	@echo "... src/commands/du.s"
 	@echo "... src/commands/echo.o"
 	@echo "... src/commands/echo.i"
 	@echo "... src/commands/echo.s"
@@ -1098,6 +1395,9 @@ help:
 	@echo "... src/commands/pwd.o"
 	@echo "... src/commands/pwd.i"
 	@echo "... src/commands/pwd.s"
+	@echo "... src/commands/rm.o"
+	@echo "... src/commands/rm.i"
+	@echo "... src/commands/rm.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
@@ -1110,6 +1410,12 @@ help:
 	@echo "... src/main/connect.o"
 	@echo "... src/main/connect.i"
 	@echo "... src/main/connect.s"
+	@echo "... src/main/cp.o"
+	@echo "... src/main/cp.i"
+	@echo "... src/main/cp.s"
+	@echo "... src/main/du.o"
+	@echo "... src/main/du.i"
+	@echo "... src/main/du.s"
 	@echo "... src/main/echo.o"
 	@echo "... src/main/echo.i"
 	@echo "... src/main/echo.s"
@@ -1125,6 +1431,9 @@ help:
 	@echo "... src/main/pwd.o"
 	@echo "... src/main/pwd.i"
 	@echo "... src/main/pwd.s"
+	@echo "... src/main/rm.o"
+	@echo "... src/main/rm.i"
+	@echo "... src/main/rm.s"
 	@echo "... src/process.o"
 	@echo "... src/process.i"
 	@echo "... src/process.s"

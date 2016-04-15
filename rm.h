@@ -24,11 +24,11 @@
 #include <errno.h>
 #include <getopt.h>
 #include <string.h>
-//** A décommenter une fois les test finis **//
-//#include "../utils.h"
+#include <fcntl.h>
+#include <dirent.h>
+#include <limits.h>
 
-//** A virer une fois les tests finis **//
-#include "utils.h"
+#include "../utils.h"
 
-//int rm_lib(int argc, char *argv[]);
+int rm_lib(int argc, char *argv[]);
 void suppression(char * file, char * options);

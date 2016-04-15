@@ -24,12 +24,7 @@
 #include <errno.h>
 #include <getopt.h>
 #include <string.h>
-    
-//** A décommenter une fois les test finis **//
-//#include "../utils.h"
-
-//** A virer une fois les tests finis **//
-#include "utils.h"
+#include "../utils.h"
 
 int chmod_lib(int argc, char *argv[]);
 void myChmod(int option, char* mode, char* file);

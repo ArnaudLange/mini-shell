@@ -21,7 +21,7 @@
 #include "chmod.h" //à virer une fois les tests effectués
 
 
-int main(int argc, char *argv[]){
+int chmod_lib(int argc, char *argv[]){
 
 
     // -----------------------------------
@@ -77,6 +77,9 @@ int main(int argc, char *argv[]){
            printf("chmod will add the right to execute for the user, and remove\n");
            printf("for the group, the right to read.\n");
            printf("And this, on both files : file1 and file2.\n");
+           printf("\nYou can also do :\n");
+           printf("chmod 777 file1\n");
+           printf("If you know directly the octal modes\n");
            printf("\n-----------------------------------------------------------\n\n");
            exit(0);
            break;
@@ -132,10 +135,13 @@ int main(int argc, char *argv[]){
 
 char* lectureMode(char* mode){
 
-    printf("Dans la fonction lectureMode\n");
     char* tabMode=calloc(9,sizeof(char));
-    
-    printf("%s\n",tabMode);
+
+    int n;
+
+    for(n=0;n<9;n++){
+        tabMode[n]=' ';
+    }
 
     int u[3]={0,1,2};
     int g[3]={3,4,5};
@@ -156,13 +162,10 @@ char* lectureMode(char* mode){
 
     Etat curEtat = etatDebut;
 
-    printf("Entree dans le for()\n");
     for(h=0;h<taille;h++){
-        printf("Tour n°%d\n",h);
+
         switch (curEtat){
             case etatDebut:
-                printf("Etat debut\n");
-                printf("  %c\n",mode[h]);
                 if(mode[h]=='o' || mode[h]=='g' || mode[h]=='u'){
                     which=mode[h];
                     curEtat=etatOpe;
@@ -174,8 +177,6 @@ char* lectureMode(char* mode){
                     exit(0);
                 }
             case etatOpe:
-                printf("Etat ope\n");
-                printf("  %c\n",mode[h]);
                 if(mode[h]=='=' || mode[h]=='+' || mode[h]=='-'){
                     etat=mode[h];
                     curEtat=etatFin;
@@ -187,30 +188,7 @@ char* lectureMode(char* mode){
                     exit(0);
                 }
             case etatFin:
-                printf("Etat fin\n");
-                printf("  %c\n",mode[h]);
                 if(mode[h]=='x'){
-                    if(which == 'u'){
-                        tabMode[u[3]]=etat;
-                        curEtat=etatVirgule;
-                        break;
-                    }
-                    else if(which == 'g'){
-                        tabMode[g[3]]=etat;
-                        curEtat=etatVirgule;
-                        break;
-                    }
-                    else if(which == 'o'){
-                        tabMode[o[3]]=etat;
-                        curEtat=etatVirgule;
-                        break;
-                    }
-                    else{
-                        printf("Error while parsing.\n");
-                        exit(1);
-                    }
-                }
-                else if(mode[h]=='w'){
                     if(which == 'u'){
                         tabMode[u[2]]=etat;
                         curEtat=etatVirgule;
@@ -231,7 +209,7 @@ char* lectureMode(char* mode){
                         exit(1);
                     }
                 }
-                else if(mode[h]=='r'){
+                else if(mode[h]=='w'){
                     if(which == 'u'){
                         tabMode[u[1]]=etat;
                         curEtat=etatVirgule;
@@ -252,14 +230,33 @@ char* lectureMode(char* mode){
                         exit(1);
                     }
                 }
+                else if(mode[h]=='r'){
+                    if(which == 'u'){
+                        tabMode[u[0]]=etat;
+                        curEtat=etatVirgule;
+                        break;
+                    }
+                    else if(which == 'g'){
+                        tabMode[g[0]]=etat;
+                        curEtat=etatVirgule;
+                        break;
+                    }
+                    else if(which == 'o'){
+                        tabMode[o[0]]=etat;
+                        curEtat=etatVirgule;
+                        break;
+                    }
+                    else{
+                        printf("Error while parsing.\n");
+                        exit(1);
+                    }
+                }
                 else{
                     printf("chmod: invalid mode: '%c'\n",mode[h]);
                     printf("Try 'chmod --help' for more information.\n");
                     exit(0);
                 }
             case etatVirgule:
-                printf("Etat virgule\n");
-                printf("  %c\n",mode[h]);
                 if (mode[h]==','){
                     which=' ';
                     etat=' ';
@@ -270,16 +267,9 @@ char* lectureMode(char* mode){
                     curEtat=etatFin;
                     h=h-1;
                 }
-
         }
-
     }
-
-
-    
-    printf("%s\n",tabMode);
     return (char*)tabMode;
-
 }
 
 void myChmod(int option, char* mode, char* file){
@@ -288,15 +278,23 @@ void myChmod(int option, char* mode, char* file){
     struct stat statbuf;
     char modeAvant[9];
     char modeApres[9];
+    char *modeApr=NULL;
+
+    modeApr=calloc(9,sizeof(char));
+    if(modeApr==NULL){
+        perror("modeApr");
+        exit(1);
+    }
 
     //initialisation des tableaux
     int w;
-
 
     for (w=0; w<9; w++){
         modeAvant[w]='-';
         modeApres[w]='-';
     }
+    modeAvant[9]='\0';
+    modeApres[9]='\0';
 
     // Prise des donnees avant changement
     sf = openFile(file);
@@ -310,74 +308,236 @@ void myChmod(int option, char* mode, char* file){
         exit(1);
     }
 
-
-    printf("File : %s\n",file);
-    printf("Entree dans fonction\n");
-    char* modeApr = lectureMode(mode);
-    printf("Sortie fonction\n");
+    if (atoi(mode)==0){
+        modeApr = lectureMode(mode);
+    }
 
     //Recuperation du mode
+    //Tout d'abord le mode User
     int valUsr=0;
+    int valUsrApr=0;
+    //on voit si il a le droit 'Read'
     if (statbuf.st_mode & S_IRUSR){
         valUsr+=4;
         modeAvant[0]='r';
+
+        //On regarde aussi si le mode etait en String si il n'y a pas le droit '-'
+        if(modeApr[0]!='-'){
+            valUsrApr+=4;
+            modeApres[0]='r';
+        }
     }
+    //ou encore le droit +
+    else if (modeApr[0]=='+'){
+        valUsrApr+=4;
+        modeApres[0]='r';
+    }
+
+    //On fait de meme pour les autres droits
     if (statbuf.st_mode & S_IWUSR){
         valUsr+=2;
         modeAvant[1]='w';
+
+        if(modeApr[1]!='-'){
+            valUsrApr+=2;
+            modeApres[1]='w';
+        }
     }
+    else if (modeApr[1]=='+'){
+        valUsrApr+=2;
+        modeApres[1]='w';
+    }
+
     if (statbuf.st_mode & S_IXUSR){
         valUsr+=1;
         modeAvant[2]='x';
+
+        if(modeApr[2]!='-'){
+            valUsrApr+=1;
+            modeApres[2]='x';
+        }
     }
+    else if (modeApr[2]=='+'){
+        valUsrApr+=1;
+        modeApres[2]='x';
+    }
+
+    //Ensuite on repete le meme pattern pour les autres users : Group et Other
     int valGrp=0;
+    int valGrpApr=0;
     if (statbuf.st_mode & S_IRGRP){
         valGrp+=4;
         modeAvant[3]='r';
+
+        if(modeApr[3]!='-'){
+            valGrpApr+=4;
+            modeApres[3]='r';
+        }
     }
+    else if (modeApr[3]=='+'){
+        valGrpApr+=4;
+        modeApres[3]='r';
+    }
+
     if (statbuf.st_mode & S_IWGRP){
         valGrp+=2;
         modeAvant[4]='w';
+
+        if(modeApr[4]!='-'){
+            valGrpApr+=2;
+            modeApres[4]='w';
+        }
     }
+    else if (modeApr[4]=='+'){
+        valGrpApr+=2;
+        modeApres[4]='w';
+    }
+
     if (statbuf.st_mode & S_IXGRP){
         valGrp+=1;
         modeAvant[5]='x';
+
+        if(modeApr[5]!='-'){
+            valGrpApr+=1;
+            modeApres[5]='x';
+        }
     }
+    else if (modeApr[5]=='+'){
+        valGrpApr+=1;
+        modeApres[5]='x';
+    }
+
+    //Et enfin, other
     int valOth=0;
+    int valOthApr=0;
     if (statbuf.st_mode & S_IROTH){
         valOth+=4;
         modeAvant[6]='r';
+
+        if(modeApr[6]!='-'){
+            valOthApr+=4;
+            modeApres[6]='r';
+        }
     }
+    else if (modeApr[6]=='+'){
+        valOthApr+=4;
+        modeApres[6]='r';
+    }
+
     if (statbuf.st_mode & S_IWOTH){
         valOth+=2;
         modeAvant[7]='w';
+
+        if(modeApr[7]!='-'){
+            valOthApr+=2;
+            modeApres[7]='w';
+        }
+    }
+    else if (modeApr[7]=='+'){
+        valOthApr+=2;
+        modeApres[7]='w';
     }
     if (statbuf.st_mode & S_IXOTH){
         valOth+=1;
         modeAvant[8]='x';
+
+        if(modeApr[8]!='-'){
+            valOthApr+=1;
+            modeApres[8]='x';
+        }
+    }
+    else if (modeApr[8]=='+'){
+        valOthApr+=1;
+        modeApres[8]='x';
     }
 
     int intMAvant=0;
     intMAvant=100*valUsr+10*valGrp+valOth;
 
+    //On check si il y a des egales
+    int e;
+    int first=1;
+    int modes[9]={'r','w','x','r','w','x','r','w','x'};
+    int modesChiffre[9]={4,2,1,4,2,1,4,2,1};
+    for(e=0;e<3;e++){
+        if(modeApr[e]=='=' && first){
+            modeApres[0]='-';
+            modeApres[1]='-';
+            modeApres[2]='-';
+            modeApres[e]=modes[e];
+            valUsrApr=modesChiffre[e];
+            first=0;
+        }
+        else if(modeApr[e]=='='){
+            modeApres[e]=modes[e];
+            valUsrApr+=modesChiffre[e];
+        }
+    }
+    first=1;
+    for(e=3;e<6;e++){
+        if(modeApr[e]=='=' && first){
+            modeApres[3]='-';
+            modeApres[4]='-';
+            modeApres[5]='-';
+            modeApres[e]=modes[e];
+            valGrpApr=modesChiffre[e];
+            first=0;
+        }
+        else if(modeApr[e]=='='){
+            modeApres[e]=modes[e];
+            valGrpApr+=modesChiffre[e];
+        }
+    }
+    first=1;
+    for(e=6;e<9;e++){
+        if(modeApr[e]=='=' && first){
+            modeApres[6]='-';
+            modeApres[7]='-';
+            modeApres[8]='-';
+            modeApres[e]=modes[e];
+            valOthApr=modesChiffre[e];
+            first=0;
+        }
+        else if(modeApr[e]=='='){
+            modeApres[e]=modes[e];
+            valOthApr+=modesChiffre[e];
+        }
+    }
 
-    lectureMode(mode);
+    int intMApres=0;
+    intMApres=100*valUsrApr+10*valGrpApr+valOthApr;
+
+    char str[4];
+    sprintf(str, "%d", intMApres);
+
+
     mode_t modeConv=strtol(mode,NULL,8);
+    mode_t modeConvString=strtol(str,NULL,8);
 
     if (atoi(mode)==0){
-        printf("%s n'est pas un nombre \n",mode);
+        if(intMAvant==intMApres){
+            if (option){
+                printf("mode of '%s' retained as %d (%s)\n",file, intMAvant,modeAvant);
+            }
+        }
+        else{
+            chmod(file,modeConvString);
+            if (option){
+                printf("mode of '%s' changed from %d to %o (%s)\n",file,intMAvant,modeConvString,modeApres);
+            }
+        }
+        
     }
     else{
         if(intMAvant == atoi(mode)){
             if (option){
-                printf("mode of '%s' retained as 0%d (%s)\n",file, intMAvant,modeAvant);
+                printf("mode of '%s' retained as %d (%s)\n",file, intMAvant,modeAvant);
             }
         }
         else{
-            modeConv=strtol(mode,NULL,8);
             chmod(file,modeConv);
             if (option){
-                printf("mode of '%s' changed from 0%d to %o\n",file,intMAvant,modeConv);
+                printf("mode of '%s' changed from %d to %o\n",file,intMAvant,modeConv);
             }
         }
     }

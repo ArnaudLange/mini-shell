@@ -26,6 +26,7 @@
 #include <getopt.h>
 #include <string.h>
 #include <unistd.h>
+#include <pwd.h>
 //** A décommenter une fois les test finis **//
 //#include "../utils.h"
 
@@ -34,5 +35,5 @@
 
 int chown_lib(int argc, char *argv[]);
 
-changeOwn(char * file,char * owner,char * options);
+changeOwn(char * file,char * ownGr,char * options);
 

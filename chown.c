@@ -148,7 +148,122 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-changeOwn(char * file, char * owner, char * options){
+changeOwn(char * file, char * ownGr, char * options){
+    struct stat statbuf;
+
+    char c;
+
+    DIR *dirp;
+    struct dirent *dptr;
+
+    char* recur = NULL;
+    recur = malloc(PATH_MAX*sizeof(char));
+    if (recur == NULL)
+    {
+        perror("recur");
+        exit(1);
+    }
+
+    //-----------------------------
+    //Parsing de ownGr pour en extraire l'owner et le groupe
 
 
+    //-----------------------------
+
+    if (lstat(file,&statbuf)==-1) { //si le fichier n'existe pas
+        printf("chown : '%s' n'existe pas\n", file);
+        exit(1);
+    }
+
+    if(S_ISDIR(statbuf.st_mode)){ //si le fichier est un répertoire
+
+        if((dirp=opendir(file))==NULL){ //si impossible de l'ouvrir
+            printf("rm : impossible d'ouvrir '%s'\n", file);
+        }
+        else {
+            if(strstr(options, "r") != NULL){ //si on a l'option -r on rentre dans la procédure pour supprmimer le dossier de manière récursive
+                while((dptr=readdir(dirp))){
+
+                    if (!strcmp(dptr->d_name,".") || !strcmp(dptr->d_name,"..")){ //pour que l'on ne supprime pas le dossier ou le dossier parent
+                        continue;
+                    } 
+
+                    if (file[strlen(file)-1]=='/'){ //si le dossier n'a pas de / dans son nom
+                        sprintf(recur,"%s%s",file,dptr->d_name); 
+                    } 
+                    else { 
+                        sprintf(recur,"%s/%s",file,dptr->d_name);
+                    }
+                    //récursion
+                    suppression(recur, options);
+                }
+                if(strstr(options, "i")){ //si on a l'option -i
+                    printf("Supprimer le repertoire '%s' (y/n) ? ", file); //on demande confirmation de suppression
+                    c='\n';
+                    while(c =='\n') c=getchar(); //petit tricks pour pas prendre le retour chariot
+                    if((c == 'y')){
+                        if(strstr(options, "v") != NULL){ //si option --verbose, on affiche ce que l'on fait
+                            printf("Suppression du répertoire '%s'\n", file);
+                        }
+
+                        remove(file);
+                    }
+                }
+                else { //si pas l'option -i, on ne demande pas confirmation
+                    if(strstr(options, "v") != NULL){
+                        printf("Suppression du répertoire '%s'\n", file);
+                    }
+                    remove(file);
+                }
+
+
+                closedir(dirp);
+            }
+
+            else{ //si on a pas l'option -r
+                printf("rm: impossible de supprimer '%s': est un dossier\n", file);
+            }
+        }
+    }
+    else{
+        if(strstr(options, "i")){
+            printf("Supprimer '%s' (y/n) ? ", file);
+            c='\n';
+            while(c=='\n') c=getchar();
+            if((c == 'y')){
+                if(strstr(options, "v") != NULL){
+                    printf("Suppression de '%s'\n", file);
+                }
+                remove(file);
+            }
+        }
+        else {
+            if(strstr(options, "v") != NULL){
+                printf("Suppression de '%s'\n", file);
+            }
+            remove(file);
+        }
+    }  
 }
+
+
+
+    uid_t uid;
+    char * endptr;
+
+    uid = strtol(owner, &endptr, 10);  /* Allow a numeric string */
+
+   if (*endptr != '\0') {         /* Was not pure numeric string */
+        pwd = getpwnam(argv[1]);   /* Try getting UID for username */
+        if (pwd == NULL) {
+            perror("getpwnam");
+            exit(EXIT_FAILURE);
+        }
+
+       uid = pwd->pw_uid;
+    }
+
+   if (chown(argv[2], uid, -1) == -1) {
+        perror("chown");
+        exit(EXIT_FAILURE);
+    }

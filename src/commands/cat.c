@@ -1,12 +1,12 @@
 /*
     This file is part of Binsh.
 
-    Foobar is free software: you can redistribute it and/or modify
+    Binsh is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Foobar is distributed in the hope that it will be useful,
+    Binsh is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -37,7 +37,7 @@ void cat(char* files, char*options, int *nbLigne)
 		if (fichier == NULL)
 		{
 			perror(files);
-			exit(1);
+			
 		}
 		while ((character=fgetc(fichier)) != EOF)
         {
@@ -213,7 +213,7 @@ void cat(char* files, char*options, int *nbLigne)
 	else
 	{
 		printf("Pas de file en entree.\n");
-		exit(0);
+		//
 	}
 
 	// ----------------------------------
@@ -231,7 +231,7 @@ int cat_lib(int argc, char *argv[])
     if (options == NULL)
     {
         perror("options");
-        exit(1);
+        
     }
 
 
@@ -243,13 +243,13 @@ int cat_lib(int argc, char *argv[])
     if (files == NULL)
     {
         perror("files");
-        exit(1);
+        
     }
     files[0] = calloc(1,sizeof(char*));
     if (files[0] == NULL)
     {
         perror("files[x]");
-        exit(1);
+        
     }
     // -----------------------------------
 
@@ -282,7 +282,7 @@ int cat_lib(int argc, char *argv[])
             printf("\n\t-E, --show-ends\t\tdisplay $ at the end of each line\n");
             printf("\n\t-T, --show-tabs\t\tdisplay TAB character as ^I\n");
             printf("\n\t-n, --number   \t\tnumber all input lines\n");
-            exit(0);
+            
             break;
 
          case 'n':
@@ -300,7 +300,7 @@ int cat_lib(int argc, char *argv[])
        default:
             printf("cat: invalid option %s\n",options);
             printf("Try 'cat --help' for more information.\n");
-            exit(1);
+            
       }
     }
 
@@ -312,13 +312,13 @@ int cat_lib(int argc, char *argv[])
                 files=realloc(files, (nbFiles+1)*sizeof(char*));
                 if(files == NULL){
                     perror("files");
-                    exit(1);
+                    
                 }
                 files[nbFiles] = calloc(1,sizeof(char));
                 if (files[nbFiles] == NULL)
                 {
                     perror("files[x]");
-                    exit(1);
+                    
                 }
                 files[nbFiles-1]=concatenateTables(files[nbFiles-1], argv[i]);
             }
@@ -346,7 +346,7 @@ int cat_lib(int argc, char *argv[])
     {
         printf("cat : invalid number of parameters\n");
         printf("Try 'cat --help' for more information.\n");
-        exit(1);
+        
     }
 
     return 0;

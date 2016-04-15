@@ -1,0 +1,68 @@
+\hypertarget{cat_8h}{}\section{include/commands/cat.h File Reference}
+\label{cat_8h}\index{include/commands/cat.\+h@{include/commands/cat.\+h}}
+
+
+cat command  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$getopt.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}../redirection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../utils.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../parameters.\+def\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../typedef.\+h\char`\"{}}\\*
+Include dependency graph for cat.\+h\+:
+% FIG 0
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries M\+A\+X\+\_\+\+O\+P\+T\+I\+O\+NS}~1\hypertarget{cat_8h_a7433aa656288775b4d203ec4ed5865fa}{}\label{cat_8h_a7433aa656288775b4d203ec4ed5865fa}
+
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries Options} \{ \\*
+{\bfseries etat\+Normal}, 
+{\bfseries etat\+Ends}, 
+{\bfseries etat\+Tabs}, 
+{\bfseries etat\+Lines}, 
+\\*
+{\bfseries etat\+ET}, 
+{\bfseries etat\+EL}, 
+{\bfseries etat\+TL}, 
+{\bfseries etat\+E\+TL}, 
+\\*
+{\bfseries etat\+Normal}, 
+{\bfseries etat\+Details}, 
+{\bfseries etat\+Dossiers}, 
+{\bfseries etat\+Details\+Dossiers}
+ \}\hypertarget{cat_8h_adf7c3ac791f996a56160a12f379cbd99}{}\label{cat_8h_adf7c3ac791f996a56160a12f379cbd99}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries read\+Cat\+Options} (char $\ast$options, \hyperlink{ls_8h_adf7c3ac791f996a56160a12f379cbd99}{Options} $\ast$etat)\hypertarget{cat_8h_a009cf2bbd1fb85259031aabe78a9ecfc}{}\label{cat_8h_a009cf2bbd1fb85259031aabe78a9ecfc}
+
+\item 
+void {\bfseries cat} (char $\ast$files, char $\ast$options, int $\ast$nb\+Ligne)\hypertarget{cat_8h_ad5885bc8f54975aa54a88e76689e1378}{}\label{cat_8h_ad5885bc8f54975aa54a88e76689e1378}
+
+\item 
+int {\bfseries cat\+\_\+lib} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})\hypertarget{cat_8h_a31ac3cf7fd1a8d4ae59fee1d0ab6eeb1}{}\label{cat_8h_a31ac3cf7fd1a8d4ae59fee1d0ab6eeb1}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+cat command 
+
+\begin{DoxyAuthor}{Author}
+Thomas Cokral 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+14 April 2016 
+\end{DoxyDate}

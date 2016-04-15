@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.0)
 # Notre projet est étiqueté shell
 project(binsh)
 
-set(CMAKE_C_FLAGS "-std=c99 -D_XOPEN_SOURCE=600 -Wl,--no-as-needed -ldl")
+set(CMAKE_C_FLAGS "-std=c99 -D_XOPEN_SOURCE=600 -Wl,--no-as-needed -ldl -pthread")
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin )
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib )
 
@@ -112,3 +112,16 @@ file(GLOB HEADER_MKDIR
 add_executable(mkdir ${SRC_MKDIR} ${HEADER_MKDIR})
 add_library(mkdir_lib SHARED ${SRC_MKDIR})
 set_target_properties(mkdir_lib PROPERTIES OUTPUT_NAME "mkdir")
+
+# connect
+file(GLOB SRC_CONNECT
+    "src/commands/connect.c"
+    "src/utils.c"
+    "src/main/connect.c"
+)
+file(GLOB HEADER_CONNECT
+    "include/commands/connect.h"
+)
+add_executable(connect ${SRC_CONNECT} ${HEADER_CONNECT})
+add_library(connect_lib SHARED ${SRC_CONNECT})
+set_target_properties(connect_lib PROPERTIES OUTPUT_NAME "connect")

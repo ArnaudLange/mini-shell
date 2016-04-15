@@ -1,0 +1,225 @@
+\hypertarget{shell_8h}{}\section{include/shell.h File Reference}
+\label{shell_8h}\index{include/shell.\+h@{include/shell.\+h}}
+
+
+shell modelisation  
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include $<$sys/wait.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+{\ttfamily \#include $<$sys/stat.\+h$>$}\\*
+{\ttfamily \#include $<$fcntl.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}commands.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}redirection.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}parameters.\+def\char`\"{}}\\*
+Include dependency graph for shell.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structshell}{shell}
+\begin{DoxyCompactList}\small\item\em Shell structure Manages the internal commands and the current directory. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structshell}{shell} {\bfseries Shell}\hypertarget{shell_8h_af8bb7f8d76a0aedf0d372072bebcc53f}{}\label{shell_8h_af8bb7f8d76a0aedf0d372072bebcc53f}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structshell}{Shell} $\ast$ \hyperlink{shell_8h_aed973c1e0c490e1be2f0f080e48512d7}{init\+Shell} ()
+\begin{DoxyCompactList}\small\item\em Initializes our Shell with all the functions. \end{DoxyCompactList}\item 
+void \hyperlink{shell_8h_a1ec5b3e849bb19826153f60f50ceccd4}{free\+Shell} (\hyperlink{structshell}{Shell} $\ast$\hyperlink{structshell}{shell})
+\begin{DoxyCompactList}\small\item\em Free the memory have allocation of the Shell. \end{DoxyCompactList}\item 
+int \hyperlink{shell_8h_af85e8a9e7697d6c09ee9caae65c9d1e2}{execute\+Command} (int fd\+\_\+in, int fd\+\_\+out, \hyperlink{structshell}{Shell} $\ast$\hyperlink{structshell}{shell}, \hyperlink{structparsedCommand}{Parsed\+Command} $\ast$cmd)
+\begin{DoxyCompactList}\small\item\em Execute a commands and redirects the flow to the right file descriptor. \end{DoxyCompactList}\item 
+int \hyperlink{shell_8h_a061b09f48bcec53502b05acf6e99aed8}{execute\+Internal\+Command} (int fd\+\_\+in, int fd\+\_\+out, \hyperlink{structparsedCommand}{Parsed\+Command} $\ast$cmd)
+\begin{DoxyCompactList}\small\item\em Execute an internal command and redirects the flow to the right file descriptor. \end{DoxyCompactList}\item 
+int \hyperlink{shell_8h_a82f0fa760aeec52c2598a29da00ba767}{execute\+External\+Command} (char $\ast$commande, char $\ast$argv)
+\begin{DoxyCompactList}\small\item\em Execute an external command. \end{DoxyCompactList}\item 
+int \hyperlink{shell_8h_a6b83c4d6b5cf2c57d31b02c532a35c51}{find\+Function} (\hyperlink{structshell}{Shell} $\ast$\hyperlink{structshell}{shell}, \hyperlink{structparsedCommand}{Parsed\+Command} $\ast$\hyperlink{structcommand}{command})
+\begin{DoxyCompactList}\small\item\em Find a function within a Shell based on its name. \end{DoxyCompactList}\item 
+int \hyperlink{shell_8h_aa0b7b43e6b9aa6131b890e69a1cea9dd}{check\+Function} (\hyperlink{structshell}{Shell} $\ast$\hyperlink{structshell}{shell}, char $\ast$name)
+\begin{DoxyCompactList}\small\item\em Check if a function exists in a shell. \end{DoxyCompactList}\item 
+int \hyperlink{shell_8h_abf0ad30b9080b4c4f4c8753afcc8be75}{test\+Function} (\hyperlink{structshell}{Shell} $\ast$\hyperlink{structshell}{shell}, char $\ast$name, int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Check and a function if it exists in a shell. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+shell modelisation 
+
+\begin{DoxyAuthor}{Author}
+Antoine Sauray 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+14 April 2016 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\index{shell.\+h@{shell.\+h}!check\+Function@{check\+Function}}
+\index{check\+Function@{check\+Function}!shell.\+h@{shell.\+h}}
+\subsubsection[{\texorpdfstring{check\+Function(\+Shell $\ast$shell, char $\ast$name)}{checkFunction(Shell *shell, char *name)}}]{\setlength{\rightskip}{0pt plus 5cm}int check\+Function (
+\begin{DoxyParamCaption}
+\item[{{\bf Shell} $\ast$}]{shell, }
+\item[{char $\ast$}]{name}
+\end{DoxyParamCaption}
+)}\hypertarget{shell_8h_aa0b7b43e6b9aa6131b890e69a1cea9dd}{}\label{shell_8h_aa0b7b43e6b9aa6131b890e69a1cea9dd}
+
+
+Check if a function exists in a shell. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em shell} & The Shell in which to look \\
+\hline
+{\em name} & the name of the function to look for \\
+\hline
+\end{DoxyParams}
+\index{shell.\+h@{shell.\+h}!execute\+Command@{execute\+Command}}
+\index{execute\+Command@{execute\+Command}!shell.\+h@{shell.\+h}}
+\subsubsection[{\texorpdfstring{execute\+Command(int fd\+\_\+in, int fd\+\_\+out, Shell $\ast$shell, Parsed\+Command $\ast$cmd)}{executeCommand(int fd_in, int fd_out, Shell *shell, ParsedCommand *cmd)}}]{\setlength{\rightskip}{0pt plus 5cm}int execute\+Command (
+\begin{DoxyParamCaption}
+\item[{int}]{fd\+\_\+in, }
+\item[{int}]{fd\+\_\+out, }
+\item[{{\bf Shell} $\ast$}]{shell, }
+\item[{{\bf Parsed\+Command} $\ast$}]{cmd}
+\end{DoxyParamCaption}
+)}\hypertarget{shell_8h_af85e8a9e7697d6c09ee9caae65c9d1e2}{}\label{shell_8h_af85e8a9e7697d6c09ee9caae65c9d1e2}
+
+
+Execute a commands and redirects the flow to the right file descriptor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fd\+\_\+in} & the input file descriptor \\
+\hline
+{\em fd\+\_\+out} & the ouput file descriptor \\
+\hline
+{\em shell} & the shell context \\
+\hline
+{\em cmd} & the command to execute \\
+\hline
+\end{DoxyParams}
+\index{shell.\+h@{shell.\+h}!execute\+External\+Command@{execute\+External\+Command}}
+\index{execute\+External\+Command@{execute\+External\+Command}!shell.\+h@{shell.\+h}}
+\subsubsection[{\texorpdfstring{execute\+External\+Command(char $\ast$commande, char $\ast$argv)}{executeExternalCommand(char *commande, char *argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int execute\+External\+Command (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{commande, }
+\item[{char $\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{shell_8h_a82f0fa760aeec52c2598a29da00ba767}{}\label{shell_8h_a82f0fa760aeec52c2598a29da00ba767}
+
+
+Execute an external command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em commande} & the command string \\
+\hline
+{\em argv} & the arguments \\
+\hline
+\end{DoxyParams}
+\index{shell.\+h@{shell.\+h}!execute\+Internal\+Command@{execute\+Internal\+Command}}
+\index{execute\+Internal\+Command@{execute\+Internal\+Command}!shell.\+h@{shell.\+h}}
+\subsubsection[{\texorpdfstring{execute\+Internal\+Command(int fd\+\_\+in, int fd\+\_\+out, Parsed\+Command $\ast$cmd)}{executeInternalCommand(int fd_in, int fd_out, ParsedCommand *cmd)}}]{\setlength{\rightskip}{0pt plus 5cm}int execute\+Internal\+Command (
+\begin{DoxyParamCaption}
+\item[{int}]{fd\+\_\+in, }
+\item[{int}]{fd\+\_\+out, }
+\item[{{\bf Parsed\+Command} $\ast$}]{cmd}
+\end{DoxyParamCaption}
+)}\hypertarget{shell_8h_a061b09f48bcec53502b05acf6e99aed8}{}\label{shell_8h_a061b09f48bcec53502b05acf6e99aed8}
+
+
+Execute an internal command and redirects the flow to the right file descriptor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fd\+\_\+in} & the input file descriptor \\
+\hline
+{\em fd\+\_\+out} & the ouput file descriptor \\
+\hline
+{\em cmd} & the command to execute \\
+\hline
+\end{DoxyParams}
+\index{shell.\+h@{shell.\+h}!find\+Function@{find\+Function}}
+\index{find\+Function@{find\+Function}!shell.\+h@{shell.\+h}}
+\subsubsection[{\texorpdfstring{find\+Function(\+Shell $\ast$shell, Parsed\+Command $\ast$command)}{findFunction(Shell *shell, ParsedCommand *command)}}]{\setlength{\rightskip}{0pt plus 5cm}int find\+Function (
+\begin{DoxyParamCaption}
+\item[{{\bf Shell} $\ast$}]{shell, }
+\item[{{\bf Parsed\+Command} $\ast$}]{command}
+\end{DoxyParamCaption}
+)}\hypertarget{shell_8h_a6b83c4d6b5cf2c57d31b02c532a35c51}{}\label{shell_8h_a6b83c4d6b5cf2c57d31b02c532a35c51}
+
+
+Find a function within a Shell based on its name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em shell} & The Shell in which to look \\
+\hline
+{\em command} & the command to look for \\
+\hline
+\end{DoxyParams}
+\index{shell.\+h@{shell.\+h}!free\+Shell@{free\+Shell}}
+\index{free\+Shell@{free\+Shell}!shell.\+h@{shell.\+h}}
+\subsubsection[{\texorpdfstring{free\+Shell(\+Shell $\ast$shell)}{freeShell(Shell *shell)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+Shell (
+\begin{DoxyParamCaption}
+\item[{{\bf Shell} $\ast$}]{shell}
+\end{DoxyParamCaption}
+)}\hypertarget{shell_8h_a1ec5b3e849bb19826153f60f50ceccd4}{}\label{shell_8h_a1ec5b3e849bb19826153f60f50ceccd4}
+
+
+Free the memory have allocation of the Shell. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em shell} & The Shell to free \\
+\hline
+\end{DoxyParams}
+\index{shell.\+h@{shell.\+h}!init\+Shell@{init\+Shell}}
+\index{init\+Shell@{init\+Shell}!shell.\+h@{shell.\+h}}
+\subsubsection[{\texorpdfstring{init\+Shell()}{initShell()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Shell}$\ast$ init\+Shell (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{shell_8h_aed973c1e0c490e1be2f0f080e48512d7}{}\label{shell_8h_aed973c1e0c490e1be2f0f080e48512d7}
+
+
+Initializes our Shell with all the functions. 
+
+\begin{DoxyReturn}{Returns}
+The dynamically allocated Shell 
+\end{DoxyReturn}
+\index{shell.\+h@{shell.\+h}!test\+Function@{test\+Function}}
+\index{test\+Function@{test\+Function}!shell.\+h@{shell.\+h}}
+\subsubsection[{\texorpdfstring{test\+Function(\+Shell $\ast$shell, char $\ast$name, int argc, char $\ast$argv[])}{testFunction(Shell *shell, char *name, int argc, char *argv[])}}]{\setlength{\rightskip}{0pt plus 5cm}int test\+Function (
+\begin{DoxyParamCaption}
+\item[{{\bf Shell} $\ast$}]{shell, }
+\item[{char $\ast$}]{name, }
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{shell_8h_abf0ad30b9080b4c4f4c8753afcc8be75}{}\label{shell_8h_abf0ad30b9080b4c4f4c8753afcc8be75}
+
+
+Check and a function if it exists in a shell. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em shell} & The Shell in which to look \\
+\hline
+{\em name} & the name of the function to look for \\
+\hline
+{\em argc} & the number of parameters \\
+\hline
+{\em argv} & the parameters \\
+\hline
+\end{DoxyParams}

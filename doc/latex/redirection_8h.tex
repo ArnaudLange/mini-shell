@@ -1,0 +1,72 @@
+\hypertarget{redirection_8h}{}\section{include/redirection.h File Reference}
+\label{redirection_8h}\index{include/redirection.\+h@{include/redirection.\+h}}
+
+
+output redirection  
+
+
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$unistd.\+h$>$}\\*
+Include dependency graph for redirection.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{redirection_8h_a3a7e4eb9f213297fae8fc2acf06bd664}{redirect\+Flow} (int fd\+\_\+in, int fd\+\_\+out)
+\begin{DoxyCompactList}\small\item\em Redirect from one file descriptor to another. Can be used to write in a file. \end{DoxyCompactList}\item 
+void \hyperlink{redirection_8h_abfcd37ae0b5e15b44ea030e4758901a1}{output} (int fd, char $\ast$input)
+\begin{DoxyCompactList}\small\item\em Redirect string to output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+output redirection 
+
+\begin{DoxyAuthor}{Author}
+Antoine Sauray 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+14 April 2016 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\index{redirection.\+h@{redirection.\+h}!output@{output}}
+\index{output@{output}!redirection.\+h@{redirection.\+h}}
+\subsubsection[{\texorpdfstring{output(int fd, char $\ast$input)}{output(int fd, char *input)}}]{\setlength{\rightskip}{0pt plus 5cm}void output (
+\begin{DoxyParamCaption}
+\item[{int}]{fd, }
+\item[{char $\ast$}]{input}
+\end{DoxyParamCaption}
+)}\hypertarget{redirection_8h_abfcd37ae0b5e15b44ea030e4758901a1}{}\label{redirection_8h_abfcd37ae0b5e15b44ea030e4758901a1}
+
+
+Redirect string to output. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fd} & File descriptor of output \\
+\hline
+{\em input} & The string to output \\
+\hline
+\end{DoxyParams}
+\index{redirection.\+h@{redirection.\+h}!redirect\+Flow@{redirect\+Flow}}
+\index{redirect\+Flow@{redirect\+Flow}!redirection.\+h@{redirection.\+h}}
+\subsubsection[{\texorpdfstring{redirect\+Flow(int fd\+\_\+in, int fd\+\_\+out)}{redirectFlow(int fd_in, int fd_out)}}]{\setlength{\rightskip}{0pt plus 5cm}void redirect\+Flow (
+\begin{DoxyParamCaption}
+\item[{int}]{fd\+\_\+in, }
+\item[{int}]{fd\+\_\+out}
+\end{DoxyParamCaption}
+)}\hypertarget{redirection_8h_a3a7e4eb9f213297fae8fc2acf06bd664}{}\label{redirection_8h_a3a7e4eb9f213297fae8fc2acf06bd664}
+
+
+Redirect from one file descriptor to another. Can be used to write in a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fd\+\_\+in} & File descriptor which provides the input \\
+\hline
+{\em fd\+\_\+out} & File descriptor which provides the output \\
+\hline
+\end{DoxyParams}

@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named more
+
+# Build rule for target.
+more: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 more
+.PHONY : more
+
+# fast build rule for target.
+more/fast:
+	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/build
+.PHONY : more/fast
+
+#=============================================================================
 # Target rules for targets named chgrp
 
 # Build rule for target.
@@ -122,6 +135,19 @@ chgrp: cmake_check_build_system
 chgrp/fast:
 	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/build
 .PHONY : chgrp/fast
+
+#=============================================================================
+# Target rules for targets named more_lib
+
+# Build rule for target.
+more_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 more_lib
+.PHONY : more_lib
+
+# fast build rule for target.
+more_lib/fast:
+	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/build
+.PHONY : more_lib/fast
 
 #=============================================================================
 # Target rules for targets named chown_lib
@@ -861,6 +887,39 @@ src/commands/mkdir.c.s:
 	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/commands/mkdir.c.s
 .PHONY : src/commands/mkdir.c.s
 
+src/commands/more.o: src/commands/more.c.o
+
+.PHONY : src/commands/more.o
+
+# target to build an object file
+src/commands/more.c.o:
+	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/commands/more.c.o
+	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/commands/more.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/more.c.o
+.PHONY : src/commands/more.c.o
+
+src/commands/more.i: src/commands/more.c.i
+
+.PHONY : src/commands/more.i
+
+# target to preprocess a source file
+src/commands/more.c.i:
+	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/commands/more.c.i
+	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/commands/more.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/more.c.i
+.PHONY : src/commands/more.c.i
+
+src/commands/more.s: src/commands/more.c.s
+
+.PHONY : src/commands/more.s
+
+# target to generate assembly for a file
+src/commands/more.c.s:
+	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/commands/more.c.s
+	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/commands/more.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/more.c.s
+.PHONY : src/commands/more.c.s
+
 src/commands/mv.o: src/commands/mv.c.o
 
 .PHONY : src/commands/mv.o
@@ -1314,6 +1373,36 @@ src/main/mkdir.c.s:
 	$(MAKE) -f CMakeFiles/mkdir_lib.dir/build.make CMakeFiles/mkdir_lib.dir/src/main/mkdir.c.s
 .PHONY : src/main/mkdir.c.s
 
+src/main/more.o: src/main/more.c.o
+
+.PHONY : src/main/more.o
+
+# target to build an object file
+src/main/more.c.o:
+	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/main/more.c.o
+	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/main/more.c.o
+.PHONY : src/main/more.c.o
+
+src/main/more.i: src/main/more.c.i
+
+.PHONY : src/main/more.i
+
+# target to preprocess a source file
+src/main/more.c.i:
+	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/main/more.c.i
+	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/main/more.c.i
+.PHONY : src/main/more.c.i
+
+src/main/more.s: src/main/more.c.s
+
+.PHONY : src/main/more.s
+
+# target to generate assembly for a file
+src/main/more.c.s:
+	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/main/more.c.s
+	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/main/more.c.s
+.PHONY : src/main/more.c.s
+
 src/main/mv.o: src/main/mv.c.o
 
 .PHONY : src/main/mv.o
@@ -1518,7 +1607,9 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
+	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.o
@@ -1553,7 +1644,9 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
+	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.i
@@ -1588,7 +1681,9 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
+	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.s
@@ -1623,7 +1718,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... more"
 	@echo "... chgrp"
+	@echo "... more_lib"
 	@echo "... chown_lib"
 	@echo "... chown"
 	@echo "... chmod_lib"
@@ -1689,6 +1786,9 @@ help:
 	@echo "... src/commands/mkdir.o"
 	@echo "... src/commands/mkdir.i"
 	@echo "... src/commands/mkdir.s"
+	@echo "... src/commands/more.o"
+	@echo "... src/commands/more.i"
+	@echo "... src/commands/more.s"
 	@echo "... src/commands/mv.o"
 	@echo "... src/commands/mv.i"
 	@echo "... src/commands/mv.s"
@@ -1734,6 +1834,9 @@ help:
 	@echo "... src/main/mkdir.o"
 	@echo "... src/main/mkdir.i"
 	@echo "... src/main/mkdir.s"
+	@echo "... src/main/more.o"
+	@echo "... src/main/more.i"
+	@echo "... src/main/more.s"
 	@echo "... src/main/mv.o"
 	@echo "... src/main/mv.i"
 	@echo "... src/main/mv.s"

@@ -110,6 +110,7 @@ int main(int argc, char* argv[]){
 	checkFunction(shell, "chmod");
         checkFunction(shell, "chown");
         checkFunction(shell, "chgrp");
+        checkFunction(shell, "more");
 
         /*
         testFunction(shell, "cd", argc, argv);

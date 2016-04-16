@@ -26,7 +26,10 @@
 #include <string.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
-#include ../"utils.h"
+#include "../utils.h"
+
+#include "../parameters.def"
+#include "../typedef.h"
 
 typedef enum{
     etatSpace, // espace
@@ -37,7 +40,7 @@ typedef enum{
     etatLigneNumber // =
 } Etat;
 
-int fontion_lib(int argc, char *argv[]);
+int more_lib(int argc, char *argv[]);
 void more(char *file, int *nbLigne);
 void getEtat(Etat *curEtat, char c, int taille, int nbLigne);
 int getLength(char *file);

@@ -205,3 +205,17 @@ file(GLOB HEADER_CHGRP
 add_executable(chgrp ${SRC_CHGRP} ${HEADER_CHGRP})
 add_library(chgrp_lib SHARED ${SRC_CHGRP})
 set_target_properties(chgrp_lib PROPERTIES OUTPUT_NAME "chgrp")
+
+# more
+file(GLOB SRC_MORE
+    "src/commands/more.c"
+    "src/utils.c"
+    "src/main/more.c"
+)
+file(GLOB HEADER_MORE
+    "include/commands/more.h"
+)
+add_executable(more ${SRC_MORE} ${HEADER_MORE})
+add_library(more_lib SHARED ${SRC_MORE})
+set_target_properties(more_lib PROPERTIES OUTPUT_NAME "more")
+

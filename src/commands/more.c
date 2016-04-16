@@ -17,7 +17,7 @@
 
 #include "../../include/commands/more.h"
 
-int main(int argc, char *argv[]){
+int more_lib(int argc, char *argv[]){
 
 
     // -----------------------------------

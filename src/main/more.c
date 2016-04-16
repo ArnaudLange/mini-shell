@@ -15,8 +15,14 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
     
-#include "../../include/commands/fonction.h"
+#define NAME "more"
+#include "../../include/commands/more.h"
+
+cmdPtr init(char name[NAME_SIZE]){
+        strncpy(name, NAME, NAME_SIZE);
+        return &more_lib;
+}
 
 int main(int argc, char* argv[]){
-        fonction_lib(argc, argv);
+        more_lib(argc, argv);
 }

@@ -22,23 +22,8 @@
 
 void ps(char *option, char* param){
 
-    // BALEK
-    /*
-    if (option == NULL){
-        printf("  PID TTY          TIME CMD\n");
-        printf("%d\n",getpid());
-        printf("%d                   Bash\n",getppid());
-
-    }
-    else if (strcmp(option,"u")){
-        printf("  PID TTY          TIME CMD\n");
-    }
-    else if (strcmp(option,"C")){
-        printf("  PID TTY          TIME CMD\n");
-    }
-    */
     char character;
-    int i,j=0;
+    int j=0;
 
     FILE *fichier=NULL;
 
@@ -49,11 +34,12 @@ void ps(char *option, char* param){
     DIR *repertoire;
     DIR *sous_repertoire;
 
-    char nomCommande[15];
-    for(i=0;i<15;i++){
-        nomCommande[i]=' ';
+    char *nomCommande=NULL;
+    nomCommande=calloc(1,sizeof(char));
+    if(nomCommande==NULL){
+        perror("calloc");
+        exit(1);
     }
-    nomCommande[15]='\0';
 
     //struct utiliser pour lire le dossier
     struct dirent *flux;
@@ -101,7 +87,7 @@ void ps(char *option, char* param){
                 perror(nameFile);
                 exit(1);
             }
-            printf("%s  ",flux->d_name);
+            
             if (strlen(sous_nameFile)>1){
                 free(sous_nameFile);
                 sous_nameFile = NULL;
@@ -120,42 +106,46 @@ void ps(char *option, char* param){
                 perror(sous_nameFile);
                 exit(1);
             }
-
+    
             while((character=fgetc(fichier)) != EOF){
-                //printf("%c",character);
-                if(character == '/' || character == 10){
-                    for(i=0;i<15;i++){
-                        nomCommande[i]=' ';
-                        j=0;
-                    }
+                if(character == '/'){
+                    free(nomCommande);
+                    nomCommande=calloc(1,sizeof(char));
+                    j=0;
                 }
                 else{
+                    nomCommande=realloc(nomCommande,(j+2)*sizeof(char));
                     nomCommande[j]=character;
+                    nomCommande[j+1]='\0';
                     j++;
                 }
             }
-            printf("%s\n",nomCommande);
-            //printf("\n");
+            if(strlen(nomCommande)!=0){
+                printf("%s  ",flux->d_name);
+                printf("%s",nomCommande);
+                printf("\n");
 
-            /*
-            while((sous_flux = readdir(sous_repertoire))){
-                if (strlen(sous_nameFile)>1){
-                    free(sous_nameFile);
-                    sous_nameFile = NULL;
-                    sous_nameFile = calloc(1,sizeof(char));
-                    if(sous_nameFile==NULL){
-                        perror("Calloc");
-                        exit(1);
-                    }
+
+                // RECUPERATION DONNEES DANS LE FICHIER stat (le temps d'activite et le tty)
+                free(sous_nameFile);
+                sous_nameFile = NULL;
+                sous_nameFile = calloc(1,sizeof(char));
+                if(sous_nameFile==NULL){
+                    perror("Calloc");
+                    exit(1);
                 }
                 sous_nameFile=concatenateTables(sous_nameFile,nameFile);
                 sous_nameFile=concatenateTables(sous_nameFile,"/");
-                sous_nameFile=concatenateTables(sous_nameFile,sous_flux->d_name);
+                sous_nameFile=concatenateTables(sous_nameFile,"stat");
+            }
+            
 
-                printf("%s\n",sous_nameFile);
-            }*/
+            free(nomCommande);
+            nomCommande=calloc(1,sizeof(char));
+            j=0;
         }
     }
+    free(nomCommande);
 }
 
 

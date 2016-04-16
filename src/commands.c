@@ -17,13 +17,21 @@
     
 #include "../include/commands.h"
 #include "../include/commands/cd.h"
-
+#include "../include/utils.h"
 #include "../include/shell.h"
 #include "../include/parameters.def"
 
-#define debugState 1
+#define debugState 0
 
- int initCommands(Command* array[MAXCMD]){
+
+bool isLetter(char c){
+      if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')){
+            return true;
+      }
+      return false;
+}
+
+int initCommands(Command* array[MAXCMD]){
         // Internal Shell commands are first added
         // char* name, char** parameters, char** options, int nameLength, int* parameterLength, int* optionLength, int (*cmd_ptr)(int, int)
         addCmdToArray(array, 0, "cd", &cd_internal);
@@ -45,51 +53,166 @@ int freeCommands(int nbCmd, Command** commands){
 
 ParsedCommand* parseCommand(char* input){
 
+        //etat initial
         State current = S0;
-
+        // le caractère lu
         char c;
+        // compteur pour chaque caractère lu
         int i=0;
-        int parameterIndex=0;   // Used to set the name in the command
-        int countParameters=0;
+        // compteur du ième caractère à ajouter dans nom/options/arguments 
+        int cpt = 0;
+
+        ParsedCommand* pc;
+        pc = (ParsedCommand*)malloc(sizeof(ParsedCommand));
 
         //Command* ret = allocateCommand();
         //(*ret).nameLength=0;
-
         // input[i]!=' ' && input[i]!='\0'
         while(input[i]!='\n'){
                 c = input[i];
                 switch(current){
+                    // cas de départ 
                     case S0:
-                          if(debugState){printf(" STATE S0");}
+                        if(debugState){printf(" STATE S0\n");}
+                        // on trouve le String de la fonction
+                        if (isLetter(c)){
+                        pc->name[cpt] = c;
+                        current = Sfunction;
+                        }
+                        // un espace
+                        else if ( c ==' '){
+                            current = S0;
+                        } // cas incorrect
+                        else {
+                            return NULL;
+                        }
                     break;
-                    case S1:
-                          if(debugState){printf(" STATE S1");}
+                    // cas où on a déjà trouvé la commande
+                    case S1 : 
+                    if(debugState){printf(" STATE S1\n");}
+                        // on trouve le String de la fonction
+                        if (isLetter(c) || c == '-'){
+                            pc->argv[pc->cptarg][cpt] = c;
+                            current = Sargs;
+                        }
+                        // un espace
+                        else if ( c ==' '){
+                            current = S1;
+                        } // une option 
+                        /*
+                        else if ( c == '-'){
+                            pc->opt[pc->cptopt][cpt] =c ; 
+                            current = Soptions;
+                        } // cas incorrect
+                        */
+                        else {
+                            return NULL;
+                        }
                     break;
-            }
+
+                    case Sfunction:
+                        if(debugState){printf(" STATE Sfunction\n");}
+                        if (isLetter(c) && c != ' ' & c !='-'){
+                        cpt ++;
+                        pc->nameLength = cpt+1;
+                        pc->name[cpt] = c;
+                        current = Sfunction;
+                        }
+                        // un espace, on a la commande
+                        else if (c ==' '){
+                            pc->nameLength = cpt;
+                            cpt = 0;
+                            current = S1;
+                        } // cas incorrect
+                        else {
+                            return NULL;
+                        }
+                    break;
+                    case Sargs :
+                    if(debugState){printf(" STATE Sargs\n");}	
+                        if (isLetter(c) && c != ' '){
+                        cpt ++;
+                        pc->argv[pc->cptarg][cpt] = c;
+                        current = Sargs;
+                        }
+                        // un espace
+                        else if ( c ==' '){
+                            pc->argc[pc->cptarg] = cpt;
+                            cpt = 0;
+                            pc->cptarg++;
+                            current = S1;
+                        } // cas incorrect
+                        else {
+                            return NULL;
+                        }
+                        pc->argc[pc->cptarg] = cpt;
+                    break;
+                    /*case Soptions :
+                    if(debugState){printf(" STATE Soptions\n");}
+                        if (isLetter(c) && c != ' '){
+                        cpt ++;
+                        pc->opt[pc->cptopt][cpt] = c;
+                        current = Soptions;
+                        }
+                        // un espace
+                        else if ( c ==' '){
+                            pc->optc[pc->cptopt] = cpt;
+                            cpt = 0;
+                            pc->cptopt++;
+                            current = S1;
+                        } // cas incorrect
+                        else {
+                            return NULL;
+                        }
+                        pc->optc[pc->cptopt] = cpt;
+                    break;
+                    */
             if(debugState){printf("\n");}
-            i++;
         }
+        i++;
         //(*ret).nameLength = parameterIndex;
-        return NULL;
+        }
+        return pc;
+
+    }
+
+void printName(ParsedCommand* pc){
+    printf("cmd = ");
+    for (int i = 0;i <= pc->nameLength;i++){
+        printf("%c", pc->name[i]);
+    }
+    printf("\n");
 }
 
-void printName(ParsedCommand* cmd){
+/*void printName(ParsedCommand* cmd){
         printf("cmd=\"");
         for(int i=0;i<(*cmd).nameLength;i++){
                 printf("%c", (*cmd).name[i]);
         }     
         printf("\"\n");  
+}*/
+
+void printParameters(ParsedCommand* pc){
+        printf("parameters = ");  
+        for (int i =0; i <= pc->cptarg;i++){
+            for (int j = 0; j <= pc->argc[i]; j++){
+                printf("%c", pc->argv[i][j]);
+            }
+            printf(" ");
+        }
+        printf("\n");
 }
 
-void printParameters(ParsedCommand* cmd){
-        printf("parameters=\"");  
-        printf("\"\n");  
-}
+/*void printOptions(ParsedCommand* pc){
+        printf("options = ");
+        for (int i =0; i <= pc->cptopt;i++){
+            for (int j = 0; j <= pc->optc[i]; j++){
+                printf("%c", pc->opt[i][j]);
+            }
+        }
+        printf("\n");
 
-void printOptions(ParsedCommand* cmd){
-        printf("options=\"");  
-        printf("\"\n");  
-}
+}*/
 
 int addCmdToArray(Command** array, int index, char* name, int (*cmd_ptr)(int, char*[])){
         array[index] = (Command*) malloc(sizeof(Command));

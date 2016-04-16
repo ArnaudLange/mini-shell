@@ -131,35 +131,36 @@ int main(int argc, char* argv[]){
                                 return EXIT_SUCCESS;                                                                                                
                         }
                         else{
-                                /*
+                                
                                 ParsedCommand* c = parseCommand(line);
-                                printName(c);
-                                printParameters(c);
-                                printOptions(c);
-                                free(c);
-                                execute(line,line);
-                                */
-                                //test_execute(line,line);
-                                //FILE* file_out = fopen("exemple.txt", "a");
-                                /*
-                                ParsedCommand* c = parseCommand(line);
-                                if(findFunction(line, c)){
-                                        printf("found function\n");
+                                if (c!=NULL){
+                                    printName(c);
+                                    printParameters(c);
+                                    //printOptions(c);
+                                    free(c);
+                                    //execute(line,line);
+                                    
+                                    //test_execute(line,line);
+                                    //FILE* file_out = fopen("exemple.txt", "a");
+                                    /*
+                                    ParsedCommand* c = parseCommand(line);
+                                    if(findFunction(line, c)){
+                                            printf("found function\n");
+                                    }
+                                    else{
+                                            printf("didn't find function\n");
+                                    }
+                                    free(c);
+                                    */
+                                    //int fd = open("exemple.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+                                    //test_internal_ls(STDIN_FILENO, STDOUT_FILENO);
+                                    //test_internal_ls(STDIN_FILENO, fd);
+                                    //fclose(file_out);
+                                    /*ParsedCommand* c = malloc(sizeof(ParsedCommand));
+                                    strncpy(c->name, "cd", NAME_SIZE);
+                                    printf("res=%d\n", findFunction(shell, c));
+                                    printf("function=%d\n", c->cmd_ptr);*/
                                 }
-                                else{
-                                        printf("didn't find function\n");
-                                }
-                                free(c);
-                                */
-                                //int fd = open("exemple.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-                                test_internal_ls(STDIN_FILENO, STDOUT_FILENO);
-                                //test_internal_ls(STDIN_FILENO, fd);
-                                //fclose(file_out);
-                                /*ParsedCommand* c = malloc(sizeof(ParsedCommand));
-                                strncpy(c->name, "cd", NAME_SIZE);
-                                printf("res=%d\n", findFunction(shell, c));
-                                printf("function=%d\n", c->cmd_ptr);*/
-                                   
                                 break;  
                         }                                                      
                 }

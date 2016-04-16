@@ -1,12 +1,12 @@
 /*
     This file is part of Binsh.
 
-    Binsh is free software: you can redistribute it and/or modify
+    Foobar is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Binsh is distributed in the hope that it will be useful,
+    Foobar is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -14,13 +14,6 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-/**
- * @file commands.h
- * @author Antoine Sauray
- * @date 14 April 2016
- * @brief Contains fonctions related to shell commands and structure modelising commands.
- */
     
 #ifndef COMMAND_H
 #define COMMAND_H
@@ -29,15 +22,11 @@
 #include <string.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <stdbool.h>
 #include <fcntl.h>
 #include <dirent.h>
-
 #include "parameters.def"
 
-
-/**
- * @brief      Structure for a shell command
- */
 struct command{
         char name[NAME_SIZE];
 
@@ -53,31 +42,23 @@ struct command{
  * @brief      Structure for a shell Parsed command
  */
 struct parsedCommand{
-        /**
-         * Name of the ParseCommand
-         */
-	char name[NAME_SIZE];
-        /**
-         * Size of the name
-         */
+        // nom de la commande 
+        char name[NAME_SIZE];
+        // taille du nom de la commande
         int nameLength;
-
-        /**
-         * Parameters of the ParsedCommand. 
-         * Max size if 100 caracters.
-         * Can hold up to 100 parameters
-         */
+        // tableau des arguments
         char argv[MAX_PARAMETERS][NAME_SIZE];
-        /**
-         * Size of the parameters
-         * 100 sizes for 100 parameters available
-         */
+        // compte le nombre d'arguments
+        int cptarg;
+        // taille de chaque argument
         int argc[NAME_SIZE];
-        /**
-         * Pointer to the function
-         * NULL default
-         * Otherwise it means the ParseCommand is internal and can be called
-         */
+        // compte le nombre d'options 
+        int cptopt;
+        // tableau des options 
+        char opt[MAX_PARAMETERS][NAME_SIZE];
+        // taille de chaque option
+        int optc[NAME_SIZE];
+
         int (*cmd_ptr)(int, char*[]);
 };
 
@@ -86,31 +67,24 @@ struct parsedCommand{
  */
 typedef enum {
         S0, // starting state is S0
+        Sfunction,
+        Sargs,
+        Soptions,
         S1,
-        S2,
-        S3,
-        S4,
-        S5,
-        S6,
-        S7,
-        S8,
-        S9,
-        S10,
-        S11,
-        S12,
-        S13
 } State;
 
 
 typedef struct parsedCommand ParsedCommand;
 typedef struct command Command;
 
+int startParsedCommand(ParsedCommand* cmd);
+
 /**
  * @brief      Initialize an array of ParsedCommands.
  *
  * @return     1 if everything went correctly. 0 otherwise
  */
-int initCommands(Command* array[MAXCMD]);
+int initCommands(Command** array);
 
 /**
  * @brief      Free all the dynamically allocated commands

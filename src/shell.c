@@ -118,7 +118,7 @@ int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
 
                 //strcpy(test[1], "-h");
 
-                cmd->cmd_ptr(*(cmd->cptarg), cmd->argv);
+                cmd->cmd_ptr(cmd->cptarg, cmd->argv);
                 
                 //cmd->cmd_ptr(2, test);
 

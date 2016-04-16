@@ -1,9 +1,8 @@
 #include <stdio.h>
+#include <unistd.h>
 
 int main(int argc, char const *argv[])
 {
-	char *res = "02:44:55";
-	int a=918133;
-	printf("%d",a/(3600*60));
+	printf("%ld\n",sysconf(_SC_CLK_TCK));
 	return 0;
 }

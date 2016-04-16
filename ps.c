@@ -25,6 +25,7 @@ void ps(char *option, char* param){
     printf("PID\tTTY\tTIME\tCMD\n");
     char character;
     int p=0;
+    long int hr,min,sc,t;
 
     FILE *fichier=NULL;
 
@@ -132,7 +133,7 @@ void ps(char *option, char* param){
                 
 
 
-                // RECUPERATION DONNEES DANS LE FICHIER stat (le temps d'activite et le tty)
+                // RECUPERATION DONNEES DANS LE FICHIER stat (le total_time d'activite et le tty)
                 free(sous_nameFile);
                 sous_nameFile = NULL;
                 sous_nameFile = calloc(1,sizeof(char));
@@ -174,14 +175,21 @@ void ps(char *option, char* param){
                         stime[strlen(stime)]=character;
                         stime[strlen(stime)+1]='\0';
                     }
-                    
                 }
 
                 // /!\ a noter
                 // uptime n'est pas affiche comme sur le "vrai" ps car je n'ai trouve le time que en int, et pas en format adapté comme m_time
                 // meme chose pour tty, je peux determiner quand il est '?' mais sinon il est sous format int
 
-                int temps = atoi(stime)+atoi(uptime);
+                long int hz = sysconf(_SC_CLK_TCK);
+                long int total_time = (atoi(stime)+atoi(uptime))/hz;
+
+                hr=total_time/3600;
+                t=total_time%3600;
+                min=t/60;
+                sc=min%60;
+
+                
                 //Si option e, on affiche tout
                 if (!strcmp(option,"e")){
 
@@ -192,7 +200,7 @@ void ps(char *option, char* param){
                     else{
                         printf("%s\t",TTY);
                     }
-                    printf("%d\t",temps);
+                    printf("%2ld:%2ld:%2ld\t",hr,min,sc);
                     printf("%s",nom);
                     printf("\n");
                 }
@@ -213,7 +221,7 @@ void ps(char *option, char* param){
                         else{
                             printf("'%s'\t",TTY);
                         }
-                        printf("%d\t",temps);
+                        printf("%2ld:%2ld:%2ld\t",hr,min,sc);
                         printf("%s",nom);
                         printf("\n");
                     }

@@ -26,11 +26,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <dirent.h>
-//** A décommenter une fois les test finis **//
-//#include "../utils.h"
+#include "../utils.h"
 
-//** A virer une fois les tests finis **//
-#include "utils.h"
-
-int fontion_lib(int argc, char *argv[]);
+int ps_lib(int argc, char *argv[]);
+void ps(char *option, char* param);
 

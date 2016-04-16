@@ -16,13 +16,12 @@
 */
 
 //** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/fonction.h"
+#include "../../include/commands/ps.h"
 
-#include "ps.h" //à virer une fois les tests effectués
 
 void ps(char *option, char* param){
 
-    printf("PID\tTTY\tTIME\tCMD\n");
+    printf("PID\tTTY\t   TIME\t\t CMD\n");
     char character;
     int p=0;
     long int hr,min,sc,t;
@@ -244,7 +243,7 @@ void ps(char *option, char* param){
 }
 
 
-int main(int argc, char *argv[]){
+int ps_lib(int argc, char *argv[]){
 
     // -----------------------------------
     int c;

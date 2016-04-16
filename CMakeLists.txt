@@ -191,3 +191,17 @@ file(GLOB HEADER_CHOWN
 add_executable(chown ${SRC_CHOWN} ${HEADER_CHOWN})
 add_library(chown_lib SHARED ${SRC_CHOWN})
 set_target_properties(chown_lib PROPERTIES OUTPUT_NAME "chown")
+
+
+# chgrp
+file(GLOB SRC_CHGRP
+    "src/commands/chgrp.c"
+    "src/utils.c"
+    "src/main/chgrp.c"
+)
+file(GLOB HEADER_CHGRP
+    "include/commands/chgrp.h"
+)
+add_executable(chgrp ${SRC_CHGRP} ${HEADER_CHGRP})
+add_library(chgrp_lib SHARED ${SRC_CHGRP})
+set_target_properties(chgrp_lib PROPERTIES OUTPUT_NAME "chgrp")

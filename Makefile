@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named chgrp
+
+# Build rule for target.
+chgrp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 chgrp
+.PHONY : chgrp
+
+# fast build rule for target.
+chgrp/fast:
+	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/build
+.PHONY : chgrp/fast
+
+#=============================================================================
 # Target rules for targets named chown_lib
 
 # Build rule for target.
@@ -304,6 +317,19 @@ cd: cmake_check_build_system
 cd/fast:
 	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/build
 .PHONY : cd/fast
+
+#=============================================================================
+# Target rules for targets named chgrp_lib
+
+# Build rule for target.
+chgrp_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 chgrp_lib
+.PHONY : chgrp_lib
+
+# fast build rule for target.
+chgrp_lib/fast:
+	$(MAKE) -f CMakeFiles/chgrp_lib.dir/build.make CMakeFiles/chgrp_lib.dir/build
+.PHONY : chgrp_lib/fast
 
 #=============================================================================
 # Target rules for targets named cat
@@ -537,6 +563,39 @@ src/commands/cd.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cd.c.s
 	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/commands/cd.c.s
 .PHONY : src/commands/cd.c.s
+
+src/commands/chgrp.o: src/commands/chgrp.c.o
+
+.PHONY : src/commands/chgrp.o
+
+# target to build an object file
+src/commands/chgrp.c.o:
+	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/commands/chgrp.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/chgrp.c.o
+	$(MAKE) -f CMakeFiles/chgrp_lib.dir/build.make CMakeFiles/chgrp_lib.dir/src/commands/chgrp.c.o
+.PHONY : src/commands/chgrp.c.o
+
+src/commands/chgrp.i: src/commands/chgrp.c.i
+
+.PHONY : src/commands/chgrp.i
+
+# target to preprocess a source file
+src/commands/chgrp.c.i:
+	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/commands/chgrp.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/chgrp.c.i
+	$(MAKE) -f CMakeFiles/chgrp_lib.dir/build.make CMakeFiles/chgrp_lib.dir/src/commands/chgrp.c.i
+.PHONY : src/commands/chgrp.c.i
+
+src/commands/chgrp.s: src/commands/chgrp.c.s
+
+.PHONY : src/commands/chgrp.s
+
+# target to generate assembly for a file
+src/commands/chgrp.c.s:
+	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/commands/chgrp.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/chgrp.c.s
+	$(MAKE) -f CMakeFiles/chgrp_lib.dir/build.make CMakeFiles/chgrp_lib.dir/src/commands/chgrp.c.s
+.PHONY : src/commands/chgrp.c.s
 
 src/commands/chmod.o: src/commands/chmod.c.o
 
@@ -985,6 +1044,36 @@ src/main/cd.c.s:
 	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/main/cd.c.s
 .PHONY : src/main/cd.c.s
 
+src/main/chgrp.o: src/main/chgrp.c.o
+
+.PHONY : src/main/chgrp.o
+
+# target to build an object file
+src/main/chgrp.c.o:
+	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/main/chgrp.c.o
+	$(MAKE) -f CMakeFiles/chgrp_lib.dir/build.make CMakeFiles/chgrp_lib.dir/src/main/chgrp.c.o
+.PHONY : src/main/chgrp.c.o
+
+src/main/chgrp.i: src/main/chgrp.c.i
+
+.PHONY : src/main/chgrp.i
+
+# target to preprocess a source file
+src/main/chgrp.c.i:
+	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/main/chgrp.c.i
+	$(MAKE) -f CMakeFiles/chgrp_lib.dir/build.make CMakeFiles/chgrp_lib.dir/src/main/chgrp.c.i
+.PHONY : src/main/chgrp.c.i
+
+src/main/chgrp.s: src/main/chgrp.c.s
+
+.PHONY : src/main/chgrp.s
+
+# target to generate assembly for a file
+src/main/chgrp.c.s:
+	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/main/chgrp.c.s
+	$(MAKE) -f CMakeFiles/chgrp_lib.dir/build.make CMakeFiles/chgrp_lib.dir/src/main/chgrp.c.s
+.PHONY : src/main/chgrp.c.s
+
 src/main/chmod.o: src/main/chmod.c.o
 
 .PHONY : src/main/chmod.o
@@ -1429,6 +1518,7 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
+	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.o
@@ -1443,6 +1533,7 @@ src/utils.c.o:
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/chgrp_lib.dir/build.make CMakeFiles/chgrp_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/utils.c.o
@@ -1462,6 +1553,7 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
+	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.i
@@ -1476,6 +1568,7 @@ src/utils.c.i:
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/chgrp_lib.dir/build.make CMakeFiles/chgrp_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/utils.c.i
@@ -1495,6 +1588,7 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
+	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.s
@@ -1509,6 +1603,7 @@ src/utils.c.s:
 	$(MAKE) -f CMakeFiles/ls.dir/build.make CMakeFiles/ls.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/ls_lib.dir/build.make CMakeFiles/ls_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/pwd.dir/build.make CMakeFiles/pwd.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/chgrp_lib.dir/build.make CMakeFiles/chgrp_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/cat.dir/build.make CMakeFiles/cat.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/pwd_lib.dir/build.make CMakeFiles/pwd_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/rm.dir/build.make CMakeFiles/rm.dir/src/utils.c.s
@@ -1528,6 +1623,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... chgrp"
 	@echo "... chown_lib"
 	@echo "... chown"
 	@echo "... chmod_lib"
@@ -1544,6 +1640,7 @@ help:
 	@echo "... ls_lib"
 	@echo "... pwd"
 	@echo "... cd"
+	@echo "... chgrp_lib"
 	@echo "... cat"
 	@echo "... pwd_lib"
 	@echo "... rm"
@@ -1565,6 +1662,9 @@ help:
 	@echo "... src/commands/cd.o"
 	@echo "... src/commands/cd.i"
 	@echo "... src/commands/cd.s"
+	@echo "... src/commands/chgrp.o"
+	@echo "... src/commands/chgrp.i"
+	@echo "... src/commands/chgrp.s"
 	@echo "... src/commands/chmod.o"
 	@echo "... src/commands/chmod.i"
 	@echo "... src/commands/chmod.s"
@@ -1607,6 +1707,9 @@ help:
 	@echo "... src/main/cd.o"
 	@echo "... src/main/cd.i"
 	@echo "... src/main/cd.s"
+	@echo "... src/main/chgrp.o"
+	@echo "... src/main/chgrp.i"
+	@echo "... src/main/chgrp.s"
 	@echo "... src/main/chmod.o"
 	@echo "... src/main/chmod.i"
 	@echo "... src/main/chmod.s"

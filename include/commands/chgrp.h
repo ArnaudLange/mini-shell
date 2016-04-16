@@ -31,6 +31,9 @@
 
 #include "../utils.h"
 
+#include "../parameters.def"
+#include "../typedef.h"
+
 
 
 int chgrp_lib(int argc, char *argv[]);

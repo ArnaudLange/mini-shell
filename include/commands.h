@@ -52,12 +52,6 @@ struct parsedCommand{
         int cptarg;
         // taille de chaque argument
         int argc[NAME_SIZE];
-        // compte le nombre d'options 
-        int cptopt;
-        // tableau des options 
-        char opt[MAX_PARAMETERS][NAME_SIZE];
-        // taille de chaque option
-        int optc[NAME_SIZE];
 
         int (*cmd_ptr)(int, char*[]);
 };
@@ -69,7 +63,6 @@ typedef enum {
         S0, // starting state is S0
         Sfunction,
         Sargs,
-        Soptions,
         S1,
 } State;
 

@@ -81,7 +81,7 @@ ParsedCommand* parseCommand(char* input){
                         }
                         // un espace
                         else if ( c ==' '){
-                            current = S0;
+                            current = S0;	
                         } // cas incorrect
                         else {
                             return NULL;
@@ -98,13 +98,7 @@ ParsedCommand* parseCommand(char* input){
                         // un espace
                         else if ( c ==' '){
                             current = S1;
-                        } // une option 
-                        /*
-                        else if ( c == '-'){
-                            pc->opt[pc->cptopt][cpt] =c ; 
-                            current = Soptions;
-                        } // cas incorrect
-                        */
+                        } 
                         else {
                             return NULL;
                         }
@@ -147,26 +141,6 @@ ParsedCommand* parseCommand(char* input){
                         }
                         pc->argc[pc->cptarg] = cpt;
                     break;
-                    /*case Soptions :
-                    if(debugState){printf(" STATE Soptions\n");}
-                        if (isLetter(c) && c != ' '){
-                        cpt ++;
-                        pc->opt[pc->cptopt][cpt] = c;
-                        current = Soptions;
-                        }
-                        // un espace
-                        else if ( c ==' '){
-                            pc->optc[pc->cptopt] = cpt;
-                            cpt = 0;
-                            pc->cptopt++;
-                            current = S1;
-                        } // cas incorrect
-                        else {
-                            return NULL;
-                        }
-                        pc->optc[pc->cptopt] = cpt;
-                    break;
-                    */
             if(debugState){printf("\n");}
         }
         i++;
@@ -184,13 +158,6 @@ void printName(ParsedCommand* pc){
     printf("\n");
 }
 
-/*void printName(ParsedCommand* cmd){
-        printf("cmd=\"");
-        for(int i=0;i<(*cmd).nameLength;i++){
-                printf("%c", (*cmd).name[i]);
-        }     
-        printf("\"\n");  
-}*/
 
 void printParameters(ParsedCommand* pc){
         printf("parameters = ");  
@@ -203,16 +170,6 @@ void printParameters(ParsedCommand* pc){
         printf("\n");
 }
 
-/*void printOptions(ParsedCommand* pc){
-        printf("options = ");
-        for (int i =0; i <= pc->cptopt;i++){
-            for (int j = 0; j <= pc->optc[i]; j++){
-                printf("%c", pc->opt[i][j]);
-            }
-        }
-        printf("\n");
-
-}*/
 
 int addCmdToArray(Command** array, int index, char* name, int (*cmd_ptr)(int, char*[])){
         array[index] = (Command*) malloc(sizeof(Command));

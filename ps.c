@@ -24,7 +24,7 @@ void ps(char *option, char* param){
 
     printf("PID\tTTY\tTIME\tCMD\n");
     char character;
-    int j=0,p=0;
+    int p=0;
 
     FILE *fichier=NULL;
 
@@ -46,6 +46,13 @@ void ps(char *option, char* param){
     char *TTY=NULL;
     TTY=calloc(1,sizeof(char));
     if(TTY==NULL){
+        perror("calloc");
+        exit(1);
+    }
+    //nom
+    char *nom=NULL;
+    nom=calloc(1,sizeof(char));
+    if(nom==NULL){
         perror("calloc");
         exit(1);
     }
@@ -114,30 +121,6 @@ void ps(char *option, char* param){
                 }
             }
             
-            sous_nameFile=concatenateTables(sous_nameFile,nameFile);
-            sous_nameFile=concatenateTables(sous_nameFile,"/");
-            sous_nameFile=concatenateTables(sous_nameFile,"cmdline");
-
-            fichier = fopen(sous_nameFile,"r");
-            if(fichier == NULL){
-                perror(sous_nameFile);
-                exit(1);
-            }
-    
-            while((character=fgetc(fichier)) != EOF){
-                if(character == '/'){
-                    free(nomCommande);
-                    nomCommande=calloc(1,sizeof(char));
-                    j=0;
-                }
-                else{
-                    nomCommande=realloc(nomCommande,(j+2)*sizeof(char));
-                    nomCommande[j]=character;
-                    nomCommande[j+1]='\0';
-                    j++;
-                }
-            }
-            if(strlen(nomCommande)!=0){
                 
 
 
@@ -163,6 +146,11 @@ void ps(char *option, char* param){
                     if (character== ' '){ //on incremente une variables pour savoir a quel espace on est rendu
                         p++;
                     }
+                    if (p==1 && character!='(' && character != ')'){
+                        nom=realloc(nom,(strlen(nom)+1)*sizeof(char));
+                        nom[strlen(nom)]=character;
+                        nom[strlen(nom)+1]='\0';
+                    }
                     if (p == 6){
                         TTY=realloc(TTY,(strlen(TTY)+1)*sizeof(char));
                         TTY[strlen(TTY)]=character;
@@ -175,6 +163,13 @@ void ps(char *option, char* param){
                     }
                     
                 }
+
+                // /!\ a noter
+                // uptime n'est pas affiche comme sur le "vrai" ps car je n'ai trouve le time que en int, et pas en format adapté comme m_time
+                // meme chose pour tty, je peux determiner quand il est '?' mais sinon il est sous format int
+
+
+                //Si option e, on affiche tout
                 if (!strcmp(option,"e")){
 
                     printf("%s\t",flux->d_name);
@@ -185,24 +180,38 @@ void ps(char *option, char* param){
                         printf("%s\t",TTY);
                     }
                     printf("%s\t",uptime);
-                    printf("%s",nomCommande);
+                    printf("%s",nom);
                     printf("\n");
-
+                }
+                //sinon on affiche que les options pour lesquelles le pid correspond a getpid() et getppid()
+                else{
+                    //On recupere le pid et le ppid
+                    char pid[15],ppid[15];
+                    //On les passe en char
+                    sprintf(pid, "%d", getpid());
+                    sprintf(ppid, "%d", getppid());
+                    //puis si le pid qui est passé en revu actuellement correspond a l'un ou l'autr
+                    //on affiche
+                    if (!strcmp(flux->d_name,pid) || !strcmp(flux->d_name,ppid)){
+                        printf("%s\t",flux->d_name);
+                        if(strlen(TTY)==2){
+                            printf("?\t");
+                        }
+                        else{
+                            printf("%s\t",TTY);
+                        }
+                        printf("%s\t",uptime);
+                        printf("%s",nom);
+                        printf("\n");
+                    }
                 }
                 p=0;
                 free(TTY);
                 TTY=calloc(1,sizeof(char));
                 free(uptime);
                 uptime=calloc(1,sizeof(char));
-
-
-            }
-            
-
-            free(nomCommande);
-            nomCommande=calloc(1,sizeof(char));
-            j=0;
-
+                free(nom);
+                nom=calloc(1,sizeof(char));
             // pid (filename) state ppid pgrp session tty_nr
         }
     }
@@ -244,12 +253,12 @@ int main(int argc, char *argv[]){
 
          case 'h': 
            printf("\n-----------------------------------------------------------\n");
-           printf("Usage: ps [OPTION]\n\n");
+           printf("Usage: ps [OPTION]\n");
            printf("\n  -e             \tall processes.\n");
            printf("\n-----------------------------------------------------------\n");
            exit(0);
            break;
-
+         //option e : qui fait ps pour tous les processus
          case 'e':
             ps("e","");
             break;

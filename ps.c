@@ -22,8 +22,9 @@
 
 void ps(char *option, char* param){
 
+    printf("PID\tTTY\tTIME\tCMD\n");
     char character;
-    int j=0;
+    int j=0,p=0;
 
     FILE *fichier=NULL;
 
@@ -34,9 +35,24 @@ void ps(char *option, char* param){
     DIR *repertoire;
     DIR *sous_repertoire;
 
+    //CMD
     char *nomCommande=NULL;
     nomCommande=calloc(1,sizeof(char));
     if(nomCommande==NULL){
+        perror("calloc");
+        exit(1);
+    }
+    //TTY
+    char *TTY=NULL;
+    TTY=calloc(1,sizeof(char));
+    if(TTY==NULL){
+        perror("calloc");
+        exit(1);
+    }
+    //Uptime
+    char *uptime=NULL;
+    uptime=calloc(1,sizeof(char));
+    if(uptime==NULL){
         perror("calloc");
         exit(1);
     }
@@ -97,6 +113,7 @@ void ps(char *option, char* param){
                     exit(1);
                 }
             }
+            
             sous_nameFile=concatenateTables(sous_nameFile,nameFile);
             sous_nameFile=concatenateTables(sous_nameFile,"/");
             sous_nameFile=concatenateTables(sous_nameFile,"cmdline");
@@ -121,9 +138,7 @@ void ps(char *option, char* param){
                 }
             }
             if(strlen(nomCommande)!=0){
-                printf("%s  ",flux->d_name);
-                printf("%s",nomCommande);
-                printf("\n");
+                
 
 
                 // RECUPERATION DONNEES DANS LE FICHIER stat (le temps d'activite et le tty)
@@ -137,15 +152,61 @@ void ps(char *option, char* param){
                 sous_nameFile=concatenateTables(sous_nameFile,nameFile);
                 sous_nameFile=concatenateTables(sous_nameFile,"/");
                 sous_nameFile=concatenateTables(sous_nameFile,"stat");
+
+                //On ouvre stat que l'on va parser pour recuperer ce qu'il nous manque (cf uptime & tty)
+                fichier = fopen(sous_nameFile,"r");
+                if(fichier == NULL){
+                    perror(sous_nameFile);
+                    exit(1);
+                }
+                while((character=fgetc(fichier)) != EOF){
+                    if (character== ' '){ //on incremente une variables pour savoir a quel espace on est rendu
+                        p++;
+                    }
+                    if (p == 6){
+                        TTY=realloc(TTY,(strlen(TTY)+1)*sizeof(char));
+                        TTY[strlen(TTY)]=character;
+                        TTY[strlen(TTY)+1]='\0';
+                    }
+                    if (p==13){
+                        uptime=realloc(uptime,(strlen(uptime)+1)*sizeof(char));
+                        uptime[strlen(uptime)]=character;
+                        uptime[strlen(uptime)+1]='\0';
+                    }
+                    
+                }
+                
+                printf("%s\t",flux->d_name);
+                if(strlen(TTY)==2){
+                    printf("?\t");
+                }
+                else{
+                    printf("%s\t",TTY);
+                }
+                printf("%s\t",uptime);
+                printf("%s",nomCommande);
+                printf("\n");
+
+                p=0;
+                free(TTY);
+                TTY=calloc(1,sizeof(char));
+                free(uptime);
+                uptime=calloc(1,sizeof(char));
+
+
             }
             
 
             free(nomCommande);
             nomCommande=calloc(1,sizeof(char));
             j=0;
+
+            // pid (filename) state ppid pgrp session tty_nr
         }
     }
     free(nomCommande);
+    free(TTY);
+    free(uptime);
 }
 
 
@@ -167,14 +228,12 @@ int main(int argc, char *argv[]){
             //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
         static struct option long_options[] = {
             {"help",     no_argument ,       0, 'h'},
-            {"u",     required_argument,       0, 'u'},
-            {"C",     required_argument,       0, 'C'},
-            {0, 0, 0, 0}
+            {"e",     no_argument,       0, 'e'}
         };
 
         //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
             //si l'option peut prendre un argument on mettra ":" après la lettre (ex: "hvp:")
-        c = getopt_long(argc, argv, "u:C:h", long_options, &option_index);
+        c = getopt_long(argc, argv, "eh", long_options, &option_index);
 
         if (c == -1) break;
 
@@ -184,28 +243,14 @@ int main(int argc, char *argv[]){
          case 'h': 
            printf("\n-----------------------------------------------------------\n");
            printf("Usage: ps [OPTION]\n\n");
-           printf("\n  -u [USER]             \tfilter processes by user.\n");
-            printf("\n  -C [COMMAND]              \tfilter processes by its name.\n");
+           printf("\n  -e             \tall processes.\n");
            printf("\n-----------------------------------------------------------\n");
            exit(0);
            break;
 
-         case 'u':
-            optind--;
-            for( ;optind < argc && *argv[optind] != '-'; optind++){
-                  //On appelle ps avec l'option u et chaque argument
-                  ps("u",argv[optind]);        
-            }
+         case 'e':
+            ps("e","");
             break;
-
-         case 'C':
-            optind--;
-            for( ;optind < argc && *argv[optind] != '-'; optind++){
-                  //On appelle ps avec l'option C et chaque argument
-                  ps("C",argv[optind]);       
-            }
-            break;
-
 
         //message par défaut quand l'option rentrée n'est pas gérée par la commande
         default:

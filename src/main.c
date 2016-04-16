@@ -105,6 +105,28 @@ int main(int argc, char* argv[]){
         checkFunction(shell, "mv");
         checkFunction(shell, "pwd");
         checkFunction(shell, "mkdir");
+	checkFunction(shell, "du");
+	checkFunction(shell, "cp");
+	checkFunction(shell, "chmod");
+        checkFunction(shell, "chown");
+        checkFunction(shell, "chgrp");
+        checkFunction(shell, "more");
+
+        /*
+        testFunction(shell, "cd", argc, argv);
+        testFunction(shell, "ls", argc, argv);
+        testFunction(shell, "cat", argc, argv);
+        testFunction(shell, "echo", argc, argv);
+        testFunction(shell, "mv", argc, argv);
+        testFunction(shell, "pwd", argc, argv);
+        testFunction(shell, "mkdir", argc, argv);
+        testFunction(shell, "du", argc, argv);
+        testFunction(shell, "cp", argc, argv);
+        testFunction(shell, "chmod", argc, argv);
+        testFunction(shell, "chown", argc, argv);
+        testFunction(shell, "chgrp", argc, argv);
+        */
+
 
         pthread_t sniffer_thread;
         

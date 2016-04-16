@@ -34,9 +34,12 @@ void freeShell(Shell* shell){
 
 int findFunction(Shell* shell, ParsedCommand* command){
         int i=0;
+        //printf("%d\n",shell->nbCmd);
         while(i<shell->nbCmd){
-                if(strcmp((*shell->commands)[i].name,(*command).name) == 0){
-                        (*command).cmd_ptr = (*shell->commands)[i].cmd_ptr;
+                //printf("%s\n", (shell->commands)[i]->name);
+                //printf("%s\n", (*command).name);
+                if(strcmp((shell->commands)[i]->name,(*command).name) == 0){
+                        (*command).cmd_ptr = (shell->commands)[i]->cmd_ptr;
                         return 1;
                 }    
                 i++;
@@ -77,7 +80,7 @@ int executeCommand(int fd_in, int fd_out, Shell* shell, ParsedCommand* cmd){
         }
         else{
                 // If command doesn't exist internally or as a library, we start it from PATH
-                return executeInternalCommand(fd_in, fd_out, cmd);
+                return executeExternalCommand(fd_in, fd_out, cmd);
         }
 }
 
@@ -108,8 +111,14 @@ int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
 
                 dup2(pipefd[READ_END], STDIN_FILENO);
                 dup2(pipefd[WRITE_END], STDOUT_FILENO);
+                //printf("argSize=%d\n", *(cmd->cptarg));
+                char test[10][10];
+                strcpy(test[0], "-l");
+                strcpy(test[1], "./");
+                //cmd->cmd_ptr(*(cmd->cptarg), (char**)cmd->argv);
                 
-                
+                cmd->cmd_ptr(2, (char**)test);
+
                 close(pipefd[READ_END]);
                 _exit(EXIT_SUCCESS);
         }
@@ -122,7 +131,7 @@ int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
         }
 }
 
-int executeExternalCommand(char *commande,char *argv){
+int executeExternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
         pid_t pid;
         // File descriptor du Pipe
            // pipefd[0] ---> Entrée (standard, fichier, ...)
@@ -148,7 +157,9 @@ int executeExternalCommand(char *commande,char *argv){
                 // Le programme écrira maintenant dans le file descriptor
                 dup2(pipefd[WRITE_END], STDOUT_FILENO);
                 //execlp(commande,argv,NULL);
-                execlp(commande, argv, (char *)NULL);
+                //execlp(cmd->name, cmd->name, (char *)NULL);
+                //execv(cmd->name,(char * const*)cmd->argv);
+                perror("lalala");
                 close(pipefd[READ_END]);
                 _exit(EXIT_SUCCESS);
            }

@@ -18,7 +18,6 @@
 #include "../../include/commands/ls.h"
 
 int ls_lib(int argc, char *argv[]){
-
 	// -----------------------------------
     // Declaration tableau deux dimensions pour les options
 

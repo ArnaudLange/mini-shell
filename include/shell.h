@@ -91,7 +91,7 @@ int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd);
  * @param      commande the command string
  * @param      argv the arguments     
  */
-int executeExternalCommand(char *commande,char *argv);
+int executeExternalCommand(int fd_in, int fd_out, ParsedCommand* cmd);
 
 /**
  * @brief      Find a function within a Shell based on its name

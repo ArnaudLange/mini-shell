@@ -64,6 +64,7 @@ ParsedCommand* parseCommand(char* input){
 
         ParsedCommand* pc;
         pc = (ParsedCommand*)malloc(sizeof(ParsedCommand));
+        pc->cptarg = calloc(0, sizeof(int));
 
         //Command* ret = allocateCommand();
         //(*ret).nameLength=0;
@@ -92,7 +93,8 @@ ParsedCommand* parseCommand(char* input){
                     if(debugState){printf(" STATE S1\n");}
                         // on trouve le String de la fonction
                         if (isLetter(c) || c == '-'){
-                            pc->argv[pc->cptarg][cpt] = c;
+                            pc->argv[*(pc->cptarg)][cpt] = c;
+                            *(pc->cptarg) =*(pc->cptarg)+1;
                             current = Sargs;
                         }
                         // un espace
@@ -108,7 +110,7 @@ ParsedCommand* parseCommand(char* input){
                         if(debugState){printf(" STATE Sfunction\n");}
                         if (isLetter(c) && c != ' ' & c !='-'){
                         cpt ++;
-                        pc->nameLength = cpt+1;
+                        pc->nameLength = cpt;
                         pc->name[cpt] = c;
                         current = Sfunction;
                         }
@@ -126,33 +128,35 @@ ParsedCommand* parseCommand(char* input){
                     if(debugState){printf(" STATE Sargs\n");}	
                         if (isLetter(c) && c != ' '){
                         cpt ++;
-                        pc->argv[pc->cptarg][cpt] = c;
+                        pc->argv[*(pc->cptarg)][cpt] = c;
                         current = Sargs;
                         }
                         // un espace
                         else if ( c ==' '){
-                            pc->argc[pc->cptarg] = cpt;
+                            pc->argc[*(pc->cptarg)] = cpt;
                             cpt = 0;
-                            pc->cptarg++;
+                            *(pc->cptarg) =*(pc->cptarg)+1;
                             current = S1;
                         } // cas incorrect
                         else {
                             return NULL;
                         }
-                        pc->argc[pc->cptarg] = cpt;
+                        pc->argc[*(pc->cptarg)] = cpt;
                     break;
             if(debugState){printf("\n");}
         }
         i++;
         //(*ret).nameLength = parameterIndex;
         }
+        pc->name[pc->nameLength+1]='\0';
         return pc;
 
     }
 
 void printName(ParsedCommand* pc){
     printf("cmd = ");
-    for (int i = 0;i <= pc->nameLength;i++){
+    printf("%s\n", pc->name);
+    for (int i = 0;i <= NAME_SIZE;i++){
         printf("%c", pc->name[i]);
     }
     printf("\n");
@@ -161,7 +165,7 @@ void printName(ParsedCommand* pc){
 
 void printParameters(ParsedCommand* pc){
         printf("parameters = ");  
-        for (int i =0; i <= pc->cptarg;i++){
+        for (int i =0; i <= *(pc->cptarg);i++){
             for (int j = 0; j <= pc->argc[i]; j++){
                 printf("%c", pc->argv[i][j]);
             }

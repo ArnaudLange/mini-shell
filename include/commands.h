@@ -49,7 +49,7 @@ struct parsedCommand{
         // tableau des arguments
         char argv[MAX_PARAMETERS][NAME_SIZE];
         // compte le nombre d'arguments
-        int cptarg;
+        int* cptarg;
         // taille de chaque argument
         int argc[NAME_SIZE];
 

@@ -76,11 +76,11 @@ int loadLibraries(Shell* shell){
                                 printf("Error loading %s\n", dp->d_name);
                         }
                         else{
-                                shell->commands[shell->nbCmd] = (Command*) malloc(sizeof(Command));
-                                Command* cmd = shell->commands[shell->nbCmd];
+                                shell->library_commands[shell->nbLibraryCmd] = (Command*) malloc(sizeof(Command));
+                                Command* cmd = shell->library_commands[shell->nbLibraryCmd];
                                 cmd->cmd_ptr = Init(cmd->name);
-                                shell->nbCmd++;
-                                printf("successfully loaded %s at index[%d] with name \'%s\'\n", dp->d_name, shell->nbCmd, cmd->name);
+                                shell->nbLibraryCmd++;
+                                printf("successfully loaded %s at index[%d] with name \'%s\'\n", dp->d_name, shell->nbLibraryCmd, cmd->name);
                         }
                 }
         }

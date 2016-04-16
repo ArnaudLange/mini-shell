@@ -47,8 +47,10 @@
  * Manages the internal commands and the current directory
  */
 struct shell{
-        int nbCmd;
-        Command* commands[MAXCMD];
+        int nbInternalCmd;
+        int nbLibraryCmd;
+        Command* internal_commands[MAXCMD];
+        Command* library_commands[MAXCMD];
         char currDir[MAXSIZE];
 };
 
@@ -77,6 +79,8 @@ void freeShell(Shell* shell);
  * @param      cmd the command to execute           
  */
 int executeCommand(int fd_in, int fd_out, Shell* shell, ParsedCommand* cmd);
+
+int executeInternalCommand(ParsedCommand* cmd);
 /**
  * @brief      Execute an internal command and redirects the flow to the right file descriptor
  *
@@ -84,7 +88,7 @@ int executeCommand(int fd_in, int fd_out, Shell* shell, ParsedCommand* cmd);
  * @param      fd_out the ouput file descriptor
  * @param      cmd the command to execute           
  */
-int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd);
+int executeLibraryCommand(int fd_in, int fd_out, ParsedCommand* cmd);
 /**
  * @brief      Execute an external command
  *

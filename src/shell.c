@@ -23,24 +23,36 @@
 
 Shell* initShell(){
         Shell* shell = malloc(sizeof(Shell));
-        (*shell).nbCmd = initCommands(shell->commands);
+        (*shell).nbInternalCmd = initCommands(shell->internal_commands);
+        (*shell).nbLibraryCmd = 0;
         return shell;
 }
 
 void freeShell(Shell* shell){
-        int res = freeCommands((*shell).nbCmd, (*shell).commands);
+        int internal = freeCommands((*shell).nbInternalCmd, (*shell).internal_commands);
+        int library = freeCommands((*shell).nbLibraryCmd, (*shell).library_commands);
         free(shell);
 }
 
 int findFunction(Shell* shell, ParsedCommand* command){
         int i=0;
         //printf("%d\n",shell->nbCmd);
-        while(i<shell->nbCmd){
+        while(i<shell->nbInternalCmd){
                 //printf("%s\n", (shell->commands)[i]->name);
                 //printf("%s\n", (*command).name);
-                if(strcmp((shell->commands)[i]->name,(*command).name) == 0){
-                        (*command).cmd_ptr = (shell->commands)[i]->cmd_ptr;
+                if(strcmp((shell->internal_commands)[i]->name,(*command).name) == 0){
+                        (*command).cmd_ptr = (shell->internal_commands)[i]->cmd_ptr;
                         return 1;
+                }    
+                i++;
+        }
+        i=0;
+        while(i<shell->nbLibraryCmd){
+                //printf("%s\n", (shell->commands)[i]->name);
+                //printf("%s\n", (*command).name);
+                if(strcmp((shell->library_commands)[i]->name,(*command).name) == 0){
+                        (*command).cmd_ptr = (shell->library_commands)[i]->cmd_ptr;
+                        return 2;
                 }    
                 i++;
         }
@@ -50,8 +62,8 @@ int findFunction(Shell* shell, ParsedCommand* command){
 
 int checkFunction(Shell* shell, char* name){
         int i=0;
-        while(i<shell->nbCmd){
-                if(strcmp((shell->commands)[i]->name, name) == 0){
+        while(i<shell->nbLibraryCmd){
+                if(strcmp((shell->library_commands)[i]->name, name) == 0){
                         printf("%s est reconnue\n", name);
                         return 1;
                 }    
@@ -63,9 +75,9 @@ int checkFunction(Shell* shell, char* name){
 
 int testFunction(Shell* shell, char* name, int argc, char* argv[]){
         int i=0;
-        while(i<shell->nbCmd){
-                if(strcmp((shell->commands)[i]->name, name) == 0){
-                        (shell->commands)[i]->cmd_ptr(argc, argv);
+        while(i<shell->nbLibraryCmd){
+                if(strcmp((shell->library_commands)[i]->name, name) == 0){
+                        (shell->library_commands)[i]->cmd_ptr(argc, argv);
                         return 1;
                 }    
                 i++;
@@ -75,8 +87,12 @@ int testFunction(Shell* shell, char* name, int argc, char* argv[]){
 }
 
 int executeCommand(int fd_in, int fd_out, Shell* shell, ParsedCommand* cmd){
-        if(findFunction(shell, cmd)){
-                return executeInternalCommand(fd_in, fd_out, cmd);
+        int res = findFunction(shell, cmd);
+        if(res==1){
+                return executeInternalCommand(cmd);
+        }
+        else if(res==2){
+                return executeLibraryCommand(fd_in, fd_out, cmd);
         }
         else{
                 // If command doesn't exist internally or as a library, we start it from PATH
@@ -84,8 +100,14 @@ int executeCommand(int fd_in, int fd_out, Shell* shell, ParsedCommand* cmd){
         }
 }
 
-int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
+int executeInternalCommand(ParsedCommand* cmd){
         printf("internal\n");
+        cmd->cmd_ptr(cmd->cptarg, cmd->argv);
+        return 1;
+}
+
+int executeLibraryCommand(int fd_in, int fd_out, ParsedCommand* cmd){
+        printf("library\n");
         pid_t pid;
         // File descriptor du Pipe
            // pipefd[0] ---> Entrée (standard, fichier, ...)

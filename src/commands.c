@@ -67,6 +67,8 @@ ParsedCommand* parseCommand(char* input){
         ParsedCommand* pc;
         pc = (ParsedCommand*)malloc(sizeof(ParsedCommand));
         pc->argv[0] = malloc(NAME_SIZE*sizeof(char));
+        //strcpy(pc->argv[0], pc->name);
+        pc->argv[0][0]='\0';
         pc->cptarg = 1;
         //Command* ret = allocateCommand();
         //(*ret).nameLength=0;
@@ -78,7 +80,7 @@ ParsedCommand* parseCommand(char* input){
                     case S0:
                         if(debugState){printf(" STATE S0\n");}
                         // on trouve le String de la fonction
-                        if (isLetter(c)){
+                        if (isLetter(c) || c == '/' || c == '.'){
                         pc->name[cpt] = c;
                         current = Sfunction;
                         }
@@ -94,7 +96,7 @@ ParsedCommand* parseCommand(char* input){
                     case S1 : 
                     if(debugState){printf(" STATE S1\n");}
                         // on trouve le String de la fonction
-                        if (isLetter(c) || c == '-'){
+                        if (isLetter(c) || c == '-' || c == '/' || c == '.' || c == '~'){
                             pc->argv[pc->cptarg] = (char*)malloc(NAME_SIZE*sizeof(char));
                             pc->argv[pc->cptarg][cpt] = c;
                             ajout=true;
@@ -112,7 +114,7 @@ ParsedCommand* parseCommand(char* input){
 
                     case Sfunction:
                         if(debugState){printf(" STATE Sfunction\n");}
-                        if (isLetter(c) && c != ' ' & c !='-'){
+                        if ((isLetter(c) || c == '/') && c != ' ' & c !='-'){
                         cpt ++;
                         pc->nameLength = cpt;
                         pc->name[cpt] = c;
@@ -157,6 +159,7 @@ ParsedCommand* parseCommand(char* input){
                 pc->cptarg =pc->cptarg+1;
                 pc->argv[pc->cptarg-1][cpt+1] = '\0';
         }
+        pc->argv[pc->cptarg]=NULL;
         pc->name[pc->nameLength+1]='\0';
         //printf("name=%s\n", pc->name);
         //printf("argv[1][0]=%c\n", pc->argv[1][0]);

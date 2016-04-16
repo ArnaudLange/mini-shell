@@ -85,7 +85,7 @@ int executeCommand(int fd_in, int fd_out, Shell* shell, ParsedCommand* cmd){
 }
 
 int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
-        
+        printf("internal\n");
         pid_t pid;
         // File descriptor du Pipe
            // pipefd[0] ---> Entrée (standard, fichier, ...)
@@ -135,6 +135,7 @@ int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
 }
 
 int executeExternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
+        printf("external\n");
         pid_t pid;
         // File descriptor du Pipe
            // pipefd[0] ---> Entrée (standard, fichier, ...)
@@ -161,7 +162,8 @@ int executeExternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
                 dup2(pipefd[WRITE_END], STDOUT_FILENO);
                 //execlp(commande,argv,NULL);
                 //execlp(cmd->name, cmd->name, (char *)NULL);
-                //execv(cmd->name,(char * const*)cmd->argv);
+                printf("name=%s\n", cmd->name);
+                execv(cmd->name, cmd->argv);
                 perror("lalala");
                 close(pipefd[READ_END]);
                 _exit(EXIT_SUCCESS);

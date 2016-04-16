@@ -38,6 +38,7 @@ int findFunction(Shell* shell, ParsedCommand* command){
         int i=0;
         //printf("%d\n",shell->nbCmd);
         while(i<shell->nbInternalCmd){
+                printf("i=%d\n", i);
                 //printf("%s\n", (shell->commands)[i]->name);
                 //printf("%s\n", (*command).name);
                 if(strcmp((shell->internal_commands)[i]->name,(*command).name) == 0){
@@ -48,6 +49,7 @@ int findFunction(Shell* shell, ParsedCommand* command){
         }
         i=0;
         while(i<shell->nbLibraryCmd){
+                printf("i=%d\n", i);
                 //printf("%s\n", (shell->commands)[i]->name);
                 //printf("%s\n", (*command).name);
                 if(strcmp((shell->library_commands)[i]->name,(*command).name) == 0){
@@ -87,7 +89,9 @@ int testFunction(Shell* shell, char* name, int argc, char* argv[]){
 }
 
 int executeCommand(int fd_in, int fd_out, Shell* shell, ParsedCommand* cmd){
+        printf("execute ocmmand\n");
         int res = findFunction(shell, cmd);
+        printf("find function\n");
         if(res==1){
                 return executeInternalCommand(cmd);
         }

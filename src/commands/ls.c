@@ -21,6 +21,9 @@ int ls_lib(int argc, char *argv[]){
 	// -----------------------------------
     // Declaration tableau deux dimensions pour les options
 
+        printf("ls : argc=%d\n", argc);
+        printf("ls : argv[1][0]=%c", argv[1][0]);
+
     char* options = NULL;
     options = (char*) calloc(2,sizeof(char));
     if (options == NULL)
@@ -54,7 +57,7 @@ int ls_lib(int argc, char *argv[]){
     // -----------------------------------
     // parcourt des arguments de la fonction
 
-    if (argc >1) {
+    if (argc >0) {
         while (1) {
         int option_index = 0;
         static struct option long_options[] = {

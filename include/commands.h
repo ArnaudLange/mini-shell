@@ -47,7 +47,8 @@ struct parsedCommand{
         // taille du nom de la commande
         int nameLength;
         // tableau des arguments
-        char argv[MAX_PARAMETERS][NAME_SIZE];
+        //char argv[MAX_PARAMETERS][NAME_SIZE];
+        char* argv[MAX_PARAMETERS];
         // compte le nombre d'arguments
         int* cptarg;
         // taille de chaque argument

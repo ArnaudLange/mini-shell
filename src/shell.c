@@ -112,12 +112,15 @@ int executeInternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
                 dup2(pipefd[READ_END], STDIN_FILENO);
                 dup2(pipefd[WRITE_END], STDOUT_FILENO);
                 //printf("argSize=%d\n", *(cmd->cptarg));
-                char test[10][10];
-                strcpy(test[0], "-l");
-                strcpy(test[1], "./");
-                //cmd->cmd_ptr(*(cmd->cptarg), (char**)cmd->argv);
+                //char* test[10];
+                //test[0] = malloc(10*sizeof(char));
+                //test[1] = malloc(10*sizeof(char));
+
+                //strcpy(test[1], "-h");
+
+                cmd->cmd_ptr(*(cmd->cptarg), cmd->argv);
                 
-                cmd->cmd_ptr(2, (char**)test);
+                //cmd->cmd_ptr(2, test);
 
                 close(pipefd[READ_END]);
                 _exit(EXIT_SUCCESS);

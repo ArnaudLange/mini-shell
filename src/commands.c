@@ -62,9 +62,14 @@ ParsedCommand* parseCommand(char* input){
         // compteur du ième caractère à ajouter dans nom/options/arguments 
         int cpt = 0;
 
+        bool ajout=false;
+
         ParsedCommand* pc;
         pc = (ParsedCommand*)malloc(sizeof(ParsedCommand));
-        pc->cptarg = calloc(0, sizeof(int));
+        pc->argv[0] = malloc(NAME_SIZE*sizeof(char));
+        pc->cptarg = malloc(sizeof(int));
+        *(pc->cptarg)=1;
+        printf("cptarg=%d\n", *(pc->cptarg));
 
         //Command* ret = allocateCommand();
         //(*ret).nameLength=0;
@@ -93,8 +98,10 @@ ParsedCommand* parseCommand(char* input){
                     if(debugState){printf(" STATE S1\n");}
                         // on trouve le String de la fonction
                         if (isLetter(c) || c == '-'){
+                            pc->argv[*(pc->cptarg)] = (char*)malloc(NAME_SIZE*sizeof(char));
                             pc->argv[*(pc->cptarg)][cpt] = c;
-                            *(pc->cptarg) =*(pc->cptarg)+1;
+                            ajout=true;
+                            //*(pc->cptarg) =*(pc->cptarg)+1;
                             current = Sargs;
                         }
                         // un espace
@@ -148,6 +155,9 @@ ParsedCommand* parseCommand(char* input){
         i++;
         //(*ret).nameLength = parameterIndex;
         }
+        if(ajout){
+                *(pc->cptarg) =*(pc->cptarg)+1;
+        }
         pc->name[pc->nameLength+1]='\0';
         return pc;
 
@@ -166,7 +176,7 @@ void printName(ParsedCommand* pc){
 void printParameters(ParsedCommand* pc){
         printf("parameters = ");  
         for (int i =0; i <= *(pc->cptarg);i++){
-            for (int j = 0; j <= pc->argc[i]; j++){
+            for (int j = 0; j < pc->argc[i]; j++){
                 printf("%c", pc->argv[i][j]);
             }
             printf(" ");

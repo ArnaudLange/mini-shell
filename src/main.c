@@ -157,8 +157,8 @@ int main(int argc, char* argv[]){
                                 
                                 ParsedCommand* c = parseCommand(line);
                                 if (c!=NULL){
-                                    printName(c);
-                                    printParameters(c);
+                                    //printName(c);
+                                    //printParameters(c);
                                     //printOptions(c);
                                     executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,c);
                                     free(c);

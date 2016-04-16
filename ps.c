@@ -175,18 +175,20 @@ void ps(char *option, char* param){
                     }
                     
                 }
-                
-                printf("%s\t",flux->d_name);
-                if(strlen(TTY)==2){
-                    printf("?\t");
-                }
-                else{
-                    printf("%s\t",TTY);
-                }
-                printf("%s\t",uptime);
-                printf("%s",nomCommande);
-                printf("\n");
+                if (!strcmp(option,"e")){
 
+                    printf("%s\t",flux->d_name);
+                    if(strlen(TTY)==2){
+                        printf("?\t");
+                    }
+                    else{
+                        printf("%s\t",TTY);
+                    }
+                    printf("%s\t",uptime);
+                    printf("%s",nomCommande);
+                    printf("\n");
+
+                }
                 p=0;
                 free(TTY);
                 TTY=calloc(1,sizeof(char));
@@ -262,7 +264,7 @@ int main(int argc, char *argv[]){
         }
     }
     else {
-        ps(NULL,"");
+        ps(" ","");
     }
     return 0;
 }

@@ -64,6 +64,14 @@ void ps(char *option, char* param){
         exit(1);
     }
 
+    //stime
+    char *stime=NULL;
+    stime=calloc(1,sizeof(char));
+    if(stime==NULL){
+        perror("calloc");
+        exit(1);
+    }
+
     //struct utiliser pour lire le dossier
     struct dirent *flux;
 
@@ -161,6 +169,11 @@ void ps(char *option, char* param){
                         uptime[strlen(uptime)]=character;
                         uptime[strlen(uptime)+1]='\0';
                     }
+                    if (p==14){
+                        stime=realloc(stime,(strlen(stime)+1)*sizeof(char));
+                        stime[strlen(stime)]=character;
+                        stime[strlen(stime)+1]='\0';
+                    }
                     
                 }
 
@@ -168,18 +181,18 @@ void ps(char *option, char* param){
                 // uptime n'est pas affiche comme sur le "vrai" ps car je n'ai trouve le time que en int, et pas en format adapté comme m_time
                 // meme chose pour tty, je peux determiner quand il est '?' mais sinon il est sous format int
 
-
+                int temps = atoi(stime)+atoi(uptime);
                 //Si option e, on affiche tout
                 if (!strcmp(option,"e")){
 
                     printf("%s\t",flux->d_name);
                     if(strlen(TTY)==2){
-                        printf("?\t");
+                        printf(" ?\t");
                     }
                     else{
                         printf("%s\t",TTY);
                     }
-                    printf("%s\t",uptime);
+                    printf("%d\t",temps);
                     printf("%s",nom);
                     printf("\n");
                 }
@@ -198,9 +211,9 @@ void ps(char *option, char* param){
                             printf("?\t");
                         }
                         else{
-                            printf("%s\t",TTY);
+                            printf("'%s'\t",TTY);
                         }
-                        printf("%s\t",uptime);
+                        printf("%d\t",temps);
                         printf("%s",nom);
                         printf("\n");
                     }
@@ -210,6 +223,8 @@ void ps(char *option, char* param){
                 TTY=calloc(1,sizeof(char));
                 free(uptime);
                 uptime=calloc(1,sizeof(char));
+                free(stime);
+                stime=calloc(1,sizeof(char));
                 free(nom);
                 nom=calloc(1,sizeof(char));
             // pid (filename) state ppid pgrp session tty_nr

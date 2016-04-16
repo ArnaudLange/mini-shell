@@ -164,3 +164,16 @@ file(GLOB HEADER_CP
 add_executable(cp ${SRC_CP} ${HEADER_CP})
 add_library(cp_lib SHARED ${SRC_CP})
 set_target_properties(cp_lib PROPERTIES OUTPUT_NAME "cp")
+
+# chmod
+file(GLOB SRC_CHMOD
+    "src/commands/chmod.c"
+    "src/utils.c"
+    "src/main/chmod.c"
+)
+file(GLOB HEADER_CHMOD
+    "include/commands/chmod.h"
+)
+add_executable(chmod ${SRC_CHMOD} ${HEADER_CHMOD})
+add_library(chmod_lib SHARED ${SRC_CHMOD})
+set_target_properties(chmod_lib PROPERTIES OUTPUT_NAME "chmod")

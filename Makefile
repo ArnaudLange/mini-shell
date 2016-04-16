@@ -111,6 +111,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named chmod_lib
+
+# Build rule for target.
+chmod_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 chmod_lib
+.PHONY : chmod_lib
+
+# fast build rule for target.
+chmod_lib/fast:
+	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/build
+.PHONY : chmod_lib/fast
+
+#=============================================================================
+# Target rules for targets named chmod
+
+# Build rule for target.
+chmod: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 chmod
+.PHONY : chmod
+
+# fast build rule for target.
+chmod/fast:
+	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/build
+.PHONY : chmod/fast
+
+#=============================================================================
 # Target rules for targets named mv_lib
 
 # Build rule for target.
@@ -485,6 +511,39 @@ src/commands/cd.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/cd.c.s
 	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/commands/cd.c.s
 .PHONY : src/commands/cd.c.s
+
+src/commands/chmod.o: src/commands/chmod.c.o
+
+.PHONY : src/commands/chmod.o
+
+# target to build an object file
+src/commands/chmod.c.o:
+	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/commands/chmod.c.o
+	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/commands/chmod.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/chmod.c.o
+.PHONY : src/commands/chmod.c.o
+
+src/commands/chmod.i: src/commands/chmod.c.i
+
+.PHONY : src/commands/chmod.i
+
+# target to preprocess a source file
+src/commands/chmod.c.i:
+	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/commands/chmod.c.i
+	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/commands/chmod.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/chmod.c.i
+.PHONY : src/commands/chmod.c.i
+
+src/commands/chmod.s: src/commands/chmod.c.s
+
+.PHONY : src/commands/chmod.s
+
+# target to generate assembly for a file
+src/commands/chmod.c.s:
+	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/commands/chmod.c.s
+	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/commands/chmod.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/chmod.c.s
+.PHONY : src/commands/chmod.c.s
 
 src/commands/connect.o: src/commands/connect.c.o
 
@@ -866,6 +925,36 @@ src/main/cd.s: src/main/cd.c.s
 src/main/cd.c.s:
 	$(MAKE) -f CMakeFiles/cd.dir/build.make CMakeFiles/cd.dir/src/main/cd.c.s
 .PHONY : src/main/cd.c.s
+
+src/main/chmod.o: src/main/chmod.c.o
+
+.PHONY : src/main/chmod.o
+
+# target to build an object file
+src/main/chmod.c.o:
+	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/main/chmod.c.o
+	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/main/chmod.c.o
+.PHONY : src/main/chmod.c.o
+
+src/main/chmod.i: src/main/chmod.c.i
+
+.PHONY : src/main/chmod.i
+
+# target to preprocess a source file
+src/main/chmod.c.i:
+	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/main/chmod.c.i
+	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/main/chmod.c.i
+.PHONY : src/main/chmod.c.i
+
+src/main/chmod.s: src/main/chmod.c.s
+
+.PHONY : src/main/chmod.s
+
+# target to generate assembly for a file
+src/main/chmod.c.s:
+	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/main/chmod.c.s
+	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/main/chmod.c.s
+.PHONY : src/main/chmod.c.s
 
 src/main/connect.o: src/main/connect.c.o
 
@@ -1251,6 +1340,8 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
+	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/utils.c.o
@@ -1280,6 +1371,8 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
+	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/utils.c.i
@@ -1309,6 +1402,8 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
+	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/echo_lib.dir/build.make CMakeFiles/echo_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/cp.dir/build.make CMakeFiles/cp.dir/src/utils.c.s
@@ -1338,7 +1433,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... chmod_lib"
 	@echo "... edit_cache"
+	@echo "... chmod"
 	@echo "... mv_lib"
 	@echo "... echo_lib"
 	@echo "... cp"
@@ -1371,6 +1468,9 @@ help:
 	@echo "... src/commands/cd.o"
 	@echo "... src/commands/cd.i"
 	@echo "... src/commands/cd.s"
+	@echo "... src/commands/chmod.o"
+	@echo "... src/commands/chmod.i"
+	@echo "... src/commands/chmod.s"
 	@echo "... src/commands/connect.o"
 	@echo "... src/commands/connect.i"
 	@echo "... src/commands/connect.s"
@@ -1407,6 +1507,9 @@ help:
 	@echo "... src/main/cd.o"
 	@echo "... src/main/cd.i"
 	@echo "... src/main/cd.s"
+	@echo "... src/main/chmod.o"
+	@echo "... src/main/chmod.i"
+	@echo "... src/main/chmod.s"
 	@echo "... src/main/connect.o"
 	@echo "... src/main/connect.i"
 	@echo "... src/main/connect.s"

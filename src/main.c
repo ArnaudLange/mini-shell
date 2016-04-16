@@ -107,6 +107,8 @@ int main(int argc, char* argv[]){
         checkFunction(shell, "mkdir");
 	checkFunction(shell, "du");
 	checkFunction(shell, "cp");
+	checkFunction(shell, "chmod");
+
 
         pthread_t sniffer_thread;
         

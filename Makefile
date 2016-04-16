@@ -111,6 +111,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named chown_lib
+
+# Build rule for target.
+chown_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 chown_lib
+.PHONY : chown_lib
+
+# fast build rule for target.
+chown_lib/fast:
+	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/build
+.PHONY : chown_lib/fast
+
+#=============================================================================
+# Target rules for targets named chown
+
+# Build rule for target.
+chown: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 chown
+.PHONY : chown
+
+# fast build rule for target.
+chown/fast:
+	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/build
+.PHONY : chown/fast
+
+#=============================================================================
 # Target rules for targets named chmod_lib
 
 # Build rule for target.
@@ -545,6 +571,39 @@ src/commands/chmod.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/chmod.c.s
 .PHONY : src/commands/chmod.c.s
 
+src/commands/chown.o: src/commands/chown.c.o
+
+.PHONY : src/commands/chown.o
+
+# target to build an object file
+src/commands/chown.c.o:
+	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/commands/chown.c.o
+	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/commands/chown.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/chown.c.o
+.PHONY : src/commands/chown.c.o
+
+src/commands/chown.i: src/commands/chown.c.i
+
+.PHONY : src/commands/chown.i
+
+# target to preprocess a source file
+src/commands/chown.c.i:
+	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/commands/chown.c.i
+	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/commands/chown.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/chown.c.i
+.PHONY : src/commands/chown.c.i
+
+src/commands/chown.s: src/commands/chown.c.s
+
+.PHONY : src/commands/chown.s
+
+# target to generate assembly for a file
+src/commands/chown.c.s:
+	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/commands/chown.c.s
+	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/commands/chown.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/chown.c.s
+.PHONY : src/commands/chown.c.s
+
 src/commands/connect.o: src/commands/connect.c.o
 
 .PHONY : src/commands/connect.o
@@ -956,6 +1015,36 @@ src/main/chmod.c.s:
 	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/main/chmod.c.s
 .PHONY : src/main/chmod.c.s
 
+src/main/chown.o: src/main/chown.c.o
+
+.PHONY : src/main/chown.o
+
+# target to build an object file
+src/main/chown.c.o:
+	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/main/chown.c.o
+	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/main/chown.c.o
+.PHONY : src/main/chown.c.o
+
+src/main/chown.i: src/main/chown.c.i
+
+.PHONY : src/main/chown.i
+
+# target to preprocess a source file
+src/main/chown.c.i:
+	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/main/chown.c.i
+	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/main/chown.c.i
+.PHONY : src/main/chown.c.i
+
+src/main/chown.s: src/main/chown.c.s
+
+.PHONY : src/main/chown.s
+
+# target to generate assembly for a file
+src/main/chown.c.s:
+	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/main/chown.c.s
+	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/main/chown.c.s
+.PHONY : src/main/chown.c.s
+
 src/main/connect.o: src/main/connect.c.o
 
 .PHONY : src/main/connect.o
@@ -1340,6 +1429,8 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
+	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/utils.c.o
@@ -1371,6 +1462,8 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
+	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/utils.c.i
@@ -1402,6 +1495,8 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
+	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chmod_lib.dir/build.make CMakeFiles/chmod_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chmod.dir/build.make CMakeFiles/chmod.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/mv_lib.dir/build.make CMakeFiles/mv_lib.dir/src/utils.c.s
@@ -1433,6 +1528,8 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... chown_lib"
+	@echo "... chown"
 	@echo "... chmod_lib"
 	@echo "... edit_cache"
 	@echo "... chmod"
@@ -1471,6 +1568,9 @@ help:
 	@echo "... src/commands/chmod.o"
 	@echo "... src/commands/chmod.i"
 	@echo "... src/commands/chmod.s"
+	@echo "... src/commands/chown.o"
+	@echo "... src/commands/chown.i"
+	@echo "... src/commands/chown.s"
 	@echo "... src/commands/connect.o"
 	@echo "... src/commands/connect.i"
 	@echo "... src/commands/connect.s"
@@ -1510,6 +1610,9 @@ help:
 	@echo "... src/main/chmod.o"
 	@echo "... src/main/chmod.i"
 	@echo "... src/main/chmod.s"
+	@echo "... src/main/chown.o"
+	@echo "... src/main/chown.i"
+	@echo "... src/main/chown.s"
 	@echo "... src/main/connect.o"
 	@echo "... src/main/connect.i"
 	@echo "... src/main/connect.s"

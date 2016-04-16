@@ -108,6 +108,7 @@ int main(int argc, char* argv[]){
 	checkFunction(shell, "du");
 	checkFunction(shell, "cp");
 	checkFunction(shell, "chmod");
+        checkFunction(shell, "chown");
 
 
         pthread_t sniffer_thread;

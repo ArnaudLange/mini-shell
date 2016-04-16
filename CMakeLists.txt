@@ -177,3 +177,17 @@ file(GLOB HEADER_CHMOD
 add_executable(chmod ${SRC_CHMOD} ${HEADER_CHMOD})
 add_library(chmod_lib SHARED ${SRC_CHMOD})
 set_target_properties(chmod_lib PROPERTIES OUTPUT_NAME "chmod")
+
+
+# chown
+file(GLOB SRC_CHOWN
+    "src/commands/chown.c"
+    "src/utils.c"
+    "src/main/chown.c"
+)
+file(GLOB HEADER_CHOWN
+    "include/commands/chown.h"
+)
+add_executable(chown ${SRC_CHOWN} ${HEADER_CHOWN})
+add_library(chown_lib SHARED ${SRC_CHOWN})
+set_target_properties(chown_lib PROPERTIES OUTPUT_NAME "chown")

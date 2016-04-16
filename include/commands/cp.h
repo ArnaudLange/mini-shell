@@ -15,24 +15,25 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #pragma once
 
-#include <stdio.h>
-#include <sys/stat.h>
 #include <sys/types.h>
-#include <stdlib.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
 #include <errno.h>
-#include <getopt.h>
-#include <string.h>
-#include <unistd.h>
-#include <pwd.h>
 #include <dirent.h>
+#include <string.h>
+#include <utime.h>
+#include <limits.h>
+#include <getopt.h>
+#include <unistd.h>
 
 #include "../utils.h"
 
+#include "../parameters.def"
+#include "../typedef.h"
 
-int chown_lib(int argc, char *argv[]);
-
-void changeOwn(char * file,char * ownGr,char * options);
+void copy(char* src, char* dst, char* options, int nbOptions);
+int cp_lib(int argc, char *argv[]);
 

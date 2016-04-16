@@ -15,8 +15,14 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
     
-#include "../../include/commands/chown.h"
+#define NAME "cp"
+#include "../../include/commands/cp.h"
+
+cmdPtr init(char name[NAME_SIZE]){
+        strncpy(name, NAME, NAME_SIZE);
+        return &cp_lib;
+}
 
 int main(int argc, char* argv[]){
-        chown_lib(argc, argv);
+        cp_lib(argc, argv);
 }

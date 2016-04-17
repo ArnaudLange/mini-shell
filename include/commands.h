@@ -39,6 +39,7 @@ struct command{
 };
 
 typedef enum {
+    vide,
     tuyau,
     lefta,
     leftw,

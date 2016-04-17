@@ -153,24 +153,44 @@ int main(int argc, char* argv[]){
                                 ParsedCommand* tab = NULL;
                                 tab = (ParsedCommand*)malloc(sizeof(ParsedCommand));
                                 ParsedCommand* c = parseCommand(line);
+
+
+
+                                /*if ( c->typeredirec == tuyau){
+                                            printf("mourg\n");
+                                        }   
+                                ParsedCommand* d = parseCommand(&line[c->cptglobal]);
+                                if ( d->typeredirec == tuyau){
+                                            printf("mourg\n");
+                                        }
+                                    printName(c);
+                                    printName(d);
+                                    */
                                 // si on a une première commande
                                 if (c!=NULL){
-                                    int i = 1;
+                                    int i = 0;
                                     tab[0] = *c;
                                     //printf("%i\n", c->fin);
-                                    while(c->fin == false ){
-                                        //printf("bonjour\n");
-                                        //ParsedCommand* c = parseCommand(&line[(tab[i-1]).cptglobal]);
-                                        //tab[i] = *c; 
+                                    // la fin n'est pas atteinte -> il y a eu une redirection, on ajoute la nouvelle commande au tableau
+                                    while(tab[i].typeredirec != vide ){
+                                        i++;
+                                        tab = realloc(tab, (i+1)*sizeof(ParsedCommand));
+                                        //printf("%i\n", (tab[i-1]).cptglobal);
+                                        tab[i] = *parseCommand(&line[(tab[i-1]).cptglobal]);
+                                        //tab[i] = *c;
                                         //tab[i] = parseCommand(line[tab[i-1]->cptglobal]);
                                     }
                                     
-                                    //tab = realloc(tab, 2*sizeof(ParsedCommand));
+                                    
                                     //ParsedCommand* d = parseCommand(&line[c->cptglobal]);
                                     //tab[1] = *d;
+                                    
+                                    printName(&tab[0]);
+                                    printParameters(&tab[0]);
+                                    printName(&tab[1]);
+                                    printParameters(&tab[1]);
+                                    //printName(&tab[2]);
 
-                                    //printName(&tab[0]);
-                                    //printName(&tab[1]);
                                     // marche a chaque fois 
                                     //if((c->typeredirec) == tuyau ){
                                     //printf("tuyau\n");}
@@ -202,7 +222,7 @@ int main(int argc, char* argv[]){
                                     printf("function=%d\n", c->cmd_ptr);*/
                                 }
                                 break;  
-                        }                                                      
+                        }                                                  
                 }
         }
         freeShell(shell); 

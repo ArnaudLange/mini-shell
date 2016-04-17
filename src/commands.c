@@ -72,6 +72,7 @@ ParsedCommand* parseCommand(char* input){
         pc->argv[0][0]='\0';
         pc->cptarg = 1;
         pc->cptglobal = 0;
+        pc->typeredirec = vide;
         while(input[pc->cptglobal]!='\n'){
                 c = input[pc->cptglobal];
                 switch(current){
@@ -107,6 +108,7 @@ ParsedCommand* parseCommand(char* input){
                             current = S1;
                         } // si on a un pipe alors on return le pc pour pouvoir relancer le parsing sur la suite (deuxième commande)
                         else if ( c == '|'){
+                        	printf("hyueres\n");
                         	pc->cptglobal++;
                         	pc->typeredirec = tuyau;
                         	return pc;
@@ -171,7 +173,9 @@ ParsedCommand* parseCommand(char* input){
         /*on termine manuellement la chaine de caractères du nom (sinon erreur)*/
         pc->argv[pc->cptarg]=NULL;
         pc->name[pc->nameLength+1]='\0';
-        pc->fin = true;
+        printf("le cacatoes est joli\n");
+        //pc->fin = true;
+        pc->typeredirec = vide;
         return pc;
 
     }
@@ -183,18 +187,22 @@ void printName(ParsedCommand* pc){
     /*for (int i = 0;i <= NAME_SIZE;i++){
         printf("%c", pc->name[i]);
     }*/
-    printf("\n");
 }
 
 
 void printParameters(ParsedCommand* pc){
-        printf("parameters = ");  
-        for (int i =0; i <= pc->cptarg;i++){
+        printf("parameters = ");
+    	for (int i =0; i < pc->cptarg;i++){
+    		printf("%s",pc->argv[i]);
+    	}
+
+    	/*
+	        for (int i =0; i <= pc->cptarg;i++){
             for (int j = 0; j < pc->argc[i]; j++){
                 printf("%c", pc->argv[i][j]);
             }
             printf(" ");
-        }
+        }*/
         printf("\n");
 }
 

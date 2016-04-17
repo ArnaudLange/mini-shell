@@ -156,11 +156,14 @@ int main(int argc, char* argv[]){
                                 if (c!=NULL){
                                     tab[0] = *c;
                                     tab = realloc(tab, 2*sizeof(ParsedCommand));
-                                    ParsedCommand* d = parseCommand(&line[6]);
-                                    //tab[1] = *d;
+                                    ParsedCommand* d = parseCommand(&line[c->cptglobal]);
+                                    tab[1] = *d;
 
-                                    //printName(&tab[0]);
-                                    //printName(&tab[1]);
+                                    printName(&tab[0]);
+                                    printName(&tab[1]);
+                                    /*if((c->typeredirec) == tuyau ){
+                                    //printf("tuyau\n");
+                                    } */
                                     //printParameters(c);
                                     //printOptions(c);
                                     executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,c);

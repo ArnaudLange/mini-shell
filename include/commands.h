@@ -38,6 +38,15 @@ struct command{
         int (*cmd_ptr)(int, char*[]);
 };
 
+typedef enum {
+    tuyau,
+    lefta,
+    leftw,
+    righta,
+    rightw,
+} Typeredirec;
+
+
 /**
  * @brief      Structure for a shell Parsed command
  */
@@ -55,9 +64,13 @@ struct parsedCommand{
         int cptarg;
         // taille de chaque argument
         int argc[NAME_SIZE];
+        // type de redirection s'il y en a un
+        Typeredirec typeredirec;
 
         int (*cmd_ptr)(int, char*[]);
 };
+
+
 
 /**
  * Enumeration of all the automate states

@@ -107,6 +107,7 @@ ParsedCommand* parseCommand(char* input){
                         } // si on a un pipe alors on return le pc pour pouvoir relancer le parsing sur la suite (deuxième commande)
                         else if ( c == '|'){
                         	pc->cptglobal++;
+                        	pc->typeredirec = tuyau;
                         	return pc;
                         }
                         else {

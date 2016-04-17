@@ -31,32 +31,37 @@ void top(){
     //ici seront stockees les nb de tasks ainsi que le nombre dans chaque mode
     int sleeping=0,stopped=0,zombie=0,running=0,nb=0;
 
-
+    //variables utilises pour calculer l'utilisation du CPU
     float hertz, total_time, seconds;
 
     while(1){    
 
+    //utilise pour savoir si on a depasse la taille de l'ecran ou non
     int nbLigne=0;
-
+    //structure qui donnera le nom de l'utilisateur suivant l'uid
     struct passwd * user;
+    //tableaux de structures pour stocker chaque processus
     struct processus *tableProcess=NULL;
     tableProcess=calloc(1,sizeof(struct processus));
     if(tableProcess==NULL){
         perror("Calloc");
         exit(1);
     }
-
+    //l'index de ce tableau
     int emplacementTable=0;
 
+    //differentes variables pour se reperer a l'interieur des fichiers
     int p=0,t=0,tp=0;
     
-
+    //variables utilises pour trouver l'heure actuelle et le temps de boot
     long int hr,min,sc, minBoot,hourBoot;
+
 
     char character;
 
     FILE *fichier=NULL;
 
+    //on recupere l'heure actuelle ici
     time_t rawtime;
     time(&rawtime);
     struct tm *tm_struct = localtime(&rawtime);
@@ -101,6 +106,7 @@ void top(){
         exit(1);
     }
 
+    //Ici on va declarer tous nos tableaux de char utilises
 
     char *uptime=NULL;
     uptime=calloc(1,sizeof(char));

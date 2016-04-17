@@ -24,8 +24,9 @@
     // -----------------------------------
     // Declaration tableau pour les options
 
+
         char* options = NULL;
-        options = (char*) calloc(15, sizeof(*options));
+        options = calloc(1, sizeof(char));
         if (options == NULL)
         {
             perror("options");
@@ -37,13 +38,13 @@
     // Declaration tableau deux dimensions pour les files
 
         char** files = NULL;
-        files = malloc(sizeof(char**));
+        files = calloc(1,sizeof(char*));
         if (files == NULL)
         {
             perror("files");
             exit(1);
         }
-        files[0] = malloc(sizeof(char*));
+        files[0] = calloc(1,sizeof(char));
         if (files[0] == NULL)
         {
             perror("files[x]");
@@ -51,7 +52,7 @@
         }
 
     // -----------------------------------
-        char* mode = malloc(sizeof(char*));
+        char* mode = calloc(1,sizeof(char));
         mode = "0777";
         int nbOptions = 0;
         int nbFiles = 0;
@@ -122,15 +123,23 @@
         }
         //Boucle pour parcourir les arguments qui ne sont pas des options
         for (i=1; i<argc; i++)
-        {  
-            if(argv[i][0] != '-' && argv[i] != mode) //si l'argument n'est pas une option, et n'est pas le mode donné
+        {
+            if(argv[i][0] != '-')
             {
                 nbFiles++;
-                files[nbFiles] = malloc(16*sizeof(char*));
-
-                files[nbFiles] = concatenateTables(files[nbFiles],argv[i]);
-
-
+                files=realloc(files, (nbFiles)*sizeof(char*));
+                if (files == NULL)
+                {
+                    perror("files");
+                    exit(1);
+                }
+                files[nbFiles] = calloc(1,sizeof(char));
+                if (files[nbFiles] == NULL)
+                {
+                    perror("files[x]");
+                    exit(1);
+                }
+                files[nbFiles-1]=concatenateTables(files[nbFiles-1], argv[i]);
             }
         }
         // if bon nombre d'arguments
@@ -143,7 +152,12 @@
             printf("mkdir : invalid number of arguments\n");
             printf("Try 'mkdir --help' for more information.\n");
         }
-        //free(files);
+
+        int l;
+        for(l=0;l<nbFiles;l++){
+            free(files[nbFiles]);
+        }
+        free(files);
         free(options);
 
 
@@ -168,7 +182,7 @@ void create_dir(char** files, int nbFiles, char* options, int nbOptions, char* m
     // ----------------------------------
     mode_t mode;
     int i;
-    for(i=1; i<=nbFiles; i++){
+    for(i=0; i<=nbFiles; i++){
         if (stat(files[i], &statbuf) != -1) { //si il existe déjà un dossier/fichier déjà nommé comme celui qu'on essaye de créer
             printf("mkdir : '%s' already exists\n", files[i]);
         }

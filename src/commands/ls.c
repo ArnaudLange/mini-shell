@@ -35,13 +35,13 @@ int ls_lib(int argc, char *argv[]){
     // Declaration tableau deux dimensions pour les files
 
     char** files = NULL;
-    files = calloc(1,sizeof(char**));
+    files = calloc(1,sizeof(char*));
     if (files == NULL)
     {
         perror("files");
         exit(1);
     }
-    files[0] = calloc(1,sizeof(char*));
+    files[0] = calloc(1,sizeof(char));
     if (files[0] == NULL)
     {
         perror("files[x]");
@@ -321,8 +321,11 @@ void ls(char *directory, char *options)
 
                         }
                 }
+                close(file);
 
         }
+        closedir(repertoire);
+        free(nameFile);
         //SAUT DE LIGNE A LA FIN
         printf("\n");
 

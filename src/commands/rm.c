@@ -25,7 +25,7 @@ int rm_lib(int argc, char *argv[]){
     // Declaration tableau deux dimensions pour les options
 
     char* options = NULL;
-    options = (char*) calloc(16, sizeof(*options));
+    options = calloc(1, sizeof(char));
     if (options == NULL)
     {
         perror("options");
@@ -37,13 +37,13 @@ int rm_lib(int argc, char *argv[]){
     // Declaration tableau deux dimensions pour les files
 
     char** files = NULL;
-    files = malloc(32*sizeof(char**));
+    files = calloc(1,sizeof(char*));
     if (files == NULL)
     {
         perror("files");
         exit(1);
     }
-    files[0] = malloc(32*sizeof(char*));
+    files[0] = calloc(1,sizeof(char));
     if (files[0] == NULL)
     {
         perror("files[x]");
@@ -121,17 +121,25 @@ int rm_lib(int argc, char *argv[]){
             if(argv[i][0] != '-')
             {
                 nbFiles++;
-                files[nbFiles] = malloc(16*sizeof(char*));
-
-                concatenateTables(files[nbFiles],argv[i]);
-
-
+                files=realloc(files, (nbFiles)*sizeof(char*));
+                if (files == NULL)
+                {
+                    perror("files");
+                    exit(1);
+                }
+                files[nbFiles] = calloc(1,sizeof(char));
+                if (files[nbFiles] == NULL)
+                {
+                    perror("files[x]");
+                    exit(1);
+                }
+                files[nbFiles-1]=concatenateTables(files[nbFiles-1], argv[i]);
             }
         }
     // if nombre d'arguments invalide
         if (nbFiles >= 1)
         {
-            for(j=1; j<=nbFiles; j++){
+            for(j=0; j<nbFiles; j++){
                 suppression(files[j], options);
             }   
         }
@@ -150,7 +158,7 @@ int rm_lib(int argc, char *argv[]){
         printf("rm : invalid number of arguments\n");
         printf("Try 'rm --help' for more information.\n");
     }
-    for(k=1; k<=nbFiles; k++){
+    for(k=0; k<nbFiles; k++){
         free(files[k]);
     }
     free(files);

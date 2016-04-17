@@ -233,4 +233,19 @@ add_executable(ps ${SRC_PS} ${HEADER_PS})
 add_library(ps_lib SHARED ${SRC_PS})
 set_target_properties(ps_lib PROPERTIES OUTPUT_NAME "ps")
 
+# top
+file(GLOB SRC_TOP
+    "src/commands/top.c"
+    "src/utils.c"
+    "src/main/top.c"
+)
+file(GLOB HEADER_TOP
+    "include/commands/top.h"
+)
+add_executable(top ${SRC_TOP} ${HEADER_TOP})
+add_library(top_lib SHARED ${SRC_TOP})
+set_target_properties(ps_lib PROPERTIES OUTPUT_NAME "top")
+
+
+
 

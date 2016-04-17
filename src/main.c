@@ -112,6 +112,7 @@ int main(int argc, char* argv[]){
         checkFunction(shell, "chgrp");
         checkFunction(shell, "more");
 	checkFunction(shell, "ps");
+        checkFunction(shell, "top");
 
         /*
         testFunction(shell, "cd", argc, argv);

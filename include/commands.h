@@ -39,6 +39,7 @@ struct command{
 };
 
 typedef enum {
+    vide,
     tuyau,
     lefta,
     leftw,
@@ -81,7 +82,10 @@ typedef enum {
         S0, // starting state is S0
         Sfunction,
         Sargs,
-        Sredirection,
+        //redirection à gauche
+        Sredirectionl,
+        //redirection à droite
+        Sredirectionr,
         S1,
 } State;
 

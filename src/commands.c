@@ -71,6 +71,7 @@ ParsedCommand* parseCommand(const char* input){
         pc->argv[0][0]='\0';
         pc->cptarg = 1;
         pc->cptglobal = 0;
+        pc->typeredirec = vide;
         while(input[pc->cptglobal]!='\n'){
                 c = input[pc->cptglobal];
                 switch(current){
@@ -106,9 +107,16 @@ ParsedCommand* parseCommand(const char* input){
                             current = S1;
                         } // si on a un pipe alors on return le pc pour pouvoir relancer le parsing sur la suite (deuxième commande)
                         else if ( c == '|'){
+                        	//printf("hyueres\n");
                         	pc->cptglobal++;
                         	pc->typeredirec = tuyau;
                         	return pc;
+                        }
+                        else if ( c == '>'){
+                        	current = Sredirectionr;
+                        }
+                        else if ( c == '<'){
+                        	current = Sredirectionl;
                         }
                         else {
 				printf("ça retourne NULL2 \n");
@@ -158,12 +166,36 @@ ParsedCommand* parseCommand(const char* input){
                         pc->argc[pc->cptarg] = cpt;
                     break;
                     // cas où l'on trouve un indicateur de redirection
-                    case Sredirection :
-                    break; 
+                    case Sredirectionl :
+	                    if(debugState){printf(" STATE Sredirectionl\n");}
+	                    if ( c=='<'){
+	                    	pc->cptglobal++;
+	                        pc->typeredirec = leftw;
+	                       	return pc;
+	                       }
+	                    else {
+	                    	pc->cptglobal++;
+	                       	pc->typeredirec = lefta;
+	                        return pc;
+	                    }
+                    break;
+                    case Sredirectionr :
+                    if(debugState){printf(" STATE Sredirectionr\n");}
+	                    if ( c=='>'){
+	                    	pc->cptglobal++;
+	                        pc->typeredirec = rightw;
+	                       	return pc;
+	                    }
+	                    else {
+	                    	pc->cptglobal++;
+	                       	pc->typeredirec = righta;
+	                        return pc;
+	                    }
             if(debugState){printf("\n");}
         }
         pc->cptglobal++;
         }
+
         /* si on a un argument au moins, on incrémente le nombre d'arguments
         et on termine manuellement la chaine de caractères (sinon erreur)*/
         if(ajout){
@@ -173,7 +205,8 @@ ParsedCommand* parseCommand(const char* input){
         /*on termine manuellement la chaine de caractères du nom (sinon erreur)*/
         pc->argv[pc->cptarg]=NULL;
         pc->name[pc->nameLength+1]='\0';
-        pc->fin = true;
+        //pc->fin = true;
+        pc->typeredirec = vide;
         return pc;
 
     }
@@ -185,18 +218,22 @@ void printName(ParsedCommand* pc){
     /*for (int i = 0;i <= NAME_SIZE;i++){
         printf("%c", pc->name[i]);
     }*/
-    printf("\n");
 }
 
 
 void printParameters(ParsedCommand* pc){
-        printf("parameters = ");  
-        for (int i =0; i <= pc->cptarg;i++){
+        printf("parameters = ");
+    	for (int i =0; i < pc->cptarg;i++){
+    		printf("%s",pc->argv[i]);
+    	}
+
+    	/*
+	        for (int i =0; i <= pc->cptarg;i++){
             for (int j = 0; j < pc->argc[i]; j++){
                 printf("%c", pc->argv[i][j]);
             }
             printf(" ");
-        }
+        }*/
         printf("\n");
 }
 

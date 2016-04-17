@@ -88,6 +88,14 @@ void top(){
     //struct utiliser pour lire le dossier
     struct dirent *flux;
 
+    //command
+    char *command=NULL;
+    command=calloc(1,sizeof(char));
+    if(command==NULL){
+        perror("calloc");
+        exit(1);
+    }
+
     //on initialise namefile qui contiendra le nom du fichier lu
     char *nameFile = NULL;
     nameFile = calloc(1,sizeof(char));
@@ -132,7 +140,19 @@ void top(){
 
         Process currentProcess;
         currentProcess.pid=0;
-        currentProcess.userName="";
+        currentProcess.userName=NULL;
+        currentProcess.userName=calloc(1,sizeof(char));
+        if(currentProcess.userName==NULL){
+            perror("calloc");
+            exit(1);
+        }
+        currentProcess.name=NULL;
+        currentProcess.name=calloc(1,sizeof(char));
+        if(currentProcess.name==NULL){
+            perror("calloc");
+            exit(1);
+        }
+
 
         if(atoi(flux->d_name)!=0){
             nb++;
@@ -183,6 +203,11 @@ void top(){
             while((character=fgetc(fichier)) != EOF){
                 if (character== ' '){ //on incremente une variables pour savoir a quel espace on est rendu
                     p++;
+                }
+                if (p==1 && character!='(' && character != ')'){
+                    command=realloc(command,(strlen(command)+1)*sizeof(char));
+                    command[strlen(command)]=character;
+                    command[strlen(command)+1]='\0';
                 }
                 if (p==2){
                     if(character=='S'){
@@ -237,27 +262,34 @@ void top(){
                 }
             }
             fclose(fichier);
+
             if (! (user = getpwuid(atoi(strUid)) )){
                 currentProcess.userName = "?";
             } else {
-                currentProcess.userName = user->pw_name;
+                currentProcess.userName = concatenateTables(currentProcess.userName,user->pw_name);
+
             }
+            currentProcess.name = concatenateTables(currentProcess.name,command);
             //t sert a comptabiliser le nombre de lignes
             t=0;
             tp=0;
             free(strUid);
             strUid=calloc(1,sizeof(char));
-
+            
 
             tableProcess[emplacementTable]=currentProcess;
             emplacementTable++;
             tableProcess=realloc(tableProcess,(emplacementTable+1)*sizeof(struct processus));
-            
+            /*
             if (ligneScreen>nbLigne){
                 printf("%d\t",tableProcess[emplacementTable-1].pid);
-                printf("%s\n",tableProcess[emplacementTable-1].userName);
+                printf("%s\t\t\t\t\t\t\t\t\t\t",tableProcess[emplacementTable-1].userName);
+                printf("%s",tableProcess[emplacementTable-1].name);
+                printf("\n");
                 nbLigne++;
-            }
+            }*/
+            free(command);
+            command=calloc(1,sizeof(char));
             
             closedir(sous_repertoire);
         }
@@ -265,6 +297,18 @@ void top(){
     }
     closedir(repertoire);
     
+    int g;
+    for(g=0;g<emplacementTable;g++){
+        if (ligneScreen>nbLigne){
+            printf("%d\t",tableProcess[g].pid);
+            printf("%s\t\t\t\t\t\t\t\t\t\t",tableProcess[g].userName);
+            printf("%s",tableProcess[g].name);
+            printf("\n");
+            nbLigne++;
+        }
+    }
+
+
     //pour repeter l'execution chaque seconde
     sleep(1);
     }

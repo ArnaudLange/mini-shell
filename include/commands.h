@@ -45,6 +45,9 @@ typedef enum {
     leftw,
     righta,
     rightw,
+    detach,
+    andd,
+    orr,
 } Typeredirec;
 
 
@@ -87,6 +90,8 @@ typedef enum {
         //redirection à droite
         Sredirectionr,
         S1,
+        Spipe_or,
+        Sdetach_and,
 } State;
 
 

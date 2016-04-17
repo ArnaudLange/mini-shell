@@ -16,12 +16,12 @@ along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 //** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/fonction.h"
+//#include "../../include/commands/su.h"
 
-#include "fonction.h" //à virer une fois les tests effectués
+#include "su.h" //à virer une fois les tests effectués
 
 
-int fonction_lib(int argc, char *argv[]){
+int main(int argc, char *argv[]){
 
     // -----------------------------------
     // Declaration tableau deux dimensions pour les options
@@ -70,8 +70,7 @@ int fonction_lib(int argc, char *argv[]){
             //structure donnant les options gérées par la commande
                 //si l'option peut prendre un argument (ex : --port:8080) à la place de no_argument on mettra required_argument
             static struct option long_options[] = {
-                {"help",     no_argument,       0, 'h'},
-                {"verbose",  no_argument,       0, 'v'}
+                {"help",     no_argument,       0, 'h'}
             };
 
             //dans le getopt_long, changer le troisième argument et rajouter les options attendues, ici "hv"
@@ -85,21 +84,15 @@ int fonction_lib(int argc, char *argv[]){
 
                 case 'h': 
                 printf("\n-----------------------------------------------------------\n");
-                printf("Usage: fonction [OPTION]... ARG\n");
-                printf("Rename SOURCE to DEST\n\n");
-                printf("    -v, --verbose        explain what is being done\n");
+                printf("Usage: su [OPTION]... USER\n");
+                printf("Change the effective user id and group id to that of USER. \n\n");
                 printf("\n-----------------------------------------------------------\n\n");
                 exit(0);
                 break;
 
-                case 'v':
-                options[nbOptions] = c; 
-                nbOptions++;
-                break;
-
                 //message par défaut quand l'option rentrée n'est pas gérée par la commande
                 default:
-                printf("Try 'fonction --help' for more information.\n");
+                printf("Try 'su --help' for more information.\n");
                 exit(1);
             }
         }
@@ -116,25 +109,24 @@ int fonction_lib(int argc, char *argv[]){
 
             }
         }
-        // if nombre d'arguments invalide
-        if (nbFiles == 2)
+        // if nombre d'arguments valide
+        if (nbFiles = 1)
         {
-            myMv(files[1],files[2], options, nbOptions);   
+            changeUser(files[1], options);   
         }
         else
         {
-            printf("fonction : invalid number of arguments\n");
-            printf("Try 'fonction --help' for more information.\n");
+            printf("su : invalid number of arguments\n");
+            printf("Try 'su --help' for more information.\n");
         }
         free(files);
         free(options);
 
 
     }
-    //** A changer **//
-    //SI pas d'arguments => on affiche une erreur
+    //SI pas d'arguments => on se log en root
     else {
-        printf("fonction : invalid number of arguments\n");
+        changeUser("root", options);
     }
 
     return 0;

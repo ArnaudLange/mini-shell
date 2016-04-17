@@ -219,7 +219,6 @@ add_executable(more ${SRC_MORE} ${HEADER_MORE})
 add_library(more_lib SHARED ${SRC_MORE})
 set_target_properties(more_lib PROPERTIES OUTPUT_NAME "more")
 
-
 # ps
 file(GLOB SRC_PS
     "src/commands/ps.c"
@@ -245,7 +244,3 @@ file(GLOB HEADER_TOP
 add_executable(top ${SRC_TOP} ${HEADER_TOP})
 add_library(top_lib SHARED ${SRC_TOP})
 set_target_properties(ps_lib PROPERTIES OUTPUT_NAME "top")
-
-
-
-

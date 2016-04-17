@@ -76,11 +76,11 @@ int loadLibraries(Shell* shell){
                                 printf("Error loading %s\n", dp->d_name);
                         }
                         else{
-                                shell->commands[shell->nbCmd] = (Command*) malloc(sizeof(Command));
-                                Command* cmd = shell->commands[shell->nbCmd];
+                                shell->library_commands[shell->nbLibraryCmd] = (Command*) malloc(sizeof(Command));
+                                Command* cmd = shell->library_commands[shell->nbLibraryCmd];
                                 cmd->cmd_ptr = Init(cmd->name);
-                                shell->nbCmd++;
-                                printf("successfully loaded %s at index[%d] with name \'%s\'\n", dp->d_name, shell->nbCmd, cmd->name);
+                                shell->nbLibraryCmd++;
+                                printf("successfully loaded %s at index[%d] with name \'%s\'\n", dp->d_name, shell->nbLibraryCmd, cmd->name);
                         }
                 }
         }
@@ -105,9 +105,9 @@ int main(int argc, char* argv[]){
         checkFunction(shell, "mv");
         checkFunction(shell, "pwd");
         checkFunction(shell, "mkdir");
-	checkFunction(shell, "du");
-	checkFunction(shell, "cp");
-	checkFunction(shell, "chmod");
+    	checkFunction(shell, "du");
+    	checkFunction(shell, "cp");
+    	checkFunction(shell, "chmod");
         checkFunction(shell, "chown");
         checkFunction(shell, "chgrp");
         checkFunction(shell, "more");
@@ -131,7 +131,6 @@ int main(int argc, char* argv[]){
 
 
         pthread_t sniffer_thread;
-        
         if( pthread_create( &sniffer_thread , NULL ,  start , (void*) shell) < 0)
         {
             perror("could not create thread");
@@ -143,49 +142,88 @@ int main(int argc, char* argv[]){
         while(1){
                 printPrompt();
                 // lecture ligne par ligne jusqu'à fin du message entré dans stdin
-                while ((read = getline(&line, &size, stdin)) != -1) {                   
-                        // suppression des retour chariot
-                        if (chariot = strchr(line,'\n')){                                                     
-                                chariot = NULL;
-                                //le pointeur de \n devient pointeur null
-                        }                                                                                       
+                while ((read = getline(&line, &size, stdin)) != -1) {                                                                                       
                         //si la ligne est vide
                         if (!strcmp(line,"")){
                                 // on passe a la prochaine   
                                 return EXIT_SUCCESS;                                                                                                
                         }
                         else{
-                                /*
+                                /* on créer un tableau de pointeur vers des ParsedCommand 
+                                pour pouvoir en stocker plusieurs et ainsi permettre la redirection */
+                                ParsedCommand* tab = NULL;
+                                tab = (ParsedCommand*)malloc(sizeof(ParsedCommand));
                                 ParsedCommand* c = parseCommand(line);
-                                printName(c);
-                                printParameters(c);
-                                printOptions(c);
-                                free(c);
-                                execute(line,line);
-                                */
-                                //test_execute(line,line);
-                                //FILE* file_out = fopen("exemple.txt", "a");
-                                /*
-                                ParsedCommand* c = parseCommand(line);
-                                if(findFunction(line, c)){
-                                        printf("found function\n");
+
+
+
+                                /*if ( c->typeredirec == tuyau){
+                                            printf("mourg\n");
+                                        }   
+                                ParsedCommand* d = parseCommand(&line[c->cptglobal]);
+                                if ( d->typeredirec == tuyau){
+                                            printf("mourg\n");
+                                        }
+                                    printName(c);
+                                    printName(d);
+                                    */
+                                // si on a une première commande
+                                if (c!=NULL){
+                                    int i = 0;
+                                    tab[0] = *c;
+                                    //printf("%i\n", c->fin);
+                                    // la fin n'est pas atteinte -> il y a eu une redirection, on ajoute la nouvelle commande au tableau
+                                    while(tab[i].typeredirec != vide ){
+                                        i++;
+                                        tab = realloc(tab, (i+1)*sizeof(ParsedCommand));
+                                        //printf("%i\n", (tab[i-1]).cptglobal);
+                                        tab[i] = *parseCommand(&line[(tab[i-1]).cptglobal]);
+                                        //tab[i] = *c;
+                                        //tab[i] = parseCommand(line[tab[i-1]->cptglobal]);
+                                    }
+                                    
+                                    
+                                    //ParsedCommand* d = parseCommand(&line[c->cptglobal]);
+                                    //tab[1] = *d;
+                                    
+                                    //printName(&tab[0]);
+                                    //printParameters(&tab[0]);
+                                    //printName(&tab[1]);
+                                    //printParameters(&tab[1]);
+                                    //printName(&tab[2]);
+
+                                    // marche a chaque fois 
+                                    //if((c->typeredirec) == tuyau ){
+                                    //printf("tuyau\n");}
+                                    //printParameters(c);
+                                    //printOptions(c);
+                                    executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,c);
+                                    free(tab);
+                                    //execute(line,line);
+                                    
+                                    //test_execute(line,line);
+                                    //FILE* file_out = fopen("exemple.txt", "a");
+                                    /*
+                                    ParsedCommand* c = parseCommand(line);
+                                    if(findFunction(line, c)){
+                                            printf("found function\n");
+                                    }
+                                    else{
+                                            printf("didn't find function\n");
+                                    }
+                                    free(c);
+                                    */
+                                    //int fd = open("exemple.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+                                    //test_internal_ls(STDIN_FILENO, STDOUT_FILENO);
+                                    //test_internal_ls(STDIN_FILENO, fd);
+                                    //fclose(file_out);
+                                    /*ParsedCommand* c = malloc(sizeof(ParsedCommand));
+                                    strncpy(c->name, "cd", NAME_SIZE);
+                                    printf("res=%d\n", findFunction(shell, c));
+                                    printf("function=%d\n", c->cmd_ptr);*/
                                 }
-                                else{
-                                        printf("didn't find function\n");
-                                }
-                                free(c);
-                                */
-                                //int fd = open("exemple.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-                                test_internal_ls(STDIN_FILENO, STDOUT_FILENO);
-                                //test_internal_ls(STDIN_FILENO, fd);
-                                //fclose(file_out);
-                                /*ParsedCommand* c = malloc(sizeof(ParsedCommand));
-                                strncpy(c->name, "cd", NAME_SIZE);
-                                printf("res=%d\n", findFunction(shell, c));
-                                printf("function=%d\n", c->cmd_ptr);*/
-                                   
                                 break;  
-                        }                                                      
+                        }                                                  
                 }
         }
         freeShell(shell); 

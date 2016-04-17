@@ -17,15 +17,12 @@
 
 #pragma once
 
+#include <sys/ioctl.h>
 #include <stdio.h>
-#include <sys/sysinfo.h>
+#include <unistd.h>
 
+#include "../utils.h"
 
-//** A décommenter une fois les test finis **//
-//#include "../utils.h"
-
-//** A virer une fois les tests finis **//
-#include "utils.h"
 
 
 

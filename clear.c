@@ -15,21 +15,22 @@ You should have received a copy of the GNU General Public License
 along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/fonction.h"
+#include "../../include/commands/clear.h"
 
-#include "clear.h" //à virer une fois les tests effectués
 
-int main(int argc, char *argv[]){
 
+
+int clear_lib (int argc, char **argv)
+{
     struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+
     int nbLigneScreen = w.ws_row;
 
     int k;
-
     for(k=0;k<nbLigneScreen;k++){
-    	
+    	printf("\033[A\33[2K");
     }
-    // on recupere la taille de l'ecran
-    return 0;
+
+    return 0;  // make sure your main returns int
 }

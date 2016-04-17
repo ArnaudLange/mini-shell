@@ -16,19 +16,38 @@
 */
 
 /**
- * @file cd.h
+ * @file redirection.h
  * @author Antoine Sauray
  * @date 14 April 2016
- * @brief cd command
+ * @brief output redirection
  */
     
-#ifndef CD_H
-#define CD_H
+#ifndef REDIRECTION_H
+#define REDIRECTION_H
 
+#include <string.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <pwd.h>
 
-int cd_internal(int argc, char* argv[]);
+// STDOUT_FILENO;
+// STDIN_FILENO;
+// STDERR_FILENO;
+                
+// int fd = open("exemple.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+
+/**
+ * @brief      Redirect from one file descriptor to another. Can be used to write in a file.
+ *
+ * @param      fd_in   File descriptor which provides the input
+ * @param      fd_out  File descriptor which provides the output
+ */
+void redirectFlow(int fd_in, int fd_out);
+
+/**
+ * @brief      Redirect string to output
+ *
+ * @param      fd   File descriptor of output
+ * @param      input  The string to output
+ */
+void output(int fd, char* input);
 
 #endif

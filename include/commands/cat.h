@@ -14,15 +14,48 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-    
-#include "../../include/commands/cd.h"
 
-#include "stdio.h"
-int cd_internal(int argc, char* argv[]){
-        if(argc>0){
-                return chdir(argv[1]);
-        }
-        else{
-                return chdir(getpwuid(getuid())->pw_dir);
-        }
-}
+/**
+ * @file cat.h
+ * @author Thomas Cokral
+ * @date 14 April 2016
+ * @brief cat command
+ */
+
+#ifndef CAT_H
+#define CAT_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+#include <getopt.h>
+
+#include "../redirection.h"
+#include "../utils.h"
+#include "../parameters.def"
+#include "../typedef.h"
+
+
+typedef enum
+{
+	etatNormal,
+	etatEnds,	
+	etatTabs, 
+	etatLines,
+	etatET,
+	etatEL,
+	etatTL,
+	etatETL	
+
+} Options;
+
+void readCatOptions(char *options, Options *etat);
+
+
+void cat(char* files, char*options, int *nbLigne);
+int cat_lib(int argc, char *argv[]);
+
+
+
+#endif

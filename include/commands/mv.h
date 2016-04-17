@@ -14,15 +14,27 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-    
-#include "../../include/commands/cd.h"
 
-#include "stdio.h"
-int cd_internal(int argc, char* argv[]){
-        if(argc>0){
-                return chdir(argv[1]);
-        }
-        else{
-                return chdir(getpwuid(getuid())->pw_dir);
-        }
-}
+/**
+ * @file mv.h
+ * @author Arnaud Langelier
+ * @date 14 April 2016
+ * @brief mv command
+ */
+
+#pragma once
+
+#include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <getopt.h>
+#include <string.h>
+#include "../utils.h"
+#include "../parameters.def"
+#include "../typedef.h"
+
+int mv_lib(int argc, char *argv[]);
+
+void mv(char* arg1, char* arg2, char* options, int iOptions);

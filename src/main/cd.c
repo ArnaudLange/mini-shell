@@ -16,13 +16,14 @@
 */
     
 #include "../../include/commands/cd.h"
+#include <unistd.h>
+#include <stdio.h>
 
-#include "stdio.h"
-int cd_internal(int argc, char* argv[]){
-        if(argc>0){
-                return chdir(argv[1]);
-        }
-        else{
-                return chdir(getpwuid(getuid())->pw_dir);
-        }
+int main(int argc, char* argv[]){
+        char *param[1];
+        param[0] = "~";
+        cd_internal(0, param);
+        char my_cwd[1024];
+        getcwd(my_cwd, 1024);
+        printf("%s\n", my_cwd);
 }

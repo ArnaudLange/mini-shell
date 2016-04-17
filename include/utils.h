@@ -14,15 +14,40 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-    
-#include "../../include/commands/cd.h"
 
-#include "stdio.h"
-int cd_internal(int argc, char* argv[]){
-        if(argc>0){
-                return chdir(argv[1]);
-        }
-        else{
-                return chdir(getpwuid(getuid())->pw_dir);
-        }
-}
+/**
+ * @file utils.h
+ * @author Antoine Sauray
+ * @date 14 April 2016
+ * @brief useful and reusable fonctions
+ */
+    
+#ifndef UTILS_H
+#define UTILS_H
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+/**
+ * @brief       Concatenates two tables
+ *
+ *
+ */
+
+char* concatenateTables(char *tab1, char *tab2);
+
+/**
+ * @brief       Opens a file with the read only mode
+ * 
+ * @return      The file in Integer
+ */
+
+int openFile(char *filename);
+
+
+
+#endif

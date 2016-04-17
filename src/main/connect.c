@@ -14,15 +14,15 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-    
-#include "../../include/commands/cd.h"
+   
+#define NAME "connect" 
+#include "../../include/commands/connect.h"
 
-#include "stdio.h"
-int cd_internal(int argc, char* argv[]){
-        if(argc>0){
-                return chdir(argv[1]);
-        }
-        else{
-                return chdir(getpwuid(getuid())->pw_dir);
-        }
+cmdPtr init(char name[NAME_SIZE]){
+        strncpy(name, NAME, NAME_SIZE);
+        return &connect_lib;
+}
+
+int main(int argc, char* argv[]){
+        connect_lib(argc, argv);
 }

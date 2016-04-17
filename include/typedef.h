@@ -1,4 +1,5 @@
-/*
+
+ /*
     This file is part of Binsh.
 
     Binsh is free software: you can redistribute it and/or modify
@@ -14,15 +15,21 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-    
-#include "../../include/commands/cd.h"
 
-#include "stdio.h"
-int cd_internal(int argc, char* argv[]){
-        if(argc>0){
-                return chdir(argv[1]);
-        }
-        else{
-                return chdir(getpwuid(getuid())->pw_dir);
-        }
-}
+/**
+ * @file typedef.h
+ * @author Antoine Sauray
+ * @date 14 April 2016
+ * @brief useful types
+ */
+
+
+#ifndef TYPEDEF_H
+#define TYPEDEF_H
+
+/**
+ * The pointer to command type
+ */
+typedef int (*cmdPtr)(int, char*[]);
+
+#endif

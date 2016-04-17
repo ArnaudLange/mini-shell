@@ -14,15 +14,23 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-    
-#include "../../include/commands/cd.h"
 
-#include "stdio.h"
-int cd_internal(int argc, char* argv[]){
-        if(argc>0){
-                return chdir(argv[1]);
-        }
-        else{
-                return chdir(getpwuid(getuid())->pw_dir);
-        }
-}
+/**
+ * @file process.h
+ * @author Antoine Sauray
+ * @date 14 April 2016
+ * @brief test fonctions
+ */
+    
+#ifndef PROCESS_H
+#define PROCESS_H
+
+#include "commands/ls.h"
+
+#include "commands.h"
+#include "shell.h"
+
+int test_execute(char *commande,char *argv);
+int test_internal_ls(int fd_in, int fd_out);
+
+#endif

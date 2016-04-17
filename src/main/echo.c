@@ -15,14 +15,14 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
     
-#include "../../include/commands/cd.h"
+#define NAME "echo"
+#include "../../include/commands/echo.h"
 
-#include "stdio.h"
-int cd_internal(int argc, char* argv[]){
-        if(argc>0){
-                return chdir(argv[1]);
-        }
-        else{
-                return chdir(getpwuid(getuid())->pw_dir);
-        }
+cmdPtr init(char name[NAME_SIZE]){
+        strncpy(name, NAME, NAME_SIZE);
+        return &echo_lib;
+}
+
+int main(int argc, char* argv[]){
+        echo_lib(argc, argv);
 }

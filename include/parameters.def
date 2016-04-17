@@ -1,0 +1,14 @@
+
+
+/**
+ * @file parameters.def
+ * @author Antoine Sauray
+ * @date 14 April 2016
+ * @brief constants parameters for our shell
+ */
+
+#define MAXSIZE 200
+#define MAXCMD 300
+#define NAME_SIZE 100
+#define MAX_PARAMETERS 100
+#define MAX_OPTIONS 1

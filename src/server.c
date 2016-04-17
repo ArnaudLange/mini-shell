@@ -81,7 +81,7 @@ void *start(void *loadedShell){
                                                 exit (EXIT_FAILURE);
                                         }
                                         printf("client connected\n");
-                                        fprintf (stderr,"Server: connect from host %s, port %d.\n",inet_ntoa (clientname.sin_addr), ntohs (clientname.sin_port));
+                                        fprintf (stderr,"Server: connect from host %s\n",inet_ntoa (clientname.sin_addr));
                                         FD_SET (new, &active_fd_set);
                                         dprintf(new, ">");
                                 }

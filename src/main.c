@@ -182,42 +182,42 @@ int main(int argc, char* argv[]){
                                         //tab[i] = *c;
                                         //tab[i] = parseCommand(line[tab[i-1]->cptglobal]);
                                     }
+                                    if (tab[0].typeredirec == vide){
+                                        executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,&tab[0]);
+                                    }
+                                    else {
+                                        // on parcourt le tableau de parsedcommand
+                                        for (int z = 0; z<=i; z++){
+                                            // si on a un pipe
+                                            if (tab[z].typeredirec == tuyau){
+                            
+                                            }// si on a <<
+                                            else if (tab[z].typeredirec == lefta){
 
-                                    // on parcourt le tableau de parsedcommand
-                                    for (int z = 0; z<=i; z++){
-                                        // si on a un pipe
-                                        printf("%i\n", i);
-                                        executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,&tab[z]);
-                                        if (tab[z].typeredirec == tuyau){
-                        
-                                        }// si on a <<
-                                        else if (tab[z].typeredirec == lefta){
+                                            }//si on a <
+                                            else if (tab[z].typeredirec == leftw){
 
-                                        }//si on a <
-                                        else if (tab[z].typeredirec == leftw){
+                                            }//si on a >>
+                                            else if (tab[z].typeredirec == righta){
 
-                                        }//si on a >>
-                                        else if (tab[z].typeredirec == righta){
+                                            }//si on a >
+                                            else if (tab[z].typeredirec == rightw){
 
-                                        }//si on a >
-                                        else if (tab[z].typeredirec == rightw){
+                                            }// si on a <<
+                                            else if (tab[z].typeredirec == lefta){
 
-                                        }// si on a <<
-                                        else if (tab[z].typeredirec == lefta){
+                                            }//si on a &
+                                            else if (tab[z].typeredirec == detach){
 
-                                        }//si on a &
-                                        else if (tab[z].typeredirec == detach){
+                                            }//si on a &&
+                                            else if (tab[z].typeredirec == andd){
+                                                if (executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,&tab[z]) != 0){
+                                                    executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,&tab[z+1]);
+                                                }
 
-                                        }//si on a &&
-                                        else if (tab[z].typeredirec == andd){
-                                            printf("bonjour");
-                                            if (executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,&tab[z]) == 1){
-                                                printf("lalala\n");
-                                                executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,&tab[z+1]);
+                                            }//si on a ||
+                                            else if (tab[z].typeredirec == orr){
                                             }
-
-                                        }//si on a ||
-                                        else if (tab[z].typeredirec == orr){
                                         }
                                     }
                                     

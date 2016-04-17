@@ -1019,33 +1019,6 @@ src/commands/rm.c.s:
 	$(MAKE) -f CMakeFiles/rm_lib.dir/build.make CMakeFiles/rm_lib.dir/src/commands/rm.c.s
 .PHONY : src/commands/rm.c.s
 
-src/commands/top.o: src/commands/top.c.o
-
-.PHONY : src/commands/top.o
-
-# target to build an object file
-src/commands/top.c.o:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/top.c.o
-.PHONY : src/commands/top.c.o
-
-src/commands/top.i: src/commands/top.c.i
-
-.PHONY : src/commands/top.i
-
-# target to preprocess a source file
-src/commands/top.c.i:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/top.c.i
-.PHONY : src/commands/top.c.i
-
-src/commands/top.s: src/commands/top.c.s
-
-.PHONY : src/commands/top.s
-
-# target to generate assembly for a file
-src/commands/top.c.s:
-	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/top.c.s
-.PHONY : src/commands/top.c.s
-
 src/main.o: src/main.c.o
 
 .PHONY : src/main.o
@@ -1825,9 +1798,6 @@ help:
 	@echo "... src/commands/rm.o"
 	@echo "... src/commands/rm.i"
 	@echo "... src/commands/rm.s"
-	@echo "... src/commands/top.o"
-	@echo "... src/commands/top.i"
-	@echo "... src/commands/top.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

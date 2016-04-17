@@ -184,10 +184,10 @@ int main(int argc, char* argv[]){
                                     //ParsedCommand* d = parseCommand(&line[c->cptglobal]);
                                     //tab[1] = *d;
                                     
-                                    printName(&tab[0]);
-                                    printParameters(&tab[0]);
-                                    printName(&tab[1]);
-                                    printParameters(&tab[1]);
+                                    //printName(&tab[0]);
+                                    //printParameters(&tab[0]);
+                                    //printName(&tab[1]);
+                                    //printParameters(&tab[1]);
                                     //printName(&tab[2]);
 
                                     // marche a chaque fois 

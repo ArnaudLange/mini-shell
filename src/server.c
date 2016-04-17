@@ -1,3 +1,5 @@
+#define _DEFAULT_SOURCE
+
 #include "../include/server.h"
 
 #define MAXMSG  512

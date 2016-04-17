@@ -42,6 +42,8 @@ struct command{
  * @brief      Structure for a shell Parsed command
  */
 struct parsedCommand{
+        //compteur pour chaque caractère
+        int cptglobal;
         // nom de la commande 
         char name[NAME_SIZE];
         // taille du nom de la commande
@@ -64,6 +66,7 @@ typedef enum {
         S0, // starting state is S0
         Sfunction,
         Sargs,
+        Sredirection,
         S1,
 } State;
 

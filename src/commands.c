@@ -58,7 +58,7 @@ ParsedCommand* parseCommand(char* input){
         // le caractère lu
         char c;
         // compteur pour chaque caractère lu
-        int i=0;
+        //int i=0;
         // compteur du ième caractère à ajouter dans nom/options/arguments 
         int cpt = 0;
 
@@ -70,8 +70,9 @@ ParsedCommand* parseCommand(char* input){
         pc->argv[0] = malloc(NAME_SIZE*sizeof(char));
         pc->argv[0][0]='\0';
         pc->cptarg = 1;
-        while(input[i]!='\n'){
-                c = input[i];
+        pc->cptglobal = 0;
+        while(input[pc->cptglobal]!='\n'){
+                c = input[pc->cptglobal];
                 switch(current){
                     // cas de départ 
                     case S0:
@@ -103,7 +104,11 @@ ParsedCommand* parseCommand(char* input){
                         // un espace
                         else if ( c ==' '){
                             current = S1;
-                        } 
+                        } // si on a un pipe alors on return le pc pour pouvoir relancer le parsing sur la suite (deuxième commande)
+                        else if ( c == '|'){
+                        	pc->cptglobal++;
+                        	return pc;
+                        }
                         else {
                             return NULL;
                         }
@@ -148,9 +153,12 @@ ParsedCommand* parseCommand(char* input){
                         }
                         pc->argc[pc->cptarg] = cpt;
                     break;
+                    // cas où l'on trouve un indicateur de redirection
+                    case Sredirection :
+                    break; 
             if(debugState){printf("\n");}
         }
-        i++;
+        pc->cptglobal++;
         }
         /* si on a un argument au moins, on incrémente le nombre d'arguments
         et on termine manuellement la chaine de caractères (sinon erreur)*/
@@ -170,9 +178,9 @@ ParsedCommand* parseCommand(char* input){
 void printName(ParsedCommand* pc){
     printf("cmd = ");
     printf("%s\n", pc->name);
-    for (int i = 0;i <= NAME_SIZE;i++){
+    /*for (int i = 0;i <= NAME_SIZE;i++){
         printf("%c", pc->name[i]);
-    }
+    }*/
     printf("\n");
 }
 

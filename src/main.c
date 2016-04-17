@@ -105,9 +105,9 @@ int main(int argc, char* argv[]){
         checkFunction(shell, "mv");
         checkFunction(shell, "pwd");
         checkFunction(shell, "mkdir");
-	checkFunction(shell, "du");
-	checkFunction(shell, "cp");
-	checkFunction(shell, "chmod");
+    	checkFunction(shell, "du");
+    	checkFunction(shell, "cp");
+    	checkFunction(shell, "chmod");
         checkFunction(shell, "chown");
         checkFunction(shell, "chgrp");
         checkFunction(shell, "more");
@@ -148,10 +148,19 @@ int main(int argc, char* argv[]){
                                 return EXIT_SUCCESS;                                                                                                
                         }
                         else{
-                                
+                                /* on créer un tableau de pointeur vers des ParsedCommand 
+                                pour pouvoir en stocker plusieurs et ainsi permettre la redirection */
+                                ParsedCommand* tab = NULL;
+                                tab = (ParsedCommand*)malloc(sizeof(ParsedCommand));
                                 ParsedCommand* c = parseCommand(line);
                                 if (c!=NULL){
-                                    //printName(c);
+                                    tab[0] = *c;
+                                    tab = realloc(tab, 2*sizeof(ParsedCommand));
+                                    ParsedCommand* d = parseCommand(&line[6]);
+                                    //tab[1] = *d;
+
+                                    //printName(&tab[0]);
+                                    //printName(&tab[1]);
                                     //printParameters(c);
                                     //printOptions(c);
                                     executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,c);

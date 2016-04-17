@@ -62,17 +62,14 @@ ParsedCommand* parseCommand(char* input){
         // compteur du ième caractère à ajouter dans nom/options/arguments 
         int cpt = 0;
 
+        //booleen pour savoir si il faut incrémenter le nb d'arguments à la fin
         bool ajout=false;
 
         ParsedCommand* pc;
         pc = (ParsedCommand*)malloc(sizeof(ParsedCommand));
         pc->argv[0] = malloc(NAME_SIZE*sizeof(char));
-        //strcpy(pc->argv[0], pc->name);
         pc->argv[0][0]='\0';
         pc->cptarg = 1;
-        //Command* ret = allocateCommand();
-        //(*ret).nameLength=0;
-        // input[i]!=' ' && input[i]!='\0'
         while(input[i]!='\n'){
                 c = input[i];
                 switch(current){
@@ -111,7 +108,7 @@ ParsedCommand* parseCommand(char* input){
                             return NULL;
                         }
                     break;
-
+                    // cas où on analyse le string de la commande
                     case Sfunction:
                         if(debugState){printf(" STATE Sfunction\n");}
                         if ((isLetter(c) || c == '/') && c != ' ' & c !='-'){
@@ -130,6 +127,7 @@ ParsedCommand* parseCommand(char* input){
                             return NULL;
                         }
                     break;
+                    // cas où on analyse le string d'un argument ou d'une option
                     case Sargs :
                     if(debugState){printf(" STATE Sargs\n");}	
                         if (isLetter(c) && c != ' '){
@@ -153,23 +151,21 @@ ParsedCommand* parseCommand(char* input){
             if(debugState){printf("\n");}
         }
         i++;
-        //(*ret).nameLength = parameterIndex;
         }
+        /* si on a un argument au moins, on incrémente le nombre d'arguments
+        et on termine manuellement la chaine de caractères (sinon erreur)*/
         if(ajout){
                 pc->cptarg =pc->cptarg+1;
                 pc->argv[pc->cptarg-1][cpt+1] = '\0';
         }
+        /*on termine manuellement la chaine de caractères du nom (sinon erreur)*/
         pc->argv[pc->cptarg]=NULL;
         pc->name[pc->nameLength+1]='\0';
-        //printf("name=%s\n", pc->name);
-        //printf("argv[1][0]=%c\n", pc->argv[1][0]);
-        //printf("argv[1][1]=%c\n", pc->argv[1][1]);
-
-        //printf("argv[1][2]=%c\n", pc->argv[1][2]);
 
         return pc;
 
     }
+
 
 void printName(ParsedCommand* pc){
     printf("cmd = ");

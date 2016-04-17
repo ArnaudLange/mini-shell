@@ -141,13 +141,7 @@ int main(int argc, char* argv[]){
         while(1){
                 printPrompt();
                 // lecture ligne par ligne jusqu'à fin du message entré dans stdin
-                while ((read = getline(&line, &size, stdin)) != -1) {                   
-                        // suppression des retour chariot
-                        /*if (chariot = strchr(line,'\n')){                                                     
-                                chariot = NULL;
-                                //le pointeur de \n devient pointeur null
-                        }
-                        */                                                                                       
+                while ((read = getline(&line, &size, stdin)) != -1) {                                                                                       
                         //si la ligne est vide
                         if (!strcmp(line,"")){
                                 // on passe a la prochaine   

@@ -38,7 +38,6 @@ int findFunction(Shell* shell, ParsedCommand* command){
         int i=0;
         //printf("%d\n",shell->nbCmd);
         while(i<shell->nbInternalCmd){
-                printf("i=%d\n", i);
                 //printf("%s\n", (shell->commands)[i]->name);
                 //printf("%s\n", (*command).name);
                 if(strcmp((shell->internal_commands)[i]->name,(*command).name) == 0){
@@ -49,7 +48,6 @@ int findFunction(Shell* shell, ParsedCommand* command){
         }
         i=0;
         while(i<shell->nbLibraryCmd){
-                printf("i=%d\n", i);
                 //printf("%s\n", (shell->commands)[i]->name);
                 //printf("%s\n", (*command).name);
                 if(strcmp((shell->library_commands)[i]->name,(*command).name) == 0){
@@ -89,9 +87,9 @@ int testFunction(Shell* shell, char* name, int argc, char* argv[]){
 }
 
 int executeCommand(int fd_in, int fd_out, Shell* shell, ParsedCommand* cmd){
-        printf("execute ocmmand\n");
+        //printf("execute command\n");
         int res = findFunction(shell, cmd);
-        printf("find function\n");
+        //printf("find function\n");
         if(res==1){
                 return executeInternalCommand(cmd);
         }
@@ -105,13 +103,13 @@ int executeCommand(int fd_in, int fd_out, Shell* shell, ParsedCommand* cmd){
 }
 
 int executeInternalCommand(ParsedCommand* cmd){
-        printf("internal\n");
+        //printf("internal\n");
         cmd->cmd_ptr(cmd->cptarg, cmd->argv);
         return 1;
 }
 
 int executeLibraryCommand(int fd_in, int fd_out, ParsedCommand* cmd){
-        printf("library\n");
+        //printf("library\n");
         pid_t pid;
         // File descriptor du Pipe
            // pipefd[0] ---> Entrée (standard, fichier, ...)
@@ -161,7 +159,7 @@ int executeLibraryCommand(int fd_in, int fd_out, ParsedCommand* cmd){
 }
 
 int executeExternalCommand(int fd_in, int fd_out, ParsedCommand* cmd){
-        printf("external\n");
+        //printf("external\n");
         pid_t pid;
         // File descriptor du Pipe
            // pipefd[0] ---> Entrée (standard, fichier, ...)

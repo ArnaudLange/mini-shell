@@ -24,6 +24,10 @@
 #include <errno.h>
 #include <getopt.h>
 #include <string.h>
+#include <unistd.h>
+#include <dirent.h>
+#include <sys/sysinfo.h>
+#include <time.h>
 //** A décommenter une fois les test finis **//
 //#include "../utils.h"
 
@@ -31,4 +35,5 @@
 #include "utils.h"
 
 int fontion_lib(int argc, char *argv[]);
+void top();
 

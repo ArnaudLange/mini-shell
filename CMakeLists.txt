@@ -219,3 +219,18 @@ add_executable(more ${SRC_MORE} ${HEADER_MORE})
 add_library(more_lib SHARED ${SRC_MORE})
 set_target_properties(more_lib PROPERTIES OUTPUT_NAME "more")
 
+
+# ps
+file(GLOB SRC_PS
+    "src/commands/ps.c"
+    "src/utils.c"
+    "src/main/ps.c"
+)
+file(GLOB HEADER_PS
+    "include/commands/ps.h"
+)
+add_executable(ps ${SRC_PS} ${HEADER_PS})
+add_library(ps_lib SHARED ${SRC_PS})
+set_target_properties(ps_lib PROPERTIES OUTPUT_NAME "ps")
+
+

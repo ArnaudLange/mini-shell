@@ -14,9 +14,23 @@
     You should have received a copy of the GNU General Public License
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
-    
-#include "../../include/commands/ps.h"
 
-int main(int argc, char* argv[]){
-        fonction_lib(argc, argv);
-}
+#pragma once
+
+#include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <getopt.h>
+#include <string.h>
+#include <unistd.h>
+#include <dirent.h>
+#include "../utils.h"
+
+#include "../parameters.def"
+#include "../typedef.h"
+
+int ps_lib(int argc, char *argv[]);
+void ps(char *option, char* param);
+

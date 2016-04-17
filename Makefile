@@ -111,6 +111,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named ps_lib
+
+# Build rule for target.
+ps_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ps_lib
+.PHONY : ps_lib
+
+# fast build rule for target.
+ps_lib/fast:
+	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/build
+.PHONY : ps_lib/fast
+
+#=============================================================================
+# Target rules for targets named ps
+
+# Build rule for target.
+ps: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ps
+.PHONY : ps
+
+# fast build rule for target.
+ps/fast:
+	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/build
+.PHONY : ps/fast
+
+#=============================================================================
 # Target rules for targets named more
 
 # Build rule for target.
@@ -953,6 +979,39 @@ src/commands/mv.c.s:
 	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/commands/mv.c.s
 .PHONY : src/commands/mv.c.s
 
+src/commands/ps.o: src/commands/ps.c.o
+
+.PHONY : src/commands/ps.o
+
+# target to build an object file
+src/commands/ps.c.o:
+	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/commands/ps.c.o
+	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/commands/ps.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ps.c.o
+.PHONY : src/commands/ps.c.o
+
+src/commands/ps.i: src/commands/ps.c.i
+
+.PHONY : src/commands/ps.i
+
+# target to preprocess a source file
+src/commands/ps.c.i:
+	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/commands/ps.c.i
+	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/commands/ps.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ps.c.i
+.PHONY : src/commands/ps.c.i
+
+src/commands/ps.s: src/commands/ps.c.s
+
+.PHONY : src/commands/ps.s
+
+# target to generate assembly for a file
+src/commands/ps.c.s:
+	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/commands/ps.c.s
+	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/commands/ps.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/ps.c.s
+.PHONY : src/commands/ps.c.s
+
 src/commands/pwd.o: src/commands/pwd.c.o
 
 .PHONY : src/commands/pwd.o
@@ -1433,6 +1492,36 @@ src/main/mv.c.s:
 	$(MAKE) -f CMakeFiles/mv.dir/build.make CMakeFiles/mv.dir/src/main/mv.c.s
 .PHONY : src/main/mv.c.s
 
+src/main/ps.o: src/main/ps.c.o
+
+.PHONY : src/main/ps.o
+
+# target to build an object file
+src/main/ps.c.o:
+	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/main/ps.c.o
+	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/main/ps.c.o
+.PHONY : src/main/ps.c.o
+
+src/main/ps.i: src/main/ps.c.i
+
+.PHONY : src/main/ps.i
+
+# target to preprocess a source file
+src/main/ps.c.i:
+	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/main/ps.c.i
+	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/main/ps.c.i
+.PHONY : src/main/ps.c.i
+
+src/main/ps.s: src/main/ps.c.s
+
+.PHONY : src/main/ps.s
+
+# target to generate assembly for a file
+src/main/ps.c.s:
+	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/main/ps.c.s
+	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/main/ps.c.s
+.PHONY : src/main/ps.c.s
+
 src/main/pwd.o: src/main/pwd.c.o
 
 .PHONY : src/main/pwd.o
@@ -1607,6 +1696,8 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
+	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/utils.c.o
@@ -1644,6 +1735,8 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
+	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/utils.c.i
@@ -1681,6 +1774,8 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
+	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/utils.c.s
@@ -1718,6 +1813,8 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... ps_lib"
+	@echo "... ps"
 	@echo "... more"
 	@echo "... chgrp"
 	@echo "... more_lib"
@@ -1792,6 +1889,9 @@ help:
 	@echo "... src/commands/mv.o"
 	@echo "... src/commands/mv.i"
 	@echo "... src/commands/mv.s"
+	@echo "... src/commands/ps.o"
+	@echo "... src/commands/ps.i"
+	@echo "... src/commands/ps.s"
 	@echo "... src/commands/pwd.o"
 	@echo "... src/commands/pwd.i"
 	@echo "... src/commands/pwd.s"
@@ -1840,6 +1940,9 @@ help:
 	@echo "... src/main/mv.o"
 	@echo "... src/main/mv.i"
 	@echo "... src/main/mv.s"
+	@echo "... src/main/ps.o"
+	@echo "... src/main/ps.i"
+	@echo "... src/main/ps.s"
 	@echo "... src/main/pwd.o"
 	@echo "... src/main/pwd.i"
 	@echo "... src/main/pwd.s"

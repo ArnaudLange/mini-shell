@@ -36,11 +36,11 @@ void freeShell(Shell* shell){
 
 int findFunction(Shell* shell, ParsedCommand* command){
         int i=0;
-        //printf("%d\n",shell->nbCmd);
+        printf("nbInternalCmd=%d\n",shell->nbInternalCmd);
         while(i<shell->nbInternalCmd){
                 printf("i=%d\n", i);
-                //printf("%s\n", (shell->commands)[i]->name);
-                //printf("%s\n", (*command).name);
+		printf("(shell)name=%s\n", (shell->internal_commands)[i]->name);
+                printf("(parsecmd)name=%s\n", (*command).name);
                 if(strcmp((shell->internal_commands)[i]->name,(*command).name) == 0){
                         (*command).cmd_ptr = (shell->internal_commands)[i]->cmd_ptr;
                         return 1;
@@ -48,6 +48,7 @@ int findFunction(Shell* shell, ParsedCommand* command){
                 i++;
         }
         i=0;
+	printf("looking into library\n");
         while(i<shell->nbLibraryCmd){
                 printf("i=%d\n", i);
                 //printf("%s\n", (shell->commands)[i]->name);

@@ -24,9 +24,9 @@ int readAndExecute (int filedes, Shell* shell)
         { 
                 /* Data read. */
                 fprintf (stderr, "Server: got message: [%s]\n", buffer);
-                ParsedCommand* c = parseCommand(buffer);
-                printf("name=%s\n", c->name);
-                executeCommand(STDIN_FILENO, filedes, shell, c);
+               	//ParsedCommand* c = parseCommand(buffer);
+                //printf("name=%s\n", c->name);
+                //executeCommand(STDIN_FILENO, filedes, shell, c);
                 // On traite ici la commande
                 return 0;
         }
@@ -34,7 +34,17 @@ int readAndExecute (int filedes, Shell* shell)
 
 void *start(void *loadedShell){
 
-        Shell* shell = (Shell*)loadedShell;
+        Shell* shell = loadedShell;
+	char* input=NULL;
+	input = malloc(10*sizeof(char));
+	input[0]='l';
+	input[1]='s';
+	input[2]='\0';
+	ParsedCommand* c = parseCommand(input);
+	free(input);
+	printf("parse command name = %s\n", c->name);
+	executeCommand(STDIN_FILENO, STDOUT_FILENO, shell, c);
+
         printf("nblibrary cmd = %d\n", shell->nbLibraryCmd);
 
         extern int makeSocket (uint16_t port);

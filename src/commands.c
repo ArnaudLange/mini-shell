@@ -51,30 +51,28 @@ int freeCommands(int nbCmd, Command** commands){
         return 1;
 }
 
-ParsedCommand* parseCommand(char* input){
-
+ParsedCommand* parseCommand(const char* input){
         //etat initial
         State current = S0;
         // le caractère lu
         char c;
         // compteur pour chaque caractère lu
-        int i=0;
+        //int i=0;
         // compteur du ième caractère à ajouter dans nom/options/arguments 
         int cpt = 0;
 
+        //booleen pour savoir si il faut incrémenter le nb d'arguments à la fin
         bool ajout=false;
+        bool fin = false;
 
         ParsedCommand* pc;
         pc = (ParsedCommand*)malloc(sizeof(ParsedCommand));
         pc->argv[0] = malloc(NAME_SIZE*sizeof(char));
-        //strcpy(pc->argv[0], pc->name);
         pc->argv[0][0]='\0';
         pc->cptarg = 1;
-        //Command* ret = allocateCommand();
-        //(*ret).nameLength=0;
-        // input[i]!=' ' && input[i]!='\0'
-        while(input[i]!='\n'){
-                c = input[i];
+        pc->cptglobal = 0;
+        while(input[pc->cptglobal]!='\n'){
+                c = input[pc->cptglobal];
                 switch(current){
                     // cas de départ 
                     case S0:
@@ -106,12 +104,18 @@ ParsedCommand* parseCommand(char* input){
                         // un espace
                         else if ( c ==' '){
                             current = S1;
-                        } 
+                        } // si on a un pipe alors on return le pc pour pouvoir relancer le parsing sur la suite (deuxième commande)
+                        else if ( c == '|'){
+                        	pc->cptglobal++;
+                        	pc->typeredirec = tuyau;
+                        	return pc;
+                        }
                         else {
+				printf("ça retourne NULL2 \n");
                             return NULL;
                         }
                     break;
-
+                    // cas où on analyse le string de la commande
                     case Sfunction:
                         if(debugState){printf(" STATE Sfunction\n");}
                         if ((isLetter(c) || c == '/') && c != ' ' & c !='-'){
@@ -127,9 +131,11 @@ ParsedCommand* parseCommand(char* input){
                             current = S1;
                         } // cas incorrect
                         else {
+				printf("ça retourne NULL3\n");
                             return NULL;
                         }
                     break;
+                    // cas où on analyse le string d'un argument ou d'une option
                     case Sargs :
                     if(debugState){printf(" STATE Sargs\n");}	
                         if (isLetter(c) && c != ' '){
@@ -146,37 +152,39 @@ ParsedCommand* parseCommand(char* input){
                             current = S1;
                         } // cas incorrect
                         else {
+				printf("ça retourne NULL4\n");
                             return NULL;
                         }
                         pc->argc[pc->cptarg] = cpt;
                     break;
+                    // cas où l'on trouve un indicateur de redirection
+                    case Sredirection :
+                    break; 
             if(debugState){printf("\n");}
         }
-        i++;
-        //(*ret).nameLength = parameterIndex;
+        pc->cptglobal++;
         }
+        /* si on a un argument au moins, on incrémente le nombre d'arguments
+        et on termine manuellement la chaine de caractères (sinon erreur)*/
         if(ajout){
                 pc->cptarg =pc->cptarg+1;
                 pc->argv[pc->cptarg-1][cpt+1] = '\0';
         }
+        /*on termine manuellement la chaine de caractères du nom (sinon erreur)*/
         pc->argv[pc->cptarg]=NULL;
         pc->name[pc->nameLength+1]='\0';
-        //printf("name=%s\n", pc->name);
-        //printf("argv[1][0]=%c\n", pc->argv[1][0]);
-        //printf("argv[1][1]=%c\n", pc->argv[1][1]);
-
-        //printf("argv[1][2]=%c\n", pc->argv[1][2]);
-
+        pc->fin = true;
         return pc;
 
     }
 
+
 void printName(ParsedCommand* pc){
     printf("cmd = ");
     printf("%s\n", pc->name);
-    for (int i = 0;i <= NAME_SIZE;i++){
+    /*for (int i = 0;i <= NAME_SIZE;i++){
         printf("%c", pc->name[i]);
-    }
+    }*/
     printf("\n");
 }
 

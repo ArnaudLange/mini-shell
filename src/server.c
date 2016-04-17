@@ -10,7 +10,8 @@ int readAndExecute (int filedes, Shell* shell)
         int nbytes;
 
         nbytes = read (filedes, buffer, MAXMSG);
-        buffer[nbytes-2]='\0';
+        buffer[nbytes-2]='\n';
+        //buffer[nbytes-3]='\n';
         if (nbytes < 0)
         {
                 /* Read error. */
@@ -23,30 +24,16 @@ int readAndExecute (int filedes, Shell* shell)
         else
         { 
                 /* Data read. */
-                fprintf (stderr, "Server: got message: [%s]\n", buffer);
-               	//ParsedCommand* c = parseCommand(buffer);
-                //printf("name=%s\n", c->name);
-                //executeCommand(STDIN_FILENO, filedes, shell, c);
+               	ParsedCommand* c = parseCommand(buffer);
+                executeCommand(STDIN_FILENO, filedes, shell, c);
+                dprintf(filedes, ">");
                 // On traite ici la commande
                 return 0;
         }
 }
 
 void *start(void *loadedShell){
-
         Shell* shell = loadedShell;
-	char* input=NULL;
-	input = malloc(10*sizeof(char));
-	input[0]='l';
-	input[1]='s';
-	input[2]='\0';
-	ParsedCommand* c = parseCommand(input);
-	free(input);
-	printf("parse command name = %s\n", c->name);
-	executeCommand(STDIN_FILENO, STDOUT_FILENO, shell, c);
-
-        printf("nblibrary cmd = %d\n", shell->nbLibraryCmd);
-
         extern int makeSocket (uint16_t port);
         int sock;
         int port=5555;
@@ -92,8 +79,9 @@ void *start(void *loadedShell){
                                                 exit (EXIT_FAILURE);
                                         }
                                         printf("client connected\n");
-                                        fprintf (stderr,"Server: connect from host %s, port %hd.\n",inet_ntoa (clientname.sin_addr), ntohs (clientname.sin_port));
+                                        fprintf (stderr,"Server: connect from host %s, port %d.\n",inet_ntoa (clientname.sin_addr), ntohs (clientname.sin_port));
                                         FD_SET (new, &active_fd_set);
+                                        dprintf(new, ">");
                                 }
                                 else
                                 {

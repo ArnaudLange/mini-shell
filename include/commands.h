@@ -38,10 +38,21 @@ struct command{
         int (*cmd_ptr)(int, char*[]);
 };
 
+typedef enum {
+    tuyau,
+    lefta,
+    leftw,
+    righta,
+    rightw,
+} Typeredirec;
+
+
 /**
  * @brief      Structure for a shell Parsed command
  */
 struct parsedCommand{
+        //compteur pour chaque caractère
+        int cptglobal;
         // nom de la commande 
         char name[NAME_SIZE];
         // taille du nom de la commande
@@ -53,9 +64,15 @@ struct parsedCommand{
         int cptarg;
         // taille de chaque argument
         int argc[NAME_SIZE];
+        // type de redirection s'il y en a un
+        Typeredirec typeredirec;
+        // boolen : true si on a fini de parser toute la chaine (return final)
+        bool fin;
 
         int (*cmd_ptr)(int, char*[]);
 };
+
+
 
 /**
  * Enumeration of all the automate states
@@ -64,6 +81,7 @@ typedef enum {
         S0, // starting state is S0
         Sfunction,
         Sargs,
+        Sredirection,
         S1,
 } State;
 
@@ -97,7 +115,7 @@ int freeCommands(int nbCmd, Command** commands);
  * @see        ParsedCommand
  * @return     a ParsedCommand struct which holds the different parsed informations
  */
-ParsedCommand* parseCommand(char* input);
+ParsedCommand* parseCommand(const char* input);
 
 /**
  * @brief      Adds a Command struct to the array

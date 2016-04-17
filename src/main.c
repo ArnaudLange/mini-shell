@@ -105,9 +105,9 @@ int main(int argc, char* argv[]){
         checkFunction(shell, "mv");
         checkFunction(shell, "pwd");
         checkFunction(shell, "mkdir");
-	checkFunction(shell, "du");
-	checkFunction(shell, "cp");
-	checkFunction(shell, "chmod");
+    	checkFunction(shell, "du");
+    	checkFunction(shell, "cp");
+    	checkFunction(shell, "chmod");
         checkFunction(shell, "chown");
         checkFunction(shell, "chgrp");
         checkFunction(shell, "more");
@@ -129,7 +129,6 @@ int main(int argc, char* argv[]){
 
 
         pthread_t sniffer_thread;
-        
         if( pthread_create( &sniffer_thread , NULL ,  start , (void*) shell) < 0)
         {
             perror("could not create thread");
@@ -141,23 +140,39 @@ int main(int argc, char* argv[]){
         while(1){
                 printPrompt();
                 // lecture ligne par ligne jusqu'à fin du message entré dans stdin
-                while ((read = getline(&line, &size, stdin)) != -1) {                   
-                        // suppression des retour chariot
-                        /*if (chariot = strchr(line,'\n')){                                                     
-                                chariot = NULL;
-                                //le pointeur de \n devient pointeur null
-                        }
-                        */                                                                                       
+                while ((read = getline(&line, &size, stdin)) != -1) {                                                                                       
                         //si la ligne est vide
                         if (!strcmp(line,"")){
                                 // on passe a la prochaine   
                                 return EXIT_SUCCESS;                                                                                                
                         }
                         else{
-                                
+                                /* on créer un tableau de pointeur vers des ParsedCommand 
+                                pour pouvoir en stocker plusieurs et ainsi permettre la redirection */
+                                ParsedCommand* tab = NULL;
+                                tab = (ParsedCommand*)malloc(sizeof(ParsedCommand));
                                 ParsedCommand* c = parseCommand(line);
+                                // si on a une première commande
                                 if (c!=NULL){
-                                    //printName(c);
+                                    int i = 1;
+                                    tab[0] = *c;
+                                    //printf("%i\n", c->fin);
+                                    while(c->fin == false ){
+                                        //printf("bonjour\n");
+                                        //ParsedCommand* c = parseCommand(&line[(tab[i-1]).cptglobal]);
+                                        //tab[i] = *c; 
+                                        //tab[i] = parseCommand(line[tab[i-1]->cptglobal]);
+                                    }
+                                    
+                                    //tab = realloc(tab, 2*sizeof(ParsedCommand));
+                                    //ParsedCommand* d = parseCommand(&line[c->cptglobal]);
+                                    //tab[1] = *d;
+
+                                    //printName(&tab[0]);
+                                    //printName(&tab[1]);
+                                    // marche a chaque fois 
+                                    //if((c->typeredirec) == tuyau ){
+                                    //printf("tuyau\n");}
                                     //printParameters(c);
                                     //printOptions(c);
                                     executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,c);

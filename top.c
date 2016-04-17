@@ -19,17 +19,57 @@ along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 //#include "../../include/commands/fonction.h"
 
 #include "top.h" //à virer une fois les tests effectués
-
+ 
 
 void top(){
 
-    int nb=0,p=0;
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    int sleeping=0,stopped=0,zombie=0,running=0,nb=0;
 
-    long int hr,min,sc, minBoot;
+    while(1){    
+
+    struct passwd * user;
+    struct processus *tableProcess=NULL;
+    tableProcess=calloc(1,sizeof(struct processus));
+    if(tableProcess==NULL){
+        perror("Calloc");
+        exit(1);
+    }
+
+    int emplacementTable=0;
+
+    int p=0,t=0,tp=0;
+    
+
+    long int hr,min,sc, minBoot,hourBoot;
 
     char character;
 
     FILE *fichier=NULL;
+
+    time_t rawtime;
+    time(&rawtime);
+    struct tm *tm_struct = localtime(&rawtime);
+
+    hr = tm_struct->tm_hour;
+    min = tm_struct->tm_min;
+    sc = tm_struct->tm_sec;
+
+    //getting uptime
+    struct sysinfo info;
+    sysinfo(&info);
+    minBoot=info.uptime/60;
+    if(minBoot>60){
+        hourBoot=minBoot/60;
+    }
+    minBoot=minBoot-60*hourBoot;
+
+    char perc='%';
+    printf("top - %ld:%ld:%ld up %ldh%ldmin,\n", hr,min,sc,hourBoot,minBoot);
+    printf("Tasks : %d total, %d running, %d sleeping, %d stopped, %d zombie\n",nb,running,sleeping,stopped,zombie);
+    printf("\nPID\tUSER\tPR\tNI\tVIRT\tRES\tSHR\tS\t%cCPU\t%cMEM\tTIME+\tCOMMAND\n",perc,perc);
+    int sleeping=0,stopped=0,zombie=0,running=0,nb=0;
 
     //dossier ou se trouvent tous les process
     char *directory = "/proc";
@@ -37,6 +77,7 @@ void top(){
     //on va ouvrir le dossier proc, puis les sous dossier a l'interieur
     DIR *repertoire;
     DIR *sous_repertoire;
+
 
     //struct utiliser pour lire le dossier
     struct dirent *flux;
@@ -46,6 +87,13 @@ void top(){
     nameFile = calloc(1,sizeof(char));
     if(nameFile==NULL){
         perror("Calloc");
+        exit(1);
+    }
+    //strUid
+    char *strUid=NULL;
+    strUid=calloc(1,sizeof(char));
+    if(strUid==NULL){
+        perror("calloc");
         exit(1);
     }
 
@@ -76,8 +124,15 @@ void top(){
             }
         }
 
+        Process currentProcess;
+        currentProcess.pid=0;
+        currentProcess.userName="";
+
         if(atoi(flux->d_name)!=0){
             nb++;
+            //on recupere le pid ici
+            currentProcess.pid = atoi(flux->d_name);
+
 
             nameFile=concatenateTables(nameFile,directory);
             nameFile=concatenateTables(nameFile,"/");
@@ -97,6 +152,8 @@ void top(){
                     exit(1);
                 }
             }
+
+            //On trouve les informations qui nous interessent dans stat
             if (strlen(sous_nameFile)>1){
                 free(sous_nameFile);
                 sous_nameFile = NULL;
@@ -121,32 +178,87 @@ void top(){
                 if (character== ' '){ //on incremente une variables pour savoir a quel espace on est rendu
                     p++;
                 }
+                if (p==2){
+                    if(character=='S'){
+                        sleeping++;
+                    }
+                    else if(character=='R'){
+                        running++;
+                    }
+                    else if(character=='Z'){
+                        zombie++;
+                    }
+                    else if(character=='T'){
+                        stopped++;
+                    }
+                }
             }
             p=0;
+            fclose(fichier);
+
+            //A present on va chercher ce qui nous interesse dans status
+            if (strlen(sous_nameFile)>1){
+                free(sous_nameFile);
+                sous_nameFile = NULL;
+                sous_nameFile = calloc(1,sizeof(char));
+                if(sous_nameFile==NULL){
+                    perror("Calloc");
+                    exit(1);
+                }
+            }
+            
+            sous_nameFile=concatenateTables(sous_nameFile,nameFile);
+            sous_nameFile=concatenateTables(sous_nameFile,"/");
+            sous_nameFile=concatenateTables(sous_nameFile,"status");
+
+            //On ouvre stat que l'on va parser pour recuperer ce qu'il nous manque (cf uptime & tty)
+            fichier = fopen(sous_nameFile,"r");
+            if(fichier == NULL){
+                perror(sous_nameFile);
+                exit(1);
+            }
+            while((character=fgetc(fichier)) != EOF){
+                if (character== 10){ //on incremente une variables pour savoir a quel espace on est rendu
+                    t++;
+                }
+                if (t==7){//quand on est a uid
+                    tp++;
+                    if(tp>6 && character!=' ' && strcmp(strUid,"0") && strlen(strUid)<4){
+                        strUid=realloc(strUid,(strlen(strUid)+1)*sizeof(char));
+                        strUid[strlen(strUid)]=character;
+                        strUid[strlen(strUid)+1]='\0';
+                    }
+                }
+            }
+            fclose(fichier);
+            if (! (user = getpwuid(atoi(strUid)) )){
+                currentProcess.userName = "?";
+            } else {
+                currentProcess.userName = user->pw_name;
+            }
+            //t sert a comptabiliser le nombre de lignes
+            t=0;
+            tp=0;
+            free(strUid);
+            strUid=calloc(1,sizeof(char));
+
+
+            tableProcess[emplacementTable]=currentProcess;
+            emplacementTable++;
+            tableProcess=realloc(tableProcess,(emplacementTable+1)*sizeof(struct processus));
+            printf("%d    ",tableProcess[emplacementTable-1].pid);
+            printf("%s\n",tableProcess[emplacementTable-1].userName);
+            closedir(sous_repertoire);
         }
+
     }
-    //Getting current time
-
-    time_t rawtime;
-    time(&rawtime);
-    struct tm *tm_struct = localtime(&rawtime);
-
-    hr = tm_struct->tm_hour;
-    min = tm_struct->tm_min;
-    sc = tm_struct->tm_sec;
-
-    //getting uptime
-    struct sysinfo info;
-    sysinfo(&info);
-    minBoot=info.uptime/60;
-
-    printf("top - %ld:%ld:%ld up %ld min\n", hr,min,sc,minBoot);
-    printf("Tasks : %d\n",nb);
-
-    //Notes 
-    // load average dans le fichier loadavg
-
+    closedir(repertoire);
+    
+    //pour repeter l'execution chaque seconde
+    sleep(1);
+    }
 }
+
 
 int main(int argc, char *argv[]){
 
@@ -179,7 +291,7 @@ int main(int argc, char *argv[]){
 
          case 'h': 
            printf("\n-----------------------------------------------------------\n");
-           printf("Usage: ps\n");
+           printf("Usage: top\n");
            printf("\nDisplay Linux processes.\n");
            printf("\n-----------------------------------------------------------\n");
            exit(0);

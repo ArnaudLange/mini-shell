@@ -28,11 +28,30 @@
 #include <dirent.h>
 #include <sys/sysinfo.h>
 #include <time.h>
+#include <pwd.h>
+#include <sys/ioctl.h>
 //** A décommenter une fois les test finis **//
 //#include "../utils.h"
 
 //** A virer une fois les tests finis **//
 #include "utils.h"
+
+typedef struct processus{
+    int pid;
+    char *userName;
+    char *pr;
+    char *ni;
+    char *virt;
+    char *res;
+    char *shr;
+    char *state;
+    long percCPU;
+    long percMEM;
+    long int procMIN;
+    long int procSEC;
+    long int procMINISEC;
+    char *name;
+} Process;
 
 int fontion_lib(int argc, char *argv[]);
 void top();

@@ -181,6 +181,37 @@ int main(int argc, char* argv[]){
                                         //tab[i] = *c;
                                         //tab[i] = parseCommand(line[tab[i-1]->cptglobal]);
                                     }
+
+                                    // on parcourt le tableau de parsedcommand
+                                    for (int z = 0; z<=i; z++){
+                                        // si on a un pipe
+                                        if (tab[z].typeredirec == tuyau){
+                        
+                                        }// si on a <<
+                                        else if (tab[z].typeredirec == lefta){
+
+                                        }//si on a <
+                                        else if (tab[z].typeredirec == leftw){
+
+                                        }//si on a >>
+                                        else if (tab[z].typeredirec == righta){
+
+                                        }//si on a >
+                                        else if (tab[z].typeredirec == rightw){
+
+                                        }// si on a <<
+                                        else if (tab[z].typeredirec == lefta){
+
+                                        }//si on a &
+                                        else if (tab[z].typeredirec == detach){
+
+                                        }//si on a &&
+                                        else if (tab[z].typeredirec == andd){
+
+                                        }//si on a ||
+                                        else if (tab[z].typeredirec == orr){
+                                        }
+                                    }
                                     
                                     
                                     //ParsedCommand* d = parseCommand(&line[c->cptglobal]);
@@ -192,11 +223,6 @@ int main(int argc, char* argv[]){
                                     //printParameters(&tab[1]);
                                     //printName(&tab[2]);
 
-                                    // marche a chaque fois 
-                                    //if((c->typeredirec) == tuyau ){
-                                    //printf("tuyau\n");}
-                                    //printParameters(c);
-                                    //printOptions(c);
                                     executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,c);
                                     free(tab);
                                     //execute(line,line);

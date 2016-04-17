@@ -30,11 +30,8 @@
 #include <time.h>
 #include <pwd.h>
 #include <sys/ioctl.h>
-//** A décommenter une fois les test finis **//
-//#include "../utils.h"
+#include "../utils.h"
 
-//** A virer une fois les tests finis **//
-#include "utils.h"
 
 typedef struct processus{
     int pid;
@@ -53,7 +50,7 @@ typedef struct processus{
     char *name;
 } Process;
 
-int fontion_lib(int argc, char *argv[]);
+int top_lib(int argc, char *argv[]);
 void top();
 int compare(const void *s1, const void *s2);
 

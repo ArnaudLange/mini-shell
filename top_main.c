@@ -15,7 +15,7 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
     
-#include "../../include/commands/fonction.h"
+#include "../../include/commands/top.h"
 
 int main(int argc, char* argv[]){
         fonction_lib(argc, argv);

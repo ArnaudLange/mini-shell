@@ -15,10 +15,8 @@ You should have received a copy of the GNU General Public License
 along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//** à décommenter et à completer une fois la fonction finies **//
-//#include "../../include/commands/fonction.h"
+#include "../../include/commands/top.h"
 
-#include "top.h" //à virer une fois les tests effectués
  
 
 void top(){
@@ -33,9 +31,8 @@ void top(){
 
     //variables utilises pour calculer l'utilisation du CPU
     float hertz, total_time, seconds;
-    int i =1;
 
-    while(i){    
+    while(1){    
 
         //utilise pour savoir si on a depasse la taille de l'ecran ou non
         int nbLigne=0;
@@ -83,8 +80,9 @@ void top(){
         char perc='%';
         printf("top - %ld:%ld:%ld up %ldh%ldmin,\n", hr,min,sc,hourBoot,minBoot);
         printf("Tasks : %d total, %d running, %d sleeping, %d stopped, %d zombie\n",nb,running,sleeping,stopped,zombie);
-        printf("\nPID\tUSER\tPR\tNI\tVIRT\tRES\tSHR\tS\t%cCPU\t%cMEM\tTIME+\tCOMMAND\n",perc,perc);
-        nbLigne+=5;
+        printf("\nPID\tUSER\t\tS\t%cCPU\t\t COMMAND\n",perc);
+        printf("---------------------------------------------------------------------\n");
+        nbLigne+=6;
         
         sleeping=0,stopped=0,zombie=0,running=0,nb=0;
 
@@ -364,7 +362,7 @@ void top(){
                 sous_nameFile=concatenateTables(sous_nameFile,"/");
                 sous_nameFile=concatenateTables(sous_nameFile,"status");
 
-                //On ouvre stat que l'on va parser pour recuperer ce qu'il nous manque (cf uptime & tty)
+                //On ouvre status que l'on va parser pour recuperer ce qu'il nous manque cf l'uid, pour trouver le user
                 fichier = fopen(sous_nameFile,"r");
                 if(fichier == NULL){
                     perror(sous_nameFile);
@@ -393,7 +391,6 @@ void top(){
                 currentProcess.name = concatenateTables(currentProcess.name,command);
 
                 
-                //determination pourcentage d'utilisation du CPU
 
                 //t sert a comptabiliser le nombre de lignes
                 t=0;
@@ -427,6 +424,7 @@ void top(){
 
         closedir(repertoire);
         
+        //c'est easy que l'on range suivant le pourcentage CPU
         qsort(tableProcess,emplacementTable,sizeof(struct processus),compare);
 
         int g;
@@ -434,9 +432,9 @@ void top(){
             if (ligneScreen>nbLigne){
                 printf("%d\t",tableProcess[g].pid);
                 printf("%s",tableProcess[g].userName);
-                printf("\t\t\t\t\t\t%c ",tableProcess[g].state);
+                printf("\t\t%c ",tableProcess[g].state);
                 printf("\t%.1f",tableProcess[g].percCPU);
-                printf("\t\t\t%s",tableProcess[g].name);
+                printf("\t\t%s",tableProcess[g].name);
                 printf("\n");
                 nbLigne++;
                 free(tableProcess[g].userName);
@@ -447,11 +445,14 @@ void top(){
 
         //pour repeter l'execution chaque seconde
         sleep(1);
+
+        //utilise pour reecrire au debut, et ainsi n'avoir qu'un affichage a la fois
         int k;
         for(k=0; k<ligneScreen;k++){
             printf("\033[F");
-        i=0;
+        
         }
+
         free(tableProcess);
         free(nameFile);
         free(sous_nameFile);
@@ -459,6 +460,7 @@ void top(){
 
 }
 
+//fonction utilisee par qsort pour comparer deux processus a chaque fois suivant le pourcentage du CPU
 int compare(const void *s1, const void *s2)
 {
   struct processus *e1 = (struct processus *)s1;
@@ -467,7 +469,7 @@ int compare(const void *s1, const void *s2)
   return ((float)e2->percCPU-(float)e1->percCPU);
 }
 
-int main(int argc, char *argv[]){
+int top_lib(int argc, char *argv[]){
 
     // -----------------------------------
     int c;

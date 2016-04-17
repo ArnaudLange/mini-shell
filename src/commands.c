@@ -107,16 +107,17 @@ ParsedCommand* parseCommand(const char* input){
                             current = S1;
                         } // si on a un pipe alors on return le pc pour pouvoir relancer le parsing sur la suite (deuxième commande)
                         else if ( c == '|'){
+                        	current = Spipe_or;
                         	//printf("hyueres\n");
-                        	pc->cptglobal++;
-                        	pc->typeredirec = tuyau;
-                        	return pc;
-                        }
+                        }// si on a une redirection à droite 
                         else if ( c == '>'){
                         	current = Sredirectionr;
-                        }
+                        }// si on a une redirection à gauche
                         else if ( c == '<'){
                         	current = Sredirectionl;
+                        }
+                        else if ( c == '&'){
+                        	current = Sdetach_and;
                         }
                         else {
 				printf("ça retourne NULL2 \n");
@@ -165,14 +166,46 @@ ParsedCommand* parseCommand(const char* input){
                         }
                         pc->argc[pc->cptarg] = cpt;
                     break;
+                    case Sdetach_and :
+					if(debugState){printf(" STATE Sdetach_and\n");}
+	                    // si on a un et logique (&&)
+	                    if ( c=='&'){
+	                    	pc->cptglobal++;
+	                        pc->typeredirec = andd;
+	                       	return pc;
+	                       } 
+	                    // on a un détachement du terminal (&)
+	                    else {
+	                    	pc->cptglobal++;
+	                       	pc->typeredirec = detach;
+	                        return pc;
+	                    }
+	                break;
+	                case Spipe_or :
+					if(debugState){printf(" STATE Spipe_or\n");}
+	                    // si on a ou logique (||)
+	                    if ( c=='&'){
+	                    	pc->cptglobal++;
+	                        pc->typeredirec = orr;
+	                       	return pc;
+	                       } 
+	                    // on a un pipe
+	                    else {
+	                    	pc->cptglobal++;
+	                       	pc->typeredirec = tuyau;
+	                        return pc;
+	                    }
+	                break;	                                 	
                     // cas où l'on trouve un indicateur de redirection
                     case Sredirectionl :
 	                    if(debugState){printf(" STATE Sredirectionl\n");}
+	                    // si on a une redirection en append (<)
 	                    if ( c=='<'){
 	                    	pc->cptglobal++;
 	                        pc->typeredirec = leftw;
 	                       	return pc;
 	                       }
+	                    // si on a une redirection en write (<<)
 	                    else {
 	                    	pc->cptglobal++;
 	                       	pc->typeredirec = lefta;
@@ -181,11 +214,12 @@ ParsedCommand* parseCommand(const char* input){
                     break;
                     case Sredirectionr :
                     if(debugState){printf(" STATE Sredirectionr\n");}
+	                    // si on a une redirection en append (>)
 	                    if ( c=='>'){
 	                    	pc->cptglobal++;
 	                        pc->typeredirec = rightw;
 	                       	return pc;
-	                    }
+	                    }// si on a une redirection en write (>>)
 	                    else {
 	                    	pc->cptglobal++;
 	                       	pc->typeredirec = righta;

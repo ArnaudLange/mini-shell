@@ -161,9 +161,9 @@ int main(int argc, char* argv[]){
 
                                     printName(&tab[0]);
                                     printName(&tab[1]);
-                                    /*if((c->typeredirec) == tuyau ){
-                                    //printf("tuyau\n");
-                                    } */
+                                    if((c->typeredirec) == tuyau ){
+                                    printf("tuyau\n");
+                                    } 
                                     //printParameters(c);
                                     //printOptions(c);
                                     executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,c);

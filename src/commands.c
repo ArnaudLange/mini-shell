@@ -138,7 +138,7 @@ ParsedCommand* parseCommand(const char* input){
                     // cas où on analyse le string d'un argument ou d'une option
                     case Sargs :
                     if(debugState){printf(" STATE Sargs\n");}	
-                        if (isLetter(c) && c != ' '){
+                        if ((isLetter(c) && c != ' ') || c == '/' || c == '-'){
                         cpt ++;
                         pc->argv[pc->cptarg][cpt] = c;
                         current = Sargs;

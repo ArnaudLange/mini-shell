@@ -197,7 +197,7 @@ int main(int argc, char* argv[]){
                                     //printParameters(c);
                                     //printOptions(c);
                                     executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,c);
-                                    free(c);
+                                    free(tab);
                                     //execute(line,line);
                                     
                                     //test_execute(line,line);

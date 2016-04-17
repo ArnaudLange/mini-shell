@@ -427,7 +427,7 @@ void top(){
     sleep(1);
     int k;
     for(k=0; k<ligneScreen;k++){
-        printf("\b");
+        printf("\033[F");
     }
     }
 }

@@ -45,7 +45,7 @@ typedef struct processus{
     char *res;
     char *shr;
     char *state;
-    long percCPU;
+    long int percCPU;
     long percMEM;
     long int procMIN;
     long int procSEC;

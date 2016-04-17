@@ -96,6 +96,44 @@ void top(){
         exit(1);
     }
 
+
+    char *uptime=NULL;
+    uptime=calloc(1,sizeof(char));
+    if(uptime==NULL){
+        perror("calloc");
+        exit(1);
+    }
+    char *utime=NULL;
+    utime=calloc(1,sizeof(char));
+    if(utime==NULL){
+        perror("calloc");
+        exit(1);
+    }
+    char *stime=NULL;
+    stime=calloc(1,sizeof(char));
+    if(stime==NULL){
+        perror("calloc");
+        exit(1);
+    }
+    char *cutime=NULL;
+    cutime=calloc(1,sizeof(char));
+    if(cutime==NULL){
+        perror("calloc");
+        exit(1);
+    }
+    char *cstime=NULL;
+    cstime=calloc(1,sizeof(char));
+    if(cstime==NULL){
+        perror("calloc");
+        exit(1);
+    }
+    char *starttime=NULL;
+    starttime=calloc(1,sizeof(char));
+    if(starttime==NULL){
+        perror("calloc");
+        exit(1);
+    }
+
     //on initialise namefile qui contiendra le nom du fichier lu
     char *nameFile = NULL;
     nameFile = calloc(1,sizeof(char));
@@ -119,11 +157,35 @@ void top(){
         exit(1);
     }
 
+
+    float flUptime;
     //ouverture du dossier
     if ((repertoire = opendir(directory)) == NULL){
         perror(directory);
         exit(1);
     }
+
+    sous_nameFile=concatenateTables(sous_nameFile,directory);
+    sous_nameFile=concatenateTables(sous_nameFile,"/");
+    sous_nameFile=concatenateTables(sous_nameFile,"uptime");
+
+    //On ouvre stat que l'on va parser pour recuperer ce qu'il nous manque (cf uptime & tty)
+    fichier = fopen(sous_nameFile,"r");
+    if(fichier == NULL){
+        perror(sous_nameFile);
+        exit(1);
+    }
+
+    while((character=fgetc(fichier)) != EOF && character!=' '){
+        uptime=realloc(uptime,(strlen(uptime)+1)*sizeof(char));
+        uptime[strlen(uptime)]=character;
+        uptime[strlen(uptime)+1]='\0';
+        
+    }
+    flUptime=atoi(uptime);
+    free(uptime);
+    uptime=calloc(1,sizeof(char));
+    fclose(fichier);
 
     //on parcourt le dossier a present pour trouver tous les sous dossiers qui nous interessent
     while((flux = readdir(repertoire))){
@@ -151,6 +213,17 @@ void top(){
         if(currentProcess.name==NULL){
             perror("calloc");
             exit(1);
+        }
+
+        //A present on va chercher ce qui nous interesse dans uptime
+        if (strlen(sous_nameFile)>1){
+            free(sous_nameFile);
+            sous_nameFile = NULL;
+            sous_nameFile = calloc(1,sizeof(char));
+            if(sous_nameFile==NULL){
+                perror("Calloc");
+                exit(1);
+            }
         }
 
 
@@ -223,10 +296,34 @@ void top(){
                         stopped++;
                     }
                 }
+                if (p==13){
+                    utime=realloc(utime,(strlen(utime)+1)*sizeof(char));
+                    utime[strlen(utime)]=character;
+                    utime[strlen(utime)+1]='\0';
+                }
+                if (p==14){
+                    stime=realloc(stime,(strlen(stime)+1)*sizeof(char));
+                    stime[strlen(stime)]=character;
+                    stime[strlen(stime)+1]='\0';
+                }
+                if (p==15){
+                    cutime=realloc(cutime,(strlen(cutime)+1)*sizeof(char));
+                    cutime[strlen(cutime)]=character;
+                    cutime[strlen(cutime)+1]='\0';
+                }
+                if (p==16){
+                    cstime=realloc(cstime,(strlen(cstime)+1)*sizeof(char));
+                    cstime[strlen(cstime)]=character;
+                    cstime[strlen(cstime)+1]='\0';
+                }
+                if (p==21){
+                    starttime=realloc(starttime,(strlen(starttime)+1)*sizeof(char));
+                    starttime[strlen(starttime)]=character;
+                    starttime[strlen(starttime)+1]='\0';
+                }
             }
             p=0;
             fclose(fichier);
-
             //A present on va chercher ce qui nous interesse dans status
             if (strlen(sous_nameFile)>1){
                 free(sous_nameFile);
@@ -267,42 +364,59 @@ void top(){
                 currentProcess.userName = "?";
             } else {
                 currentProcess.userName = concatenateTables(currentProcess.userName,user->pw_name);
-
             }
             currentProcess.name = concatenateTables(currentProcess.name,command);
+
+            float cpu_usage=0;
+            long int hertz = sysconf(_SC_CLK_TCK);
+            long int total_time = atoi(utime)+atoi(stime)+atoi(cutime)+atoi(cstime);
+            float seconds = flUptime - (atoi(starttime) / hertz);
+            if(seconds > 0){
+                cpu_usage = 100 * ((total_time / hertz) / seconds);
+            }
+            currentProcess.percCPU=cpu_usage;
+
+            //determination pourcentage d'utilisation du CPU
+
             //t sert a comptabiliser le nombre de lignes
             t=0;
             tp=0;
-            free(strUid);
-            strUid=calloc(1,sizeof(char));
+            
             
 
             tableProcess[emplacementTable]=currentProcess;
             emplacementTable++;
             tableProcess=realloc(tableProcess,(emplacementTable+1)*sizeof(struct processus));
-            /*
-            if (ligneScreen>nbLigne){
-                printf("%d\t",tableProcess[emplacementTable-1].pid);
-                printf("%s\t\t\t\t\t\t\t\t\t\t",tableProcess[emplacementTable-1].userName);
-                printf("%s",tableProcess[emplacementTable-1].name);
-                printf("\n");
-                nbLigne++;
-            }*/
+            
             free(command);
             command=calloc(1,sizeof(char));
-            
+            free(utime);
+            utime=calloc(1,sizeof(char));
+            free(stime);
+            stime=calloc(1,sizeof(char));
+            free(cutime);
+            cutime=calloc(1,sizeof(char));
+            free(cstime);
+            cstime=calloc(1,sizeof(char));
+            free(starttime);
+            starttime=calloc(1,sizeof(char));
+            free(strUid);
+            strUid=calloc(1,sizeof(char));
+
             closedir(sous_repertoire);
         }
 
     }
+
     closedir(repertoire);
     
     int g;
     for(g=0;g<emplacementTable;g++){
         if (ligneScreen>nbLigne){
             printf("%d\t",tableProcess[g].pid);
-            printf("%s\t\t\t\t\t\t\t\t\t\t",tableProcess[g].userName);
-            printf("%s",tableProcess[g].name);
+            printf("%s",tableProcess[g].userName);
+            printf("\t\t\t\t\t\t\t%ld",tableProcess[g].percCPU);
+            printf("\t\t\t%s",tableProcess[g].name);
             printf("\n");
             nbLigne++;
         }
@@ -311,6 +425,10 @@ void top(){
 
     //pour repeter l'execution chaque seconde
     sleep(1);
+    int k;
+    for(k=0; k<ligneScreen;k++){
+        printf("\b");
+    }
     }
 }
 

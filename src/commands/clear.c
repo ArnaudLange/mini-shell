@@ -29,7 +29,8 @@ int clear_lib (int argc, char **argv)
 
     int k;
     for(k=0;k<nbLigneScreen;k++){
-    	printf("\033[A\33[2K");
+    	//printf("\033[A\33[2K");
+        printf("\n");
     }
 
     return 0;  // make sure your main returns int

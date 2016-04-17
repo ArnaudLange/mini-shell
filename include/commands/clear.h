@@ -22,9 +22,8 @@
 #include <unistd.h>
 
 #include "../utils.h"
-
-
-
+#include "../parameters.def"
+#include "../typedef.h"
 
 int clear_lib(int argc, char *argv[]);
 

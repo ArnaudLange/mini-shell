@@ -15,8 +15,14 @@
     along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 */
     
+#define NAME "clear"
 #include "../../include/commands/clear.h"
 
+cmdPtr init(char name[NAME_SIZE]){
+        strncpy(name, NAME, NAME_SIZE);
+        return &clear_lib;
+}
+
 int main(int argc, char* argv[]){
-        fonction_lib(argc, argv);
+        clear_lib(argc, argv);
 }

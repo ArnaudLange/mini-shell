@@ -120,7 +120,6 @@ ParsedCommand* parseCommand(const char* input){
                         	current = Sdetach_and;
                         }
                         else {
-				printf("ça retourne NULL2 \n");
                             return NULL;
                         }
                     break;
@@ -140,7 +139,7 @@ ParsedCommand* parseCommand(const char* input){
                             current = S1;
                         } // cas incorrect
                         else {
-				printf("ça retourne NULL3\n");
+				//printf("ça retourne NULL3\n");
                             return NULL;
                         }
                     break;
@@ -161,7 +160,6 @@ ParsedCommand* parseCommand(const char* input){
                             current = S1;
                         } // cas incorrect
                         else {
-				printf("ça retourne NULL4\n");
                             return NULL;
                         }
                         pc->argc[pc->cptarg] = cpt;

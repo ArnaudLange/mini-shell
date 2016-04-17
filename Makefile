@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named clear_lib
+
+# Build rule for target.
+clear_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 clear_lib
+.PHONY : clear_lib
+
+# fast build rule for target.
+clear_lib/fast:
+	$(MAKE) -f CMakeFiles/clear_lib.dir/build.make CMakeFiles/clear_lib.dir/build
+.PHONY : clear_lib/fast
+
+#=============================================================================
 # Target rules for targets named ps_lib
 
 # Build rule for target.
@@ -161,6 +174,19 @@ chgrp: cmake_check_build_system
 chgrp/fast:
 	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/build
 .PHONY : chgrp/fast
+
+#=============================================================================
+# Target rules for targets named clear
+
+# Build rule for target.
+clear: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 clear
+.PHONY : clear
+
+# fast build rule for target.
+clear/fast:
+	$(MAKE) -f CMakeFiles/clear.dir/build.make CMakeFiles/clear.dir/build
+.PHONY : clear/fast
 
 #=============================================================================
 # Target rules for targets named top_lib
@@ -741,6 +767,39 @@ src/commands/chown.c.s:
 	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/chown.c.s
 .PHONY : src/commands/chown.c.s
 
+src/commands/clear.o: src/commands/clear.c.o
+
+.PHONY : src/commands/clear.o
+
+# target to build an object file
+src/commands/clear.c.o:
+	$(MAKE) -f CMakeFiles/clear_lib.dir/build.make CMakeFiles/clear_lib.dir/src/commands/clear.c.o
+	$(MAKE) -f CMakeFiles/clear.dir/build.make CMakeFiles/clear.dir/src/commands/clear.c.o
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/clear.c.o
+.PHONY : src/commands/clear.c.o
+
+src/commands/clear.i: src/commands/clear.c.i
+
+.PHONY : src/commands/clear.i
+
+# target to preprocess a source file
+src/commands/clear.c.i:
+	$(MAKE) -f CMakeFiles/clear_lib.dir/build.make CMakeFiles/clear_lib.dir/src/commands/clear.c.i
+	$(MAKE) -f CMakeFiles/clear.dir/build.make CMakeFiles/clear.dir/src/commands/clear.c.i
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/clear.c.i
+.PHONY : src/commands/clear.c.i
+
+src/commands/clear.s: src/commands/clear.c.s
+
+.PHONY : src/commands/clear.s
+
+# target to generate assembly for a file
+src/commands/clear.c.s:
+	$(MAKE) -f CMakeFiles/clear_lib.dir/build.make CMakeFiles/clear_lib.dir/src/commands/clear.c.s
+	$(MAKE) -f CMakeFiles/clear.dir/build.make CMakeFiles/clear.dir/src/commands/clear.c.s
+	$(MAKE) -f CMakeFiles/shell.dir/build.make CMakeFiles/shell.dir/src/commands/clear.c.s
+.PHONY : src/commands/clear.c.s
+
 src/commands/connect.o: src/commands/connect.c.o
 
 .PHONY : src/commands/connect.o
@@ -1311,6 +1370,36 @@ src/main/chown.c.s:
 	$(MAKE) -f CMakeFiles/chown.dir/build.make CMakeFiles/chown.dir/src/main/chown.c.s
 .PHONY : src/main/chown.c.s
 
+src/main/clear.o: src/main/clear.c.o
+
+.PHONY : src/main/clear.o
+
+# target to build an object file
+src/main/clear.c.o:
+	$(MAKE) -f CMakeFiles/clear_lib.dir/build.make CMakeFiles/clear_lib.dir/src/main/clear.c.o
+	$(MAKE) -f CMakeFiles/clear.dir/build.make CMakeFiles/clear.dir/src/main/clear.c.o
+.PHONY : src/main/clear.c.o
+
+src/main/clear.i: src/main/clear.c.i
+
+.PHONY : src/main/clear.i
+
+# target to preprocess a source file
+src/main/clear.c.i:
+	$(MAKE) -f CMakeFiles/clear_lib.dir/build.make CMakeFiles/clear_lib.dir/src/main/clear.c.i
+	$(MAKE) -f CMakeFiles/clear.dir/build.make CMakeFiles/clear.dir/src/main/clear.c.i
+.PHONY : src/main/clear.c.i
+
+src/main/clear.s: src/main/clear.c.s
+
+.PHONY : src/main/clear.s
+
+# target to generate assembly for a file
+src/main/clear.c.s:
+	$(MAKE) -f CMakeFiles/clear_lib.dir/build.make CMakeFiles/clear_lib.dir/src/main/clear.c.s
+	$(MAKE) -f CMakeFiles/clear.dir/build.make CMakeFiles/clear.dir/src/main/clear.c.s
+.PHONY : src/main/clear.c.s
+
 src/main/connect.o: src/main/connect.c.o
 
 .PHONY : src/main/connect.o
@@ -1785,10 +1874,12 @@ src/utils.o: src/utils.c.o
 
 # target to build an object file
 src/utils.c.o:
+	$(MAKE) -f CMakeFiles/clear_lib.dir/build.make CMakeFiles/clear_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.o
+	$(MAKE) -f CMakeFiles/clear.dir/build.make CMakeFiles/clear.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/top_lib.dir/build.make CMakeFiles/top_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/utils.c.o
 	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.o
@@ -1826,10 +1917,12 @@ src/utils.i: src/utils.c.i
 
 # target to preprocess a source file
 src/utils.c.i:
+	$(MAKE) -f CMakeFiles/clear_lib.dir/build.make CMakeFiles/clear_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.i
+	$(MAKE) -f CMakeFiles/clear.dir/build.make CMakeFiles/clear.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/top_lib.dir/build.make CMakeFiles/top_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/utils.c.i
 	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.i
@@ -1867,10 +1960,12 @@ src/utils.s: src/utils.c.s
 
 # target to generate assembly for a file
 src/utils.c.s:
+	$(MAKE) -f CMakeFiles/clear_lib.dir/build.make CMakeFiles/clear_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/ps_lib.dir/build.make CMakeFiles/ps_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/ps.dir/build.make CMakeFiles/ps.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/more.dir/build.make CMakeFiles/more.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chgrp.dir/build.make CMakeFiles/chgrp.dir/src/utils.c.s
+	$(MAKE) -f CMakeFiles/clear.dir/build.make CMakeFiles/clear.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/top_lib.dir/build.make CMakeFiles/top_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/more_lib.dir/build.make CMakeFiles/more_lib.dir/src/utils.c.s
 	$(MAKE) -f CMakeFiles/chown_lib.dir/build.make CMakeFiles/chown_lib.dir/src/utils.c.s
@@ -1908,10 +2003,12 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... clear_lib"
 	@echo "... ps_lib"
 	@echo "... ps"
 	@echo "... more"
 	@echo "... chgrp"
+	@echo "... clear"
 	@echo "... top_lib"
 	@echo "... more_lib"
 	@echo "... chown_lib"
@@ -1962,6 +2059,9 @@ help:
 	@echo "... src/commands/chown.o"
 	@echo "... src/commands/chown.i"
 	@echo "... src/commands/chown.s"
+	@echo "... src/commands/clear.o"
+	@echo "... src/commands/clear.i"
+	@echo "... src/commands/clear.s"
 	@echo "... src/commands/connect.o"
 	@echo "... src/commands/connect.i"
 	@echo "... src/commands/connect.s"
@@ -2016,6 +2116,9 @@ help:
 	@echo "... src/main/chown.o"
 	@echo "... src/main/chown.i"
 	@echo "... src/main/chown.s"
+	@echo "... src/main/clear.o"
+	@echo "... src/main/clear.i"
+	@echo "... src/main/clear.s"
 	@echo "... src/main/connect.o"
 	@echo "... src/main/connect.i"
 	@echo "... src/main/connect.s"

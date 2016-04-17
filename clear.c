@@ -22,7 +22,14 @@ along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 
 int main(int argc, char *argv[]){
 
-    
+    struct winsize w;
+    int nbLigneScreen = w.ws_row;
+
+    int k;
+
+    for(k=0;k<nbLigneScreen;k++){
+    	
+    }
     // on recupere la taille de l'ecran
     return 0;
 }

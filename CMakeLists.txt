@@ -243,4 +243,4 @@ file(GLOB HEADER_TOP
 )
 add_executable(top ${SRC_TOP} ${HEADER_TOP})
 add_library(top_lib SHARED ${SRC_TOP})
-set_target_properties(ps_lib PROPERTIES OUTPUT_NAME "top")
+set_target_properties(top_lib PROPERTIES OUTPUT_NAME "top")

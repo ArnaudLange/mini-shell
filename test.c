@@ -4,14 +4,8 @@
 
 int main(int argc, char const *argv[])
 {
-	int m = 15;
+	float m=1;
 
-	uid_t uid=getuid();
-	printf("%d\n",uid);
-
-	Process currentProcess;
-	currentProcess.pid=m;
-
-	printf("%d\n",currentProcess.pid);
+	printf("%f\n",m);
 	return 0;
 }

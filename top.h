@@ -44,8 +44,8 @@ typedef struct processus{
     char *virt;
     char *res;
     char *shr;
-    char *state;
-    long int percCPU;
+    char state;
+    float percCPU;
     long percMEM;
     long int procMIN;
     long int procSEC;
@@ -55,4 +55,5 @@ typedef struct processus{
 
 int fontion_lib(int argc, char *argv[]);
 void top();
+int compare(const void *s1, const void *s2);
 

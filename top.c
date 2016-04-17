@@ -283,6 +283,7 @@ void top(){
                     command[strlen(command)+1]='\0';
                 }
                 if (p==2){
+                    currentProcess.state=character;
                     if(character=='S'){
                         sleeping++;
                     }
@@ -322,6 +323,7 @@ void top(){
                     starttime[strlen(starttime)+1]='\0';
                 }
             }
+
             p=0;
             fclose(fichier);
             //A present on va chercher ce qui nous interesse dans status
@@ -367,15 +369,14 @@ void top(){
             }
             currentProcess.name = concatenateTables(currentProcess.name,command);
 
-            float cpu_usage=0;
+            long int cpu_usage=0;
             long int hertz = sysconf(_SC_CLK_TCK);
             long int total_time = atoi(utime)+atoi(stime)+atoi(cutime)+atoi(cstime);
-            float seconds = flUptime - (atoi(starttime) / hertz);
+            long int seconds = flUptime - (atoi(starttime) / hertz);
             if(seconds > 0){
                 cpu_usage = 100 * ((total_time / hertz) / seconds);
             }
             currentProcess.percCPU=cpu_usage;
-
             //determination pourcentage d'utilisation du CPU
 
             //t sert a comptabiliser le nombre de lignes
@@ -410,12 +411,15 @@ void top(){
 
     closedir(repertoire);
     
+    qsort(tableProcess,emplacementTable,sizeof(struct processus),compare);
+
     int g;
     for(g=0;g<emplacementTable;g++){
         if (ligneScreen>nbLigne){
             printf("%d\t",tableProcess[g].pid);
             printf("%s",tableProcess[g].userName);
-            printf("\t\t\t\t\t\t\t%ld",tableProcess[g].percCPU);
+            printf("\t\t\t\t\t\t%c ",tableProcess[g].state);
+            printf("\t%.1f",tableProcess[g].percCPU);
             printf("\t\t\t%s",tableProcess[g].name);
             printf("\n");
             nbLigne++;
@@ -429,9 +433,17 @@ void top(){
     for(k=0; k<ligneScreen;k++){
         printf("\033[F");
     }
+
     }
 }
 
+int compare(const void *s1, const void *s2)
+{
+  struct processus *e1 = (struct processus *)s1;
+  struct processus *e2 = (struct processus *)s2;
+  
+  return ((float)e1->percCPU-(float)e2->percCPU);
+}
 
 int main(int argc, char *argv[]){
 

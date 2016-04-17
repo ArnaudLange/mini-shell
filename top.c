@@ -23,15 +23,16 @@ along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 
 void top(){
 
-    float big=0;
-
+    //on recupere la taille de l'ecran pour que top n'affiche que sur la fenetre et pas plus
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     int ligneScreen = w.ws_row;
 
+    //ici seront stockees les nb de tasks ainsi que le nombre dans chaque mode
     int sleeping=0,stopped=0,zombie=0,running=0,nb=0;
 
-    long int hertz, total_time, seconds;
+
+    float hertz, total_time, seconds;
 
     while(1){    
 
@@ -441,8 +442,9 @@ void top(){
     for(k=0; k<ligneScreen;k++){
         printf("\033[F");
     }
-
+    free(tableProcess);
     }
+
 }
 
 int compare(const void *s1, const void *s2)

@@ -98,6 +98,9 @@ typedef enum {
 typedef struct parsedCommand ParsedCommand;
 typedef struct command Command;
 
+bool isLetter(char c);
+bool isNumber(char c);
+
 int startParsedCommand(ParsedCommand* cmd);
 
 /**

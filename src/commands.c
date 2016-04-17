@@ -31,6 +31,14 @@ bool isLetter(char c){
       return false;
 }
 
+bool isNumber(char c){
+      if(c > '0' && c < '9'){
+            return true;
+      }
+      return false;
+}
+
+
 int initCommands(Command* array[MAXCMD]){
         // Internal Shell commands are first added
         // char* name, char** parameters, char** options, int nameLength, int* parameterLength, int* optionLength, int (*cmd_ptr)(int, int)
@@ -147,7 +155,7 @@ ParsedCommand* parseCommand(const char* input){
                     // cas où on analyse le string d'un argument ou d'une option
                     case Sargs :
                     if(debugState){printf(" STATE Sargs\n");}	
-                        if ((isLetter(c) && c != ' ') || c == '/' || c == '-' || c == '.'){
+                        if ((isLetter(c) && c != ' ') || isNumber(c) || c == '/' || c == '-' || c == '.'){
                         cpt ++;
                         pc->argv[pc->cptarg][cpt] = c;
                         current = Sargs;

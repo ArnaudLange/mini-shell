@@ -154,6 +154,7 @@ int main(int argc, char* argv[]){
                                 ParsedCommand* tab = NULL;
                                 tab = (ParsedCommand*)malloc(sizeof(ParsedCommand));
                                 ParsedCommand* c = parseCommand(line);
+                        
 
 
 
@@ -185,6 +186,8 @@ int main(int argc, char* argv[]){
                                     // on parcourt le tableau de parsedcommand
                                     for (int z = 0; z<=i; z++){
                                         // si on a un pipe
+                                        printf("%i\n", i);
+                                        executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,&tab[z]);
                                         if (tab[z].typeredirec == tuyau){
                         
                                         }// si on a <<
@@ -207,6 +210,11 @@ int main(int argc, char* argv[]){
 
                                         }//si on a &&
                                         else if (tab[z].typeredirec == andd){
+                                            printf("bonjour");
+                                            if (executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,&tab[z]) == 1){
+                                                printf("lalala\n");
+                                                executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,&tab[z+1]);
+                                            }
 
                                         }//si on a ||
                                         else if (tab[z].typeredirec == orr){
@@ -223,7 +231,7 @@ int main(int argc, char* argv[]){
                                     //printParameters(&tab[1]);
                                     //printName(&tab[2]);
 
-                                    executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,c);
+                                    //executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,c);
                                     free(tab);
                                     //execute(line,line);
                                     

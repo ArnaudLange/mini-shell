@@ -25,9 +25,13 @@ void top(){
 
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    int ligneScreen = w.ws_row;
+
     int sleeping=0,stopped=0,zombie=0,running=0,nb=0;
 
     while(1){    
+
+    int nbLigne=0;
 
     struct passwd * user;
     struct processus *tableProcess=NULL;
@@ -69,7 +73,9 @@ void top(){
     printf("top - %ld:%ld:%ld up %ldh%ldmin,\n", hr,min,sc,hourBoot,minBoot);
     printf("Tasks : %d total, %d running, %d sleeping, %d stopped, %d zombie\n",nb,running,sleeping,stopped,zombie);
     printf("\nPID\tUSER\tPR\tNI\tVIRT\tRES\tSHR\tS\t%cCPU\t%cMEM\tTIME+\tCOMMAND\n",perc,perc);
-    int sleeping=0,stopped=0,zombie=0,running=0,nb=0;
+    nbLigne+=5;
+    
+    sleeping=0,stopped=0,zombie=0,running=0,nb=0;
 
     //dossier ou se trouvent tous les process
     char *directory = "/proc";
@@ -246,8 +252,13 @@ void top(){
             tableProcess[emplacementTable]=currentProcess;
             emplacementTable++;
             tableProcess=realloc(tableProcess,(emplacementTable+1)*sizeof(struct processus));
-            printf("%d    ",tableProcess[emplacementTable-1].pid);
-            printf("%s\n",tableProcess[emplacementTable-1].userName);
+            
+            if (ligneScreen>nbLigne){
+                printf("%d\t",tableProcess[emplacementTable-1].pid);
+                printf("%s\n",tableProcess[emplacementTable-1].userName);
+                nbLigne++;
+            }
+            
             closedir(sous_repertoire);
         }
 

@@ -23,11 +23,15 @@ along with Binsh.  If not, see <http://www.gnu.org/licenses/>.
 
 void top(){
 
+    float big=0;
+
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     int ligneScreen = w.ws_row;
 
     int sleeping=0,stopped=0,zombie=0,running=0,nb=0;
+
+    long int hertz, total_time, seconds;
 
     while(1){    
 
@@ -323,6 +327,17 @@ void top(){
                     starttime[strlen(starttime)+1]='\0';
                 }
             }
+            //On recupere les %CPU
+            float cpu_usage=0;
+            hertz = sysconf(_SC_CLK_TCK);
+            total_time = atoi(utime)+atoi(stime);
+            seconds = flUptime - (atoi(starttime) / hertz);
+            if(seconds > 0){
+                cpu_usage=(total_time/hertz);
+                cpu_usage=cpu_usage/seconds;
+                cpu_usage=cpu_usage*100;
+            }
+            currentProcess.percCPU=cpu_usage;
 
             p=0;
             fclose(fichier);
@@ -369,14 +384,7 @@ void top(){
             }
             currentProcess.name = concatenateTables(currentProcess.name,command);
 
-            long int cpu_usage=0;
-            long int hertz = sysconf(_SC_CLK_TCK);
-            long int total_time = atoi(utime)+atoi(stime)+atoi(cutime)+atoi(cstime);
-            long int seconds = flUptime - (atoi(starttime) / hertz);
-            if(seconds > 0){
-                cpu_usage = 100 * ((total_time / hertz) / seconds);
-            }
-            currentProcess.percCPU=cpu_usage;
+            
             //determination pourcentage d'utilisation du CPU
 
             //t sert a comptabiliser le nombre de lignes
@@ -442,7 +450,7 @@ int compare(const void *s1, const void *s2)
   struct processus *e1 = (struct processus *)s1;
   struct processus *e2 = (struct processus *)s2;
   
-  return ((float)e1->percCPU-(float)e2->percCPU);
+  return ((float)e2->percCPU-(float)e1->percCPU);
 }
 
 int main(int argc, char *argv[]){

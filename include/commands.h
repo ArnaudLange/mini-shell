@@ -66,6 +66,8 @@ struct parsedCommand{
         int argc[NAME_SIZE];
         // type de redirection s'il y en a un
         Typeredirec typeredirec;
+        // boolen : true si on a fini de parser toute la chaine (return final)
+        bool fin;
 
         int (*cmd_ptr)(int, char*[]);
 };

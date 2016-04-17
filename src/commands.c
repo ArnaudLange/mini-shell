@@ -64,6 +64,7 @@ ParsedCommand* parseCommand(char* input){
 
         //booleen pour savoir si il faut incrémenter le nb d'arguments à la fin
         bool ajout=false;
+        bool fin = false;
 
         ParsedCommand* pc;
         pc = (ParsedCommand*)malloc(sizeof(ParsedCommand));
@@ -170,7 +171,7 @@ ParsedCommand* parseCommand(char* input){
         /*on termine manuellement la chaine de caractères du nom (sinon erreur)*/
         pc->argv[pc->cptarg]=NULL;
         pc->name[pc->nameLength+1]='\0';
-
+        pc->fin = true;
         return pc;
 
     }

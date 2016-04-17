@@ -153,17 +153,27 @@ int main(int argc, char* argv[]){
                                 ParsedCommand* tab = NULL;
                                 tab = (ParsedCommand*)malloc(sizeof(ParsedCommand));
                                 ParsedCommand* c = parseCommand(line);
+                                // si on a une première commande
                                 if (c!=NULL){
+                                    int i = 1;
                                     tab[0] = *c;
-                                    tab = realloc(tab, 2*sizeof(ParsedCommand));
-                                    ParsedCommand* d = parseCommand(&line[c->cptglobal]);
-                                    tab[1] = *d;
+                                    //printf("%i\n", c->fin);
+                                    while(c->fin == false ){
+                                        //printf("bonjour\n");
+                                        //ParsedCommand* c = parseCommand(&line[(tab[i-1]).cptglobal]);
+                                        //tab[i] = *c; 
+                                        //tab[i] = parseCommand(line[tab[i-1]->cptglobal]);
+                                    }
+                                    
+                                    //tab = realloc(tab, 2*sizeof(ParsedCommand));
+                                    //ParsedCommand* d = parseCommand(&line[c->cptglobal]);
+                                    //tab[1] = *d;
 
-                                    printName(&tab[0]);
-                                    printName(&tab[1]);
-                                    if((c->typeredirec) == tuyau ){
-                                    printf("tuyau\n");
-                                    } 
+                                    //printName(&tab[0]);
+                                    //printName(&tab[1]);
+                                    // marche a chaque fois 
+                                    //if((c->typeredirec) == tuyau ){
+                                    //printf("tuyau\n");}
                                     //printParameters(c);
                                     //printOptions(c);
                                     executeCommand(STDIN_FILENO,STDOUT_FILENO,shell,c);

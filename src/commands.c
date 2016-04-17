@@ -31,6 +31,13 @@ bool isLetter(char c){
       return false;
 }
 
+bool isNumber(char c){
+      if(c > '0' && c < '9'){
+            return true;
+      }
+      return false;
+}
+
 int initCommands(Command* array[MAXCMD]){
         // Internal Shell commands are first added
         // char* name, char** parameters, char** options, int nameLength, int* parameterLength, int* optionLength, int (*cmd_ptr)(int, int)
@@ -79,7 +86,7 @@ ParsedCommand* parseCommand(const char* input){
                     case S0:
                         if(debugState){printf(" STATE S0\n");}
                         // on trouve le String de la fonction
-                        if (isLetter(c) || c == '/' || c == '.'){
+                        if (isLetter(c) || isNumber(c)){
                         pc->name[cpt] = c;
                         current = Sfunction;
                         }
@@ -95,7 +102,7 @@ ParsedCommand* parseCommand(const char* input){
                     case S1 : 
                     if(debugState){printf(" STATE S1\n");}
                         // on trouve le String de la fonction
-                        if (isLetter(c)){
+                        if (isLetter(c) || isNumber(c)){
                             pc->argv[pc->cptarg] = (char*)malloc(NAME_SIZE*sizeof(char));
                             pc->argv[pc->cptarg][cpt] = c;
                             ajout=true;

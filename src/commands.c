@@ -25,7 +25,14 @@
 
 
 bool isLetter(char c){
-      if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')){
+      if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '+') || (c == '-') || (c == '=') || (c == '.') || (c == '/') || (c == ',') || (c == '~')){
+            return true;
+      }
+      return false;
+}
+
+bool isNumber(char c){
+      if(c > '0' && c < '9'){
             return true;
       }
       return false;
@@ -79,7 +86,7 @@ ParsedCommand* parseCommand(const char* input){
                     case S0:
                         if(debugState){printf(" STATE S0\n");}
                         // on trouve le String de la fonction
-                        if (isLetter(c) || c == '/' || c == '.'){
+                        if (isLetter(c) || isNumber(c)){
                         pc->name[cpt] = c;
                         current = Sfunction;
                         }
@@ -95,7 +102,7 @@ ParsedCommand* parseCommand(const char* input){
                     case S1 : 
                     if(debugState){printf(" STATE S1\n");}
                         // on trouve le String de la fonction
-                        if (isLetter(c) || c == '-' || c == '/' || c == '.' || c == '~'){
+                        if (isLetter(c) || isNumber(c)){
                             pc->argv[pc->cptarg] = (char*)malloc(NAME_SIZE*sizeof(char));
                             pc->argv[pc->cptarg][cpt] = c;
                             ajout=true;
@@ -120,7 +127,6 @@ ParsedCommand* parseCommand(const char* input){
                         	current = Sdetach_and;
                         }
                         else {
-				printf("ça retourne NULL2 \n");
                             return NULL;
                         }
                     break;
@@ -140,14 +146,14 @@ ParsedCommand* parseCommand(const char* input){
                             current = S1;
                         } // cas incorrect
                         else {
-				printf("ça retourne NULL3\n");
+				//printf("ça retourne NULL3\n");
                             return NULL;
                         }
                     break;
                     // cas où on analyse le string d'un argument ou d'une option
                     case Sargs :
                     if(debugState){printf(" STATE Sargs\n");}	
-                        if ((isLetter(c) && c != ' ') || c == '/' || c == '-' || c == '.'){
+                        if (isLetter(c)){
                         cpt ++;
                         pc->argv[pc->cptarg][cpt] = c;
                         current = Sargs;
@@ -161,7 +167,6 @@ ParsedCommand* parseCommand(const char* input){
                             current = S1;
                         } // cas incorrect
                         else {
-				printf("ça retourne NULL4\n");
                             return NULL;
                         }
                         pc->argc[pc->cptarg] = cpt;

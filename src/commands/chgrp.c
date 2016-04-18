@@ -20,33 +20,35 @@
 int chgrp_lib(int argc, char *argv[]){
 
     // -----------------------------------
-    // Declaration tableau deux dimensions pour les options
+    // Declaration tableau pour les options
 
-    char* options = NULL;
-    options = (char*) calloc(16, sizeof(*options));
-    if (options == NULL)
-    {
-        perror("options");
-        exit(1);
-    }
+
+        char* options = NULL;
+        options = calloc(1, sizeof(char));
+        if (options == NULL)
+        {
+            perror("options");
+            exit(1);
+        }
 
 
     // -----------------------------------
     // Declaration tableau deux dimensions pour les files
 
-    char** files = NULL;
-    files = malloc(36*sizeof(char**));
-    if (files == NULL)
-    {
-        perror("files");
-        exit(1);
-    }
-    files[0] = malloc(36*sizeof(char*));
-    if (files[0] == NULL)
-    {
-        perror("files[x]");
-        exit(1);
-    }
+        char** files = NULL;
+        files = calloc(1,sizeof(char*));
+        if (files == NULL)
+        {
+            perror("files");
+            exit(1);
+        }
+        files[0] = calloc(1,sizeof(char));
+        if (files[0] == NULL)
+        {
+            perror("files[x]");
+            exit(1);
+        }
+
 
     // -----------------------------------
 
@@ -112,17 +114,25 @@ int chgrp_lib(int argc, char *argv[]){
             if(argv[i][0] != '-')
             {
                 nbFiles++;
-                files[nbFiles] = malloc(16*sizeof(char*));
-
-                concatenateTables(files[nbFiles],argv[i]);
-
-
+                files=realloc(files, (nbFiles)*sizeof(char*));
+                if (files == NULL)
+                {
+                    perror("files");
+                    exit(1);
+                }
+                files[nbFiles] = calloc(1,sizeof(char));
+                if (files[nbFiles] == NULL)
+                {
+                    perror("files[x]");
+                    exit(1);
+                }
+                files[nbFiles-1]=concatenateTables(files[nbFiles-1], argv[i]);
             }
         }
         // if nombre d'arguments valide
         if (nbFiles >= 2){
-            for(j=2; j<=nbFiles; j++){
-                changeGrp(files[j], files[1], options);
+            for(j=1; j<nbFiles; j++){
+                changeGrp(files[j], files[0], options);
             }
         }
         else{

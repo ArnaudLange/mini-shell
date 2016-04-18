@@ -244,3 +244,16 @@ file(GLOB HEADER_TOP
 add_executable(top ${SRC_TOP} ${HEADER_TOP})
 add_library(top_lib SHARED ${SRC_TOP})
 set_target_properties(top_lib PROPERTIES OUTPUT_NAME "top")
+
+# clear
+file(GLOB SRC_CLEAR
+    "src/commands/clear.c"
+    "src/utils.c"
+    "src/main/clear.c"
+)
+file(GLOB HEADER_CLEAR
+    "include/commands/clear.h"
+)
+add_executable(clear ${SRC_CLEAR} ${HEADER_CLEAR})
+add_library(clear_lib SHARED ${SRC_CLEAR})
+set_target_properties(clear_lib PROPERTIES OUTPUT_NAME "clear")

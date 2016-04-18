@@ -159,4 +159,6 @@ void printParameters(ParsedCommand* cmd);
  */
 void printOptions(ParsedCommand* cmd);
 
+bool isNumber(char c);
+
 #endif

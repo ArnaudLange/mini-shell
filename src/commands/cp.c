@@ -20,33 +20,34 @@
 int cp_lib(int argc, char *argv[]){
 
 // -----------------------------------
-// Declaration tableau deux dimensions pour les options
-
-    char* options = NULL;
-    options = (char*) calloc(15, sizeof(*options));
-    if (options == NULL)
-    {
-        perror("options");
-        exit(1);
-    }
+    // Declaration tableau pour les options
 
 
-// -----------------------------------
-// Declaration tableau deux dimensions pour les fichiers
+        char* options = NULL;
+        options = calloc(1, sizeof(char));
+        if (options == NULL)
+        {
+            perror("options");
+            exit(1);
+        }
 
-    char** files = NULL;
-    files = malloc(32*sizeof(char**));
-    if (files == NULL)
-    {
-        perror("files");
-        exit(1);
-    }
-    files[0] = malloc(32*sizeof(char*));
-    if (files[0] == NULL)
-    {
-        perror("files[x]");
-        exit(1);
-    }
+
+    // -----------------------------------
+    // Declaration tableau deux dimensions pour les files
+
+        char** files = NULL;
+        files = calloc(1,sizeof(char*));
+        if (files == NULL)
+        {
+            perror("files");
+            exit(1);
+        }
+        files[0] = calloc(1,sizeof(char));
+        if (files[0] == NULL)
+        {
+            perror("files[x]");
+            exit(1);
+        }
 
 // -----------------------------------
 
@@ -108,17 +109,25 @@ int cp_lib(int argc, char *argv[]){
             if(argv[i][0] != '-')
             {
                 nbFiles++;
-                files[nbFiles] = malloc(16*sizeof(char*));
-
-                files[nbFiles] = concatenateTables(files[nbFiles],argv[i]);
-
-
+                files=realloc(files, (nbFiles)*sizeof(char*));
+                if (files == NULL)
+                {
+                    perror("files");
+                    exit(1);
+                }
+                files[nbFiles] = calloc(1,sizeof(char));
+                if (files[nbFiles] == NULL)
+                {
+                    perror("files[x]");
+                    exit(1);
+                }
+                files[nbFiles-1]=concatenateTables(files[nbFiles-1], argv[i]);
             }
         }
 
         if (nbFiles == 2)
         {
-            copy(files[1],files[2], options, nbOptions);   
+            copy(files[0],files[1], options, nbOptions);   
         }
 
         else if (nbFiles > 2) //si plus de deux fichiers en argument
@@ -129,13 +138,13 @@ int cp_lib(int argc, char *argv[]){
                     printf("cp : erreur de création du répertoire '%s', copie impossible\n",files[nbFiles]);
                     exit(1);
                 }
-                for(j=1; j<nbFiles; j++){ //on copie chaque fichier dedans
+                for(j=0; j<nbFiles; j++){ //on copie chaque fichier dedans
                     copy(files[j],files[nbFiles], options, nbOptions);
                 }
             }
             else{ //si il existe
                 if(S_ISDIR(statbuf.st_mode)){ //si c'est un dossier
-                    for(j=1; j<nbFiles; j++){//on copie chaque fichier dedans
+                    for(j=0; j<nbFiles; j++){//on copie chaque fichier dedans
                         copy(files[j],files[nbFiles], options, nbOptions);
                     }
                 }
@@ -325,4 +334,6 @@ void copy(char* src, char* dst, char* options, int nbOptions){
         }
         closedir(dirp);
     }
+    free(recur);
+    free(recur2);
 }

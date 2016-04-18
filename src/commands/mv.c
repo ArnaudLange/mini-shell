@@ -25,7 +25,7 @@ int mv_lib(int argc, char *argv[]){
     // Declaration tableau deux dimensions pour les options
 
     char* options = NULL;
-    options = (char*) calloc(15, sizeof(*options));
+    options = calloc(1, sizeof(char));
     if (options == NULL)
     {
         perror("options");
@@ -37,13 +37,13 @@ int mv_lib(int argc, char *argv[]){
     // Declaration tableau deux dimensions pour les files
 
     char** files = NULL;
-    files = malloc(sizeof(char**));
+    files = calloc(1,sizeof(char*));
     if (files == NULL)
     {
         perror("files");
         exit(1);
     }
-    files[0] = malloc(sizeof(char*));
+    files[0] = calloc(1,sizeof(char));
     if (files[0] == NULL)
     {
         perror("files[x]");
@@ -98,23 +98,32 @@ int mv_lib(int argc, char *argv[]){
             if(argv[i][0] != '-')
             {
                 nbFiles++;
-                files[nbFiles] = malloc(16*sizeof(char*));
-
-                concatenateTables(files[nbFiles],argv[i]);
-
-
+                files=realloc(files, (nbFiles)*sizeof(char*));
+                if (files == NULL)
+                {
+                    perror("files");
+                    exit(1);
+                }
+                files[nbFiles] = calloc(1,sizeof(char));
+                if (files[nbFiles] == NULL)
+                {
+                    perror("files[x]");
+                    exit(1);
+                }
+                files[nbFiles-1]=concatenateTables(files[nbFiles-1], argv[i]);
             }
         }
         // if there are 2 files
         if (nbFiles == 2)
         {
-            mv(files[1],files[2], options, nbOptions);   
+            mv(files[0],files[1], options, nbOptions);   
         }
         else
         {
             printf("mv : invalid number of arguments\n");
             printf("Try 'mv --help' for more information.\n");
         }
+
         free(files);
         free(options);
 

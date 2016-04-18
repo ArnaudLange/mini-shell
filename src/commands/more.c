@@ -24,13 +24,13 @@ int more_lib(int argc, char *argv[]){
     // Declaration tableau deux dimensions pour les files
 
     char** files = NULL;
-    files = malloc(36*sizeof(char**));
+    files = calloc(1,sizeof(char*));
     if (files == NULL)
     {
         perror("files");
         exit(1);
     }
-    files[0] = malloc(36*sizeof(char*));
+    files[0] = calloc(1,sizeof(char));
     if (files[0] == NULL)
     {
         perror("files[x]");
@@ -219,6 +219,7 @@ int getLength(char *file){
             length++;
         }
     }
+    fclose(fichier);
     return length;
 }
 
@@ -324,6 +325,7 @@ void more(char *file, int *nbLigne){
 
             }
         }
+        fclose(fichier);
     }
     else{
         printf("\n-----------------------------------------------------------\n");
